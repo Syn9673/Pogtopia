@@ -1,0 +1,19 @@
+{
+  "name": "pogtopia",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./js/src",
+  "dependencies": {
+    "node-addon-api": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node ./js/tests/server.js",
+    "install": "cd native && node-gyp rebuild -j 8"
+  },
+  "repository": {
+    "url": "https://github.com/Alexander9673/Pogtopia"
+  },
+  "author": "Alexander9673",
+  "license": "GPL-3.0"
+}
