@@ -4,6 +4,12 @@
 ## Info
 This is just a Beta Testing, not meant for use at the moment.
 
+## Installation
+For Linux, you must have enet installed, for Windows, no need.  
+Stable: `$ npm install pogtopia`  
+Most Updated (Github, updated frequently): `$ npm install Alexander9673/Pogtopia`.  
+If you don't have git installed and want to install from github: `$ npm install --save https://github.com/Alexander/Pogtopia/tarball/master`
+
 ## Example Usage
 ```js
 const Pogtopia = require("pogtopia");
