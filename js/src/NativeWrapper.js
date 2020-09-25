@@ -58,7 +58,7 @@ module.exports = class NativeWrapper {
   static send(packet, connectID) {
     switch (packet.constructor.name) {
       case "Buffer": {
-        native.send_packet(buffer, connectID);
+        native.send_packet(packet, connectID);
         break;
       }
 

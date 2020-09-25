@@ -1,28 +1,39 @@
-# pogtopia
- A server for Growtopia. Base code only.
+# Pogtopia
+A simple to use API for creating private servers for Growtopia.
 
-## Info
-This is just a Beta Testing, not meant for use at the moment.
+## Installations
+**Requirements**  
+  - `node-gyp`  
+  - Python **2.7** (3+ can be used)  
+  - Windows Build Tools/Build Essential  
 
-## Installation
-For Linux, you must have enet installed, for Windows, no need.  
-Stable: `$ npm install pogtopia`  
+**Installing the Requirements**
+Simply run this as Administrator in Windows Powershell,  
+`$ npm install windows-build-tools node-gyp -g`  
 
-Most Updated (Github, updated frequently): `$ npm install Alexander9673/Pogtopia`.  
+If on Linux, simply install `build-essential` first with,  
+`$ sudo (yum/apt-get/etc...) install build-essential`  
 
-If you don't have git installed and want to install from github:  
-`$ npm install https://github.com/Alexander/Pogtopia/tarball/master`
+After that, install node-gyp by doing  
+`$ npm install node-gyp -g`  
 
-## Example Usage
+After installing everything, simply run  
+`$ npm install pogtopia` to install the latest version on NPM, or  
+`$ npm install Alexander9673/Pogtopia` to install the version on Github.
+
+## Example
 ```js
 const Pogtopia = require("pogtopia");
-const server = new Pogtopia.Server({
+const server = new Pogtopia({
 	server: {
-		port: 17091
+		port: 17091 // set port to 17091
 	}
 });
 
-server.start();										// start the server
-server.setHandler("connect", (peer) => {});			// handle connections
-server.setHandler("receive", (peer, packet) => {});	// handle messages received
+server.setHandler("connect", (peer) => peer.requestLoginInformation()); // request login information from the peer
+server.setHandler("receive", (peer, packet) => {
+	// handle packets here
+});
+
+server.start();
 ```

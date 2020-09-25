@@ -84,13 +84,6 @@ module.exports = class Variant {
     }).parse();
   }
 
-  /**
-   * Creates a new Variant Packet
-   * @static
-   * @param {...(string|number|number[])|VariantOptions} options Options for the variant packet
-   * @param {...(string|number|number[])} args Arguments of the Variant packet
-   * @returns {Variant}
-   */
   static from(options, ...args) {
     if (Array.isArray(options) || typeof options !== "object")
       args.unshift(options);

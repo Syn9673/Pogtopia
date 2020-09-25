@@ -6,7 +6,28 @@ module.exports = class TankPacket {
   }
 
   static from(options) {
-    return new TankPacket(options);
+    if (Buffer.isBuffer(options)) {
+      if (options.length < 60)
+        throw new Error("Invalid Tank Packet length");
+
+      const tank = {
+        type: options.readUInt32LE(4),
+        netID: options.readInt32LE(8),
+        targetNetID: options.readInt32LE(12),
+        state: options.readUInt32LE(16),
+        delay: options.readUInt32LE(20),
+        itemInfo: options.readUInt32LE(24),
+        playerPosX: options.readFloatLE(28),
+        playerPosY: options.readFloatLE(32),
+        playerSpeedX: options.readFloatLE(36),
+        playerSpeedY: options.readFloatLE(40),
+        playerPunchX: options.readInt32LE(48),
+        playerPunchY: options.readInt32LE(52),
+        extraData: options.length <= 60 ? null : () => options.slice(60)
+      };
+
+      return new TankPacket(tank);
+    } else return new TankPacket(options);
   }
 
   parse() {

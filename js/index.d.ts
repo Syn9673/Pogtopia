@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import * as Redis from "ioredis";
 
 
 
@@ -127,10 +128,63 @@ interface VariantOptions {
 
 
 
+interface PeerData {
+  /**
+   * The connectID of a user
+   */
+  connectID: number
+
+  /**
+   * A unique identifier for a peer, it would just be the username for non-guest accounts and rid for guest.
+   */
+  uid?: string
+
+  /**
+   * The password of a user
+   */
+  password?: string
+
+  /**
+   * The name to display for the user
+   */
+  displayName?: string
+
+  /**
+   * The user id of the user, not to be mixed with uid.
+   */
+  userID?: number
+}
+
+
+
+
+
+
+interface ItemsDat {
+  packet: Buffer
+  content: Buffer
+  hash: number
+}
+
+
+
+
+
+
 /**
  * A class that represents the Server
  */
 export class Server extends EventEmitter {
+  /**
+   * Our redis client
+   */
+  public redis: Redis;
+
+  /**
+   * Items dat object
+   */
+  public items: ItemsDat;
+
   /**
    * Creates a new instance of the Server class
    * @param config The configuration for the server
@@ -161,6 +215,18 @@ export class Server extends EventEmitter {
    * @param callback The callback for that event
    */
   public setHandler(type: "receive", callback: (peer: Peer, packet: Buffer) => void): void;
+
+  /**
+   * Set the items.dat to use, this will create the packet and the hash
+   * @param file The items.dat file content
+   */
+  public setItemsDat(file: Buffer): void;
+
+  /**
+   * Converts a string packet data to map, this will split the `\n` and `|`.
+   * @param packet The string packet
+   */
+  public stringPacketToMap(packet: Buffer): Map<string, string>;
 }
 
 
@@ -182,7 +248,14 @@ export class Variant {
   /**
    * Parse the Variant Packet, convert it to bytes.
    */
-  public parse(): Buffer;
+  public parse(): Buffer; 
+
+  /**
+   * Creates a new Variant Packet
+   * @param options Options for the variant packet
+   * @param args Arguments of the Variant packet
+   */
+  public static from(options: string | number | number[] | VariantOptions, ...args: string|number|number[]): Variant;
 }
 
 
@@ -222,9 +295,9 @@ export class TankPacket {
 
   /**
    * Create a new TankPacket
-   * @param options The options for the TankPacket
+   * @param options The options for the TankPacket or the Buffer to convert to a TankPacket
    */
-  public static from(options: TankOptions): TankPacket;
+  public static from(options: TankOptions | Buffer): TankPacket;
 
   /**
    * Parse the TankPacket to bytes
@@ -243,14 +316,27 @@ export class TankPacket {
 export class Peer {
   /**
    * Creates a new instance of the peer
+   * @param {Server} server The instance of the server
+   * @param {PeerData} data The user data of the peer
    */
-  constructor(private server: Server, public connectID: number);
+  constructor(private server: Server, public data: PeerData = {});
 
   /**
    * Sends the packet to the peer
    * @param data The packet to send
    */
   public send(data: Buffer | TextPacket | Variant | TankPacket): void;
+
+  /**
+   * Request the login information from the peer. This will emit the "receive" event.
+   */
+  public requestLoginInformation(): void
+
+  /**
+   * Fetches the peer data from the cache or database
+   * @param type Where to fetch the data
+   */
+  public async fetch(type: "cache" | "db"): Promise<void>;
 }
 
 
