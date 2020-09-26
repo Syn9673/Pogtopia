@@ -1,5 +1,6 @@
 import { EventEmitter } from "events";
 import * as Redis from "ioredis";
+import * as Mongo from "mongodb";
 
 
 
@@ -171,6 +172,16 @@ interface ItemsDat {
 
 
 
+interface Collections {
+  players: Mongo.Collection,
+  worlds: Mongo.Collection
+}
+
+
+
+
+
+
 /**
  * A class that represents the Server
  */
@@ -184,6 +195,11 @@ export class Server extends EventEmitter {
    * Items dat object
    */
   public items: ItemsDat;
+
+  /**
+   * MongoDB Collections
+   */
+  public collections: Collections;
 
   /**
    * Creates a new instance of the Server class
@@ -283,6 +299,7 @@ export class TextPacket {
 
 
 
+interface TankPacket extends TankOptions { }
 /**
  * A class that represents a TankPacket
  */
@@ -292,6 +309,11 @@ export class TankPacket {
    * @param options The options for the TankPacket
    */
   constructor(private options: TankOptions);
+
+  /**
+   * Setup the properties of the TankPacket
+   */
+  private setup();
 
   /**
    * Create a new TankPacket
@@ -322,6 +344,13 @@ export class Peer {
   constructor(private server: Server, public data: PeerData = {});
 
   /**
+   * Creates a new player to be saved to the database. This will also set the `data` property of a peer
+   * @param data The data of the peer to create
+   * @param saveToCache Whether or not to save the data to cache as well
+   */
+  public async create(data: PeerData, saveToCache?: boolean): Promise<void>;
+
+  /**
    * Sends the packet to the peer
    * @param data The packet to send
    */
@@ -333,10 +362,25 @@ export class Peer {
   public requestLoginInformation(): void
 
   /**
+   * Saves the player to the database.
+   */
+  public async saveToDb(): Promise<void>;
+
+  /**
+   * Saves player data to the cache.
+   */
+  public async saveToCache(): Promise<void>;
+
+  /**
+   * Check if proper player data is present.
+   */
+  public hasPlayerData(): boolean;
+
+  /**
    * Fetches the peer data from the cache or database
    * @param type Where to fetch the data
    */
-  public async fetch(type: "cache" | "db"): Promise<void>;
+  public async fetch(type: "cache" | "db", filter: PeerData = {}): Promise<void>;
 }
 
 

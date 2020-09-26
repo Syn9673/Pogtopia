@@ -9,6 +9,15 @@ module.exports = class Peer {
     this.server = server;
   }
 
+  async create(data, saveToCache) {
+    this.data = data;
+
+    if (saveToCache)
+      await this.server.redis.set(`player:${data.connectID}:${data.userID}`, JSON.stringify(data));
+
+    await this.server.collections.players.insertOne(data);
+  }
+
   send(data) {
     Native.send(data, this.data.connectID);
   }
@@ -20,22 +29,31 @@ module.exports = class Peer {
     this.send(buffer);
   }
 
-  async save() {
-    const data = await this.server.redis.get(`player:${this.data.connectID}:${this.data.uid}`);
-    if (!data) return;
+  async saveToDb() {
+    delete this.data["_id"]; // we need this gone if present
 
-    // TODO: save to mongodb
+    await this.server.collections.players.replaceOne({ uid: this.data.uid }, this.data, { upsert: true });
   }
 
-  async fetch(type) {
+  async saveToCache() {
+    await this.server.redis.set(`player:${this.data.connectID}:${this.data.userID}`, JSON.stringify(this.data));
+  }
+
+  hasPlayerData() {
+    return Object.keys(this.data).length > 1 ? true : false;
+  }
+
+  async fetch(type, filter) {
+    if (!filter) filter = this.data;
+
     switch (type) {
       case "cache": {
         // cache format: "player:connectID:userID"
         let pattern;
 
-        if (this.data.uid)
-          pattern = `player:*:${this.data.uid}`;
-        else pattern = `player:${this.data.connectID}:*`;
+        if (filter.uid)
+          pattern = `player:*:${filter.userID}`;
+        else pattern = `player:${filter.connectID}:*`;
 
         if (!pattern)
           break;
@@ -60,6 +78,12 @@ module.exports = class Peer {
         } catch (err) {
           this.data = null;
         }
+        break;
+      }
+
+      case "db": {
+
+
         break;
       }
     }

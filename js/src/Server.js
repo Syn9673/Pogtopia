@@ -3,6 +3,7 @@ const Peer = require("./Peer");
 const { EventEmitter } = require("events");
 const Redis = require("ioredis");
 const TankPacket = require("./Packet/TankPacket");
+const mongo = require("mongodb");
 
 module.exports = class Server extends EventEmitter {
   constructor(config) {
@@ -19,6 +20,9 @@ module.exports = class Server extends EventEmitter {
     // this is for the items dat
     this.items = null;
 
+    // mongo collections
+    this.collections = null;
+
     // handle events that are emitted from the core
     this.on("connect", (connectID) => {
       const peer = new Peer(this, { connectID });
@@ -28,10 +32,27 @@ module.exports = class Server extends EventEmitter {
     this.on("receive", (connectID, packet) => {
       const peer = new Peer(this, { connectID });
       this.events.emit("receive", peer, packet);
-    })
+    });
+
+    // handle on exit
+    process.on("SIGINT", async () => {
+      const keys = await this.redis.keys("player:*");
+
+      for (const key of keys) {
+        const player = JSON.parse(await this.redis.get(key));
+
+        // save to db
+        delete player["_id"];
+
+        await this.collections.players.replaceOne({ uid: player.uid }, player, { upsert: true });
+        await this.redis.del(key); // delete from cache
+      }
+
+      process.exit();
+    });
   }
 
-  start() {
+  async start() {
     if (!this.items || this.events.listenerCount < 2)
       throw new Error("There are some stuff missing in-order to make the server online. Please check if you have set the handlers for each events, and the items.dat file");
 
@@ -46,6 +67,19 @@ module.exports = class Server extends EventEmitter {
     }
 
     listen(); // listen for events
+
+    const mongoClient = new mongo.MongoClient("mongodb://127.0.0.1", { useUnifiedTopology: true });
+    await mongoClient.connect(); // connect to mongodb
+
+    const database = mongoClient.db("pogtopia");
+
+    // set mongo collections
+    this.collections = {
+      players: database.collection("players"),
+      worlds: database.collection("worlds")
+    }
+
+    await this.log("Mongo Collections now available to use.");
   }
 
   log(...args) {
@@ -72,6 +106,8 @@ module.exports = class Server extends EventEmitter {
         return h;
       })()
     }
+
+    console.log(this.items);
   }
 
   stringPacketToMap(packet) {

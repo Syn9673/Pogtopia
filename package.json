@@ -5,6 +5,7 @@
   "main": "./js/src",
   "dependencies": {
     "ioredis": "^4.17.3",
+    "mongodb": "^3.6.2",
     "node-addon-api": "^3.0.0"
   },
   "devDependencies": {},

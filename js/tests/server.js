@@ -23,6 +23,13 @@ server.setHandler("receive", async (peer, packet) => {
       const data = server.stringPacketToMap(packet);
 
       if (data.has("requestedName")) { // logging in
+        await peer.fetch("db");
+
+        if (peer.hasPlayerData()) {// registered in db
+        } else { // not registered
+          // TODO: create peer user
+
+        }
       } else {
         await peer.fetch("cache");
 

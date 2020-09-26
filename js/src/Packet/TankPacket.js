@@ -3,6 +3,15 @@ const TANK_PACKET_DEFAULT_SIZE = 60;
 module.exports = class TankPacket {
   constructor(options) {
     this.options = options;
+
+    this.setup();
+  }
+
+  setup() {
+    for (const key in this.options)
+      this[key] = this.options[key];
+
+    delete this.options;
   }
 
   static from(options) {
