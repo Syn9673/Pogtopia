@@ -43,6 +43,24 @@ module.exports = class Peer {
     return Object.keys(this.data).length > 1 ? true : false;
   }
 
+  async alreadyInCache() {
+    const pattern = `player:*:${this.data.userID}`;
+
+    let cursor;
+    let key;
+
+    while (cursor !== "0" && !key) {
+      const result = await this.server.redis.scan(cursor, "MATCH", pattern);
+
+      cursor = result[0]; // the cursor
+      key = result[1][0]; // the key that matched
+    }
+
+    if (!key)
+      return false;
+    else return true;
+  }
+
   async fetch(type, filter) {
     if (!filter) filter = this.data;
 
@@ -62,7 +80,7 @@ module.exports = class Peer {
         let key;
 
         while (cursor !== "0" && !key) {
-          const result = await this.server.redis.scan(cursor, "match", key);
+          const result = await this.server.redis.scan(cursor, "MATCH", pattern);
 
           cursor = result[0]; // the cursor
           key = result[1][0]; // the key that matched
@@ -82,8 +100,14 @@ module.exports = class Peer {
       }
 
       case "db": {
+        let result = await this.server.collections.players.findOne(filter);
+        if (!result)
+          result = {};
+        else delete result["_id"];
 
+        result.connectID = this.data.connectID;
 
+        this.data = result;
         break;
       }
     }

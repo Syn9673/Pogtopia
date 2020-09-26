@@ -4,6 +4,7 @@ const { EventEmitter } = require("events");
 const Redis = require("ioredis");
 const TankPacket = require("./Packet/TankPacket");
 const mongo = require("mongodb");
+const fs = require("fs");
 
 module.exports = class Server extends EventEmitter {
   constructor(config) {
@@ -23,6 +24,8 @@ module.exports = class Server extends EventEmitter {
     // mongo collections
     this.collections = null;
 
+    this.availableUserID = null;
+
     // handle events that are emitted from the core
     this.on("connect", (connectID) => {
       const peer = new Peer(this, { connectID });
@@ -36,7 +39,8 @@ module.exports = class Server extends EventEmitter {
 
     // handle on exit
     process.on("SIGINT", async () => {
-      const keys = await this.redis.keys("player:*");
+      const keys = await this.redis.keys("player:*:*");
+      let count = 0;
 
       for (const key of keys) {
         const player = JSON.parse(await this.redis.get(key));
@@ -46,7 +50,20 @@ module.exports = class Server extends EventEmitter {
 
         await this.collections.players.replaceOne({ uid: player.uid }, player, { upsert: true });
         await this.redis.del(key); // delete from cache
+
+        count++;
       }
+
+      await this.log("Saved", count, `player${count === 1 ? "" : "s"}.`);
+
+      // handle server.dat
+      const HEADER = "POGTOPIA";
+      const serverDat = Buffer.alloc(HEADER.length + 4);
+
+      serverDat.write(HEADER);
+      serverDat.writeUInt32LE(this.availableUserID, HEADER.length);
+
+      fs.writeFileSync(`${__dirname}/Data/server.dat`, serverDat); // save the server.dat file
 
       process.exit();
     });
@@ -80,6 +97,20 @@ module.exports = class Server extends EventEmitter {
     }
 
     await this.log("Mongo Collections now available to use.");
+
+    // check serverDat
+    const serverDat = fs.readFileSync(`${__dirname}/Data/server.dat`);
+    const HEADER = "POGTOPIA";
+    const TOTAL_LEN = HEADER.length + 4;
+
+    if (serverDat.length != TOTAL_LEN || (serverDat.length >= HEADER.length && !serverDat.toString().startsWith(HEADER))) { // reset the serverDat
+      const file = Buffer.alloc(TOTAL_LEN);
+      file.write(HEADER);
+
+      this.availableUserID = 0;
+    } else this.availableUserID = serverDat.readUInt32LE(HEADER.length);
+
+    await this.log("Server.dat file processed.");
   }
 
   log(...args) {
@@ -106,8 +137,6 @@ module.exports = class Server extends EventEmitter {
         return h;
       })()
     }
-
-    console.log(this.items);
   }
 
   stringPacketToMap(packet) {

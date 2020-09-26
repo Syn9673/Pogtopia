@@ -202,6 +202,11 @@ export class Server extends EventEmitter {
   public collections: Collections;
 
   /**
+   * The current avaiable user id
+   */
+  public availableUserID: number;
+
+  /**
    * Creates a new instance of the Server class
    * @param config The configuration for the server
    */
@@ -375,6 +380,11 @@ export class Peer {
    * Check if proper player data is present.
    */
   public hasPlayerData(): boolean;
+
+  /**
+   * Whether or not a player is already in cache
+   */
+  public async alreadyInCache(): Promise<boolean>;
 
   /**
    * Fetches the peer data from the cache or database
