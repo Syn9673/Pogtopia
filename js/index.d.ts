@@ -365,7 +365,7 @@ export class Peer {
    * Disconnects a peer
    * @param type The type of disconnection.
    */
-  public async disconnect(type?: "later" | "now"): Promis<void>;
+  public async disconnect(type?: "later" | "now"): Promise<void>;
 
   /**
    * Request the login information from the peer. This will emit the "receive" event.
