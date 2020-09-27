@@ -22,6 +22,30 @@ module.exports = class Peer {
     Native.send(data, this.data.connectID);
   }
 
+  async disconnect(type) {
+    type = type?.toLowerCase();
+
+    Native.disconnect(type, this.data.connectID);
+
+    // delete the peer from cache
+    const pattern = `player:${this.data.connectID}:*`;
+
+    let cursor;
+    let key;
+
+    while (cursor !== "0" && !key) {
+      const result = await this.server.redis.scan(cursor, "MATCH", pattern);
+
+      cursor = result[0]; // the cursor
+      key = result[1][0]; // the key that matched
+    }
+
+    if (!key) return;
+
+    await this.server.redis.del(key);
+    await this.saveToDb();
+  }
+
   requestLoginInformation() {
     const buffer = Buffer.alloc(4);
     buffer.writeUInt8(0x1);

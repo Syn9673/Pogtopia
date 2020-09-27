@@ -83,4 +83,33 @@ module.exports = class NativeWrapper {
       }
     }
   }
+
+  /**
+   * Disconnect a peer
+   * @param {"now"|"later"} [type] What type of disconnect method
+   * @param {number} connectID The connectID of the peer
+   */
+  static disconnect(type, connectID) {
+    let typeAsNum;
+    type = type?.toLowerCase();
+
+    switch (type) {
+      case "now": {
+        typeAsNum = 1;
+        break;
+      }
+
+      case "later": {
+        typeAsNum = 2;
+        break;
+      }
+
+      default: {
+        typeAsNum = 0;
+        break;
+      }
+    }
+
+    native.peer_disconnect(typeAsNum, connectID);
+  }
 }

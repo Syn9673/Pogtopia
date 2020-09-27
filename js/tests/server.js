@@ -22,29 +22,31 @@ server.setHandler("receive", async (peer, packet) => {
     case Pogtopia.PacketMessageTypes.ACTION: {
       const data = server.stringPacketToMap(packet);
 
-      if (data.has("requestedName")) { // logging in
-        await peer.fetch("db", {
-          uid: data.has("tankIDName") ? data.get("tankIDName").toLowerCase() : data.get("rid")
-        });
+      if (data.has("requestedName")) {
+        const isGuest = !data.has("tankIDName");
+        const uid = isGuest ? data.get("rid") : data.get("tankIDName").toLowerCase();
 
-        if (peer.hasPlayerData()) {// registered in db
-          if (await peer.alreadyInCache())
-            return peer.send(Pogtopia.Variant.from("OnConsoleMessage", "Already logged in."));
-          else await peer.saveToCache();
+        if (!uid) return await peer.disconnect("later");
 
-          console.log(peer.data);
-        } else { // not registered
-          await peer.create({
-            connectID: peer.data.connectID,
-            userID: server.availableUserID++,
-            uid: data.get("rid"),
-            displayName: data.get("requestedName") + `_${Math.floor(Math.random() * 899) + 100}`
-          }, true); // create the account of the user
-        }
-      } else {
-        await peer.fetch("cache");
+        if (isGuest) {
+          await peer.fetch("db", { uid });
 
-        if (!peer.data) return;
+          if (!peer.hasPlayerData()) // no data, lets create one for the new guest
+            peer.create({
+              connectID: peer.data.connectID,
+              displayName: `${data.get("requestedName")}_${Math.floor(Math.random() * 899) + 100}`,
+              password: "",
+              uid,
+              userID: server.availableUserID++
+            }, true);
+          else {
+            // update displayname for peer
+            peer.data.displayName = `${data.get("requestedName")}_${peer.data.displayName.split("_")[1]}`;
+            await peer.saveToCache();
+          }
+        } else { // TODO: handle non-guest accounts
+          await peer.fetch("db", { uid });
+        };
       }
       break;
     }

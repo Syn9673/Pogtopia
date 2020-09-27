@@ -112,12 +112,39 @@ void js_send_packet(NCP) {
 	}
 }
 
+void js_peer_disconnect(NCP) {
+	auto type = info[0].As<Napi::Number>().Uint32Value();
+	auto connectID = info[1].As<Napi::Number>().Uint32Value();
+
+	for (int i = 0; i < host->peerCount; ++i) {
+		if (host->peers[i].data != nullptr && *reinterpret_cast<unsigned int*>(host->peers[i].data) == connectID && host->peers[i].state == ENET_PEER_STATE_CONNECTED) {
+			switch (type) {
+				case 0: {
+					enet_peer_disconnect(&host->peers[i], 0);
+					break;
+				}
+
+				case 1: {
+					enet_peer_disconnect_now(&host->peers[i], 0);
+					break;
+				}
+
+				case 2: {
+					enet_peer_disconnect_later(&host->peers[i], 0);
+					break;
+				}
+			}
+		}
+	}
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
 	exports["init"] = Napi::Function::New(env, js_init);
 	exports["set_event_emitter"] = Napi::Function::New(env, js_set_event_emitter);
 	exports["host_create"] = Napi::Function::New(env, js_host_create);
 	exports["host_event_recieve"] = Napi::Function::New(env, js_host_event_recieve);
 	exports["send_packet"] = Napi::Function::New(env, js_send_packet);
+	exports["peer_disconnect"] = Napi::Function::New(env, js_peer_disconnect);
 
 	return exports;
 }

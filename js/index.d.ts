@@ -362,6 +362,12 @@ export class Peer {
   public send(data: Buffer | TextPacket | Variant | TankPacket): void;
 
   /**
+   * Disconnects a peer
+   * @param type The type of disconnection.
+   */
+  public async disconnect(type?: "later" | "now"): Promis<void>;
+
+  /**
    * Request the login information from the peer. This will emit the "receive" event.
    */
   public requestLoginInformation(): void
