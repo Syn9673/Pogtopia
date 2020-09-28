@@ -8,6 +8,26 @@ import * as Mongo from "mongodb";
 
 
 /**
+ * Options for the CDN to use
+ */
+interface CDNOptions {
+  /**
+   * The host site of the CDN
+   */
+  host: string
+
+  /**
+   * The url of the CDN
+   */
+  url: string
+}
+
+
+
+
+
+
+/**
  * The config for the server
  */
 interface ServerConfig {
@@ -15,6 +35,11 @@ interface ServerConfig {
    * The port for the server to use
    */
   port: number
+
+  /**
+   * The options for the CDN
+   */
+  cdn: CDNOptions
 }
 
 
@@ -182,6 +207,16 @@ interface Collections {
 
 
 
+interface OnSuperMainArgs {
+  arg3: string
+  arg4: string
+}
+
+
+
+
+
+
 /**
  * A class that represents the Server
  */
@@ -207,10 +242,20 @@ export class Server extends EventEmitter {
   public availableUserID: number;
 
   /**
+   * Arguments for the OnSuperMain packet
+   */
+  public OnSuperMainArgs: OnSuperMainArgs;
+
+  /**
    * Creates a new instance of the Server class
    * @param config The configuration for the server
    */
   constructor(config: Config);
+
+  /**
+   * Fetches the CDN Data passed from the config
+   */
+  getCDN(): CDNOptions | null;
 
   /**
    * Start the server
@@ -228,7 +273,7 @@ export class Server extends EventEmitter {
    * @param type The event to handle
    * @param callback The callback for that event
    */
-  public setHandler(type: "connect", callback: (peer: Peer) => void): void;
+  public setHandler(type: "connect" | "disconnect", callback: (peer: Peer) => void): void;
 
   /**
    * Set the handler for a specific event
@@ -399,6 +444,32 @@ export class Peer {
   public async fetch(type: "cache" | "db", filter: PeerData = {}): Promise<void>;
 }
 
+
+
+
+
+
+interface HTTPOptions {
+  serverIP?: string
+  serverPort?: string | number
+  httpsEnabled?: boolean
+}
+
+
+
+
+
+
+/**
+ * The http server handler
+ */
+export const Http = {
+  /**
+   * Start the HTTP server
+   * @param opts Options for the HTTP Server
+   */
+  start(opts?: HTTPOptions): void
+}
 
 
 

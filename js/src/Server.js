@@ -24,7 +24,14 @@ module.exports = class Server extends EventEmitter {
     // mongo collections
     this.collections = null;
 
+    // last available user id
     this.availableUserID = null;
+
+    // OnSuperMainArgs
+    this.OnSuperMainArgs = {
+      arg3: "cc.cz.madkite.freedom org.aqua.gg idv.aqua.bulldog com.cih.gamecih2 com.cih.gamecih com.cih.game_cih cn.maocai.gamekiller com.gmd.speedtime org.dax.attack com.x0.strai.frep com.x0.strai.free org.cheatengine.cegui org.sbtools.gamehack com.skgames.traffikrider org.sbtoods.gamehaca com.skype.ralder org.cheatengine.cegui.xx.multi1458919170111 com.prohiro.macro me.autotouch.autotouch com.cygery.repetitouch.free com.cygery.repetitouch.pro com.proziro.zacro com.slash.gamebuster",
+      arg4: "proto=110|choosemusic=audio/mp3/theme3.mp3|active_holiday=7|server_tick=61370149|clash_active=1|drop_lavacheck_faster=1|isPayingUser=0|usingStoreNavigation=1|enableInventoryTab=1|bigBackpack=1|"
+    }
 
     // handle events that are emitted from the core
     this.on("connect", (connectID) => {
@@ -35,6 +42,11 @@ module.exports = class Server extends EventEmitter {
     this.on("receive", (connectID, packet) => {
       const peer = new Peer(this, { connectID });
       this.events.emit("receive", peer, packet);
+    });
+
+    this.on("disconnect", (connectID) => {
+      const peer = new Peer(this, { connectID });
+      this.events.emit("disconnect", peer);
     });
 
     // handle on exit
@@ -67,6 +79,10 @@ module.exports = class Server extends EventEmitter {
 
       process.exit();
     });
+  }
+
+  getCDN() {
+    return this.config.server.cdn ?? null;
   }
 
   async start() {
