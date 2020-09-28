@@ -141,7 +141,7 @@ module.exports = class Server extends EventEmitter {
     this.items = {
       content: file,
       packet: TankPacket.from({
-        type: 0x9,
+        type: 0x10,
         extraData: () => file
       }),
       hash: (() => {

@@ -158,7 +158,7 @@ interface PeerData {
   /**
    * The connectID of a user
    */
-  connectID: number
+  connectID?: number
 
   /**
    * A unique identifier for a peer, it would just be the username for non-guest accounts and rid for guest.
@@ -321,7 +321,7 @@ export class Variant {
    * @param options Options for the variant packet
    * @param args Arguments of the Variant packet
    */
-  public static from(options: string | number | number[] | VariantOptions, ...args: string|number|number[]): Variant;
+  public static from(options: string | VariantOptions, ...args: (string|number|number[])[]): Variant;
 }
 
 

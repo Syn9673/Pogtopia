@@ -90,10 +90,9 @@ server.setHandler("receive", async (peer, packet) => {
     }
 
     case Pogtopia.PacketMessageTypes.TANK_PACKET: {
-      if (packet.length < 60) break;
+      if (packet.length < 60) return;
       break;
     }
-
   }
 });
 
