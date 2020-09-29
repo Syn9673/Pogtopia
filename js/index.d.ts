@@ -187,7 +187,7 @@ interface PeerData {
 
 
 interface ItemsDat {
-  packet: Buffer
+  packet: TankPacket
   content: Buffer
   hash: number
 }
@@ -210,6 +210,90 @@ interface Collections {
 interface OnSuperMainArgs {
   arg3: string
   arg4: string
+}
+
+
+
+
+
+interface WorldTile {
+  fg: number
+  bg: number
+  x: number
+  y: number
+}
+
+
+
+
+
+
+interface WorldData {
+  name: string
+  width?: number
+  height?: number
+  tileCount?: number
+  tiles?: WorldTile[]
+}
+
+
+
+
+
+
+export class World {
+  /**
+   * The data of the world
+   */
+  public data: WorldData;
+
+  /**
+   * Creates a new instances of the world class.
+   * @param server The server object
+   * @param name The nme of the world
+   */
+  constructor(public server: Server, private name: string);
+
+  /**
+   * Serilizes the world packet
+   * @param fetch Whether or not to fetch from cache or the db first before serializing.
+   */
+  public async serialize(fetch = false): Promise<TankPacket>;
+
+  /**
+   * Whether or not the world is cached
+   */
+  public async inCache(): Promise<boolean>;
+
+  /**
+   * Whether or not the world has it's data.
+   */
+  public hasData(): boolean;
+
+  /**
+   * Fetches the world data from the cache, or db if not present. This will set the `.data` property. This doesn't auto generate worlds if not present.
+   */
+  public async fetch(): Promise<void>;
+
+  /**
+   * Saves world data to cache
+   */
+  public async saveToCache(): Promise<void>;
+
+  /**
+   * Saves world data to the database
+   */
+  public async saveToDb(): Promise<void>;
+
+  /**
+   * Deletes the world from cache
+   */
+  public async uncache(): Promise<void>;
+
+  /**
+   * Generates a world, it will save to cache after generating
+   */
+  public async generate(): Promise<void>;
 }
 
 
@@ -256,6 +340,11 @@ export class Server extends EventEmitter {
    * Fetches the CDN Data passed from the config
    */
   getCDN(): CDNOptions | null;
+
+  /**
+   * Reset the values of the server.dat file
+   */
+  clearServerDat(): void;
 
   /**
    * Start the server

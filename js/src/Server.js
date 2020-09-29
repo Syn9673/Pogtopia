@@ -5,6 +5,7 @@ const Redis = require("ioredis");
 const TankPacket = require("./Packet/TankPacket");
 const mongo = require("mongodb");
 const fs = require("fs");
+const World = require("./World");
 
 module.exports = class Server extends EventEmitter {
   constructor(config) {
@@ -68,6 +69,21 @@ module.exports = class Server extends EventEmitter {
 
       await this.log("Saved", count, `player${count === 1 ? "" : "s"}.`);
 
+      const worldKeys = await this.redis.keys("world:*");
+      count = 0;
+
+      for (const key of worldKeys) {
+        const world = new World(this, key.split(":")[1]); // world:NAME_HERE
+        await world.fetch();
+
+        await world.saveToDb();
+        await world.uncache();
+
+        count++;
+      }
+
+      await this.log("Saved", count, `world${count === 1 ? "" : "s"}`);
+
       // handle server.dat
       const HEADER = "POGTOPIA";
       const serverDat = Buffer.alloc(HEADER.length + 4);
@@ -83,6 +99,10 @@ module.exports = class Server extends EventEmitter {
 
   getCDN() {
     return this.config.server.cdn ?? null;
+  }
+
+  clearServerDat() {
+    this.availableUserID = 0;
   }
 
   async start() {
@@ -115,7 +135,7 @@ module.exports = class Server extends EventEmitter {
     await this.log("Mongo Collections now available to use.");
 
     // check serverDat
-    const serverDat = fs.readFileSync(`${__dirname}/Data/server.dat`);
+    const serverDat = fs.existsSync(`${__dirname}/Data/server.dat`) ? fs.readFileSync(`${__dirname}/Data/server.dat`) : Buffer.alloc(0);
     const HEADER = "POGTOPIA";
     const TOTAL_LEN = HEADER.length + 4;
 

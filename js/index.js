@@ -7,5 +7,6 @@ module.exports = {
   Variant: require("./src/Packet/Variant"),
   PacketMessageTypes: require("./src/Structs/PacketMessageTypes"),
   VariantTypes: require("./src/Structs/VariantTypes"),
-  Http: require("./src/Http")
+  Http: require("./src/Http"),
+  World: require("./src/World")
 }
