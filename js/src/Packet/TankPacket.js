@@ -24,7 +24,6 @@ module.exports = class TankPacket {
         netID: options.readInt32LE(8),
         targetNetID: options.readInt32LE(12),
         state: options.readUInt32LE(16),
-        delay: options.readUInt32LE(20),
         itemInfo: options.readUInt32LE(24),
         playerPosX: options.readFloatLE(28),
         playerPosY: options.readFloatLE(32),
@@ -48,8 +47,7 @@ module.exports = class TankPacket {
     buffer.writeInt32LE(this.netID ?? 0, 8);          // user netID
     buffer.writeInt32LE(this.targetNetID ?? 0, 12);   // netID of target user
     buffer.writeUInt32LE(this.state ?? 0x8, 16);      // state of the variant packet
-    buffer.writeUInt32LE(this.delay ?? 0, 20);        // delay (in ms) on when to execute the packet (client side)
-    buffer.writeUInt32LE(this.itemInfo ?? 0, 24);     // Item info/state used
+    buffer.writeUInt32LE(this.itemInfo ?? 0, 24);     // Item info/state used or the delay (in ms)
     buffer.writeFloatLE(this.playerPosX ?? 0, 28);    // position of the user on the x-axis
     buffer.writeFloatLE(this.playerPosY ?? 0, 32);    // position of the user on the y-axis
     buffer.writeFloatLE(this.playerSpeedX ?? 0, 36);  // speed of the user on the x-axis

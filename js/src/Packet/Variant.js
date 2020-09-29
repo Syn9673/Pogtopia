@@ -20,9 +20,9 @@ module.exports = class Variant {
 
   parse() {
     return TankPacket.from({
-      type: 0x1,                  // variant
-      netID: this.options.netID,  // our netID
-      delay: this.options.delay,  // the delay in ms,
+      type: 0x1,                      // variant
+      netID: this.options.netID,      // our netID
+      itemInfo: this.options.delay,   // the delay in ms,
       extraData: () => {
         const bytes = [null];   // the reason it's an array is so that we don't have to resize the buffer.
         let index = 0;          // variants index are the same as array indexes.

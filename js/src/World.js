@@ -21,13 +21,18 @@ module.exports = class World {
 
     console.time("World Serialize");
 
-    let bytesToAllocate = 20 + this.data.name.length;
+    let bytesToAllocate = 32 + this.data.name.length;
 
     // caclulate the necessary lengths we need for the packet
     for (const tile of this.data.tiles) {
       let val = 8; // initial size
 
       switch (tile.fg) {
+        case 6: {
+          val += 4 + (tile.label ? tile.label.length : 0);
+          break;
+        }
+
         default: {
           break;
         }
@@ -50,7 +55,24 @@ module.exports = class World {
       buffer.writeUInt16LE(tile.fg, pos);
       buffer.writeUInt16LE(tile.bg, pos + 2);
 
-      pos += 8;  
+      pos += 4;
+      
+      switch (tile.fg) {
+        case 0x6: {
+          buffer.writeUInt8(0x1, pos + 2);
+          buffer.writeUInt8(0x1, pos + 4);
+          buffer.writeUInt16LE(tile.label?.length ?? 0, pos + 5);
+          buffer.write(tile.label || "", pos + 7);
+
+          pos += 8 + tile.label.length ?? 0;
+          break;
+        }
+
+        default: {
+          pos += 4;
+          break;
+        }
+      }
     }
 
     console.timeEnd("World Serialize");
@@ -111,8 +133,18 @@ module.exports = class World {
     let x = 0;
     let y = 0;
 
+    if (height < 20)
+      height = 20;
+
     const tileCount = width * height;
     const tiles = [];
+    const mainDoorPosition = Math.floor(Math.random() * width);
+
+    // constants
+    const TOP_LEVEL = height / 3;
+    const MAIN_DOOR_BEDROCK_Y_AXIS = TOP_LEVEL + 1;
+    const BEDROCK_LEVEL = height - 5;
+    const LAVA_START_LEVEL = height - 12;
 
     for (let i = 0; i < tileCount; i++) {
       if (x >= width) {
@@ -127,10 +159,34 @@ module.exports = class World {
         y
       }
 
-      if (y >= height - 5) {
+      if (y >= BEDROCK_LEVEL) {
         tile.fg = 8;
         tile.bg = 14;
+      } else if (y > TOP_LEVEL && y < BEDROCK_LEVEL) {
+        tile.fg = 2;
+        tile.bg = 14;
+      } else if (x === mainDoorPosition && y === TOP_LEVEL) {
+        tile.fg = 6; // main door
+
+        // door data
+        tile.label = "EXIT";
+        tile.doorDestination = "EXIT";
       }
+
+      if (y >= LAVA_START_LEVEL && y < BEDROCK_LEVEL) {
+        const rand = Math.random() * 100;
+
+        if (rand > 97)
+          tile.fg = 10;
+        else if (rand > 85 && rand < 97)
+          tile.fg = 4;
+      }
+
+      if (x === mainDoorPosition && y === MAIN_DOOR_BEDROCK_Y_AXIS)
+        tile.fg = 8;
+      else if (y > TOP_LEVEL + 1 && (x !== mainDoorPosition && y !== MAIN_DOOR_BEDROCK_Y_AXIS) && y < LAVA_START_LEVEL)
+        if (Math.random() * 100 > 98)
+          tile.fg = 10;
 
       tiles.push(tile);
       x++;

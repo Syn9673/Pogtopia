@@ -84,12 +84,7 @@ interface TankOptions {
   state?: number
 
   /**
-   * The delay (in ms) on when to execute the packet, client side.
-   */
-  delay?: number
-
-  /**
-   * The info of the item used (name should be changed).
+   * The info of the item used (name should be changed) or the delay on when to execute the packet (in ms).
    */
   itemInfo?: number
 
@@ -179,6 +174,11 @@ interface PeerData {
    * The user id of the user, not to be mixed with uid.
    */
   userID?: number
+
+  /**
+   * The country of the player
+   */
+  country?: string
 }
 
 
@@ -221,6 +221,9 @@ interface WorldTile {
   bg: number
   x: number
   y: number
+  doorOpen?: boolean
+  label?: string
+  doorDestination?: string
 }
 
 
@@ -531,6 +534,12 @@ export class Peer {
    * @param type Where to fetch the data
    */
   public async fetch(type: "cache" | "db", filter: PeerData = {}): Promise<void>;
+
+  /**
+   * Joins a world
+   * @param name The name of the world
+   */
+  public async join(name: string): Promise<void>;
 }
 
 

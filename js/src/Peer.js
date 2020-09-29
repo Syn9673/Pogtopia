@@ -1,4 +1,6 @@
 const Native = require("./NativeWrapper");
+const World = require("./World");
+const Variant = require("./Packet/Variant");
 
 module.exports = class Peer {
   constructor(server, data = {}) {
@@ -135,5 +137,47 @@ module.exports = class Peer {
         break;
       }
     }
+  }
+
+  async join(name) {
+    if (!this.hasPlayerData()) {
+      this.send(Variant.from(
+        "OnFailedToEnterWorld",
+        1
+      ));
+
+      return this.send(Variant.from(
+        "OnConsoleMessage",
+        "Something went wrong. Please try again."
+      ));
+    }
+
+    const world = new World(this.server, name);
+    const packet = await world.serialize(true);
+
+    this.send(packet);
+
+    const mainDoor = world.data.tiles.find(tile => tile.fg === 6);
+
+    const x = mainDoor?.x ?? 0;
+    const y = mainDoor?.y ?? 0;
+    
+    await this.saveToCache();
+
+    // send OnSpawn call
+    this.send(Variant.from(
+      "OnSpawn",
+      `spawn|avatar
+netID|${this.data.connectID}
+userID|${this.data.userID}
+colrect|0|0|20|30
+posXY|${x * 32}|${y * 32}
+name|${this.data.displayName}
+country|${this.data.country}
+invis|0
+mstate|0
+smstate|1
+type|local
+`));
   }
 }
