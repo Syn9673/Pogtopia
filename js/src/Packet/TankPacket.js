@@ -19,6 +19,8 @@ module.exports = class TankPacket {
       if (options.length < 60)
         throw new Error("Invalid Tank Packet length");
 
+      options = options.slice(0, -1); // remove null terminators
+
       const tank = {
         type: options.readUInt32LE(4),
         netID: options.readInt32LE(8),

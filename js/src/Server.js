@@ -52,28 +52,28 @@ module.exports = class Server extends EventEmitter {
 
     // handle on exit
     process.on("SIGINT", async () => {
-      const keys = await this.redis.keys("player:*:*");
+      const players = JSON.parse(await this.redis.get("players"));
       let count = 0;
 
-      for (const key of keys) {
-        const player = JSON.parse(await this.redis.get(key));
+      for (const player of players) {
+        if (!player) continue;
 
-        // save to db
         delete player["_id"];
 
-        await this.collections.players.replaceOne({ uid: player.uid }, player, { upsert: true });
-        await this.redis.del(key); // delete from cache
+        const peer = new Peer(this, player);
+        await peer.saveToDb();
 
         count++;
       }
 
+      await this.redis.del("player");
       await this.log("Saved", count, `player${count === 1 ? "" : "s"}.`);
 
       const worldKeys = await this.redis.keys("world:*");
       count = 0;
 
       for (const key of worldKeys) {
-        const world = new World(this, key.split(":")[1]); // world:NAME_HERE
+        const world = new World(this, { name: key.split(":")[1] }); // world:NAME_HERE
         await world.fetch();
 
         await world.saveToDb();
@@ -147,6 +147,8 @@ module.exports = class Server extends EventEmitter {
     } else this.availableUserID = serverDat.readUInt32LE(HEADER.length);
 
     await this.log("Server.dat file processed.");
+
+    await this.redis.set("players", JSON.stringify([])); // set an empty array for players cache
   }
 
   log(...args) {
@@ -193,5 +195,18 @@ module.exports = class Server extends EventEmitter {
     }
 
     return data;
+  }
+
+  async forEach(type, callback) {
+    if (type === "player") {
+      const players = JSON.parse(await this.redis.get("players"));
+      if (!Array.isArray(players)) return;
+
+      for (const player of players) {
+        if (!player) continue;
+        callback(new Peer(this, player));
+      }
+      // todo: world
+    } else if (type === "world") {}
   }
 }

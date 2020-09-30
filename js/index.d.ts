@@ -179,6 +179,21 @@ interface PeerData {
    * The country of the player
    */
   country?: string
+
+  /**
+   * Current world of a player
+   */
+  currentWorld?: string
+
+  /**
+   * Position of a player on the x-axis
+   */
+  x?: number
+
+  /**
+   * Position of a player on the y-axis
+   */
+  y?: number
 }
 
 
@@ -221,7 +236,7 @@ interface WorldTile {
   bg: number
   x: number
   y: number
-  doorOpen?: boolean
+  doorClosed?: boolean
   label?: string
   doorDestination?: string
 }
@@ -258,17 +273,6 @@ export class World {
   constructor(public server: Server, private name: string);
 
   /**
-   * Serilizes the world packet
-   * @param fetch Whether or not to fetch from cache or the db first before serializing.
-   */
-  public async serialize(fetch = false): Promise<TankPacket>;
-
-  /**
-   * Whether or not the world is cached
-   */
-  public async inCache(): Promise<boolean>;
-
-  /**
    * Whether or not the world has it's data.
    */
   public hasData(): boolean;
@@ -277,6 +281,16 @@ export class World {
    * Fetches the world data from the cache, or db if not present. This will set the `.data` property. This doesn't auto generate worlds if not present.
    */
   public async fetch(): Promise<void>;
+  
+  /**
+   * Generates a world, it will save to cache after generating
+   */
+  public async generate(): Promise<void>;
+
+  /**
+   * Serilizes the world packet. Fetches automatically from either the cache or database, if not present. Will also try to generate the world.
+   */
+  public async serialize(): Promise<TankPacket>;
 
   /**
    * Saves world data to cache
@@ -292,11 +306,6 @@ export class World {
    * Deletes the world from cache
    */
   public async uncache(): Promise<void>;
-
-  /**
-   * Generates a world, it will save to cache after generating
-   */
-  public async generate(): Promise<void>;
 }
 
 
@@ -385,6 +394,20 @@ export class Server extends EventEmitter {
    * @param packet The string packet
    */
   public stringPacketToMap(packet: Buffer): Map<string, string>;
+
+  /**
+   * Loops through each player in the cache
+   * @param type The type to loop
+   * @param callback The callback to run per element
+   */
+  public async forEach(type: "player", callback: (peer: Peer) => void): Promise<void>;
+
+  /**
+   * Loops through each world in the cache
+   * @param type The type to loop
+   * @param callback The callback to run per element
+   */
+  public async forEach(type: "world", callback: (world: World) => void): Promise<void>;
 }
 
 

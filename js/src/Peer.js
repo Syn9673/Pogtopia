@@ -14,8 +14,13 @@ module.exports = class Peer {
   async create(data, saveToCache) {
     this.data = data;
 
-    if (saveToCache)
-      await this.server.redis.set(`player:${data.connectID}:${data.userID}`, JSON.stringify(data));
+    if (saveToCache) {
+      const players = JSON.parse(await this.server.redis.get("players"));
+      if (!Array.isArray(players)) return;
+
+      players[this.data.connectID] = this.data;
+      await this.server.redis.set("players", JSON.stringify(players));
+    }
 
     await this.server.collections.players.insertOne(data);
   }
@@ -28,24 +33,12 @@ module.exports = class Peer {
     type = type?.toLowerCase();
 
     Native.disconnect(type, this.data.connectID);
+    const players = JSON.parse(await this.server.redis.get("players"));
 
-    // delete the peer from cache
-    const pattern = `player:${this.data.connectID}:*`;
+    if (!Array.isArray(players) || !players[this.data.connectID]) return;
+    players[this.data.connectID] = null;
 
-    let cursor;
-    let key;
-
-    while (cursor !== "0" && !key) {
-      const result = await this.server.redis.scan(cursor, "MATCH", pattern);
-
-      cursor = result[0]; // the cursor
-      key = result[1][0]; // the key that matched
-    }
-
-    if (!key) return;
-
-    await this.server.redis.del(key);
-    await this.saveToDb();
+    await this.server.redis.set("players", JSON.stringify(players));
   }
 
   requestLoginInformation() {
@@ -62,7 +55,12 @@ module.exports = class Peer {
   }
 
   async saveToCache() {
-    await this.server.redis.set(`player:${this.data.connectID}:${this.data.userID}`, JSON.stringify(this.data));
+    const players = JSON.parse(await this.server.redis.get("players"));
+
+    if (!Array.isArray(players)) return;
+    players[this.data.connectID] = this.data;
+
+    await this.server.redis.set("players", JSON.stringify(players));
   }
 
   hasPlayerData() {
@@ -70,19 +68,10 @@ module.exports = class Peer {
   }
 
   async alreadyInCache() {
-    const pattern = `player:*:${this.data.userID}`;
-
-    let cursor;
-    let key;
-
-    while (cursor !== "0" && !key) {
-      const result = await this.server.redis.scan(cursor, "MATCH", pattern);
-
-      cursor = result[0]; // the cursor
-      key = result[1][0]; // the key that matched
-    }
-
-    if (!key)
+    const players = JSON.parse(await this.server.redis.get("players"));
+    if (!Array.isArray(players)) return;
+    
+    if (!players[this.data.connectID])
       return false;
     else return true;
   }
@@ -92,36 +81,16 @@ module.exports = class Peer {
 
     switch (type) {
       case "cache": {
-        // cache format: "player:connectID:userID"
-        let pattern;
+        const players = JSON.parse(await this.server.redis.get("players"));
+        if (!Array.isArray(players)) return;
 
-        if (filter.uid)
-          pattern = `player:*:${filter.userID}`;
-        else pattern = `player:${filter.connectID}:*`;
+        const data = players[this.data.connectID];
 
-        if (!pattern)
-          break;
-
-        let cursor;
-        let key;
-
-        while (cursor !== "0" && !key) {
-          const result = await this.server.redis.scan(cursor, "MATCH", pattern);
-
-          cursor = result[0]; // the cursor
-          key = result[1][0]; // the key that matched
+        if (data) {
+          data.connectID = this.data.connectID;
+          this.data = data;
         }
 
-        if (!key)
-          break;
-
-        const data = await this.server.redis.get(key);
-
-        try {
-          this.data = JSON.parse(data);
-        } catch (err) {
-          this.data = null;
-        }
         break;
       }
 
@@ -140,7 +109,9 @@ module.exports = class Peer {
   }
 
   async join(name) {
-    if (!this.hasPlayerData()) {
+    name = name.toUpperCase().trim();
+
+    if (!this.hasPlayerData() || name.match(/\W+|_/g) || name.length > 26) {
       this.send(Variant.from(
         "OnFailedToEnterWorld",
         1
@@ -152,8 +123,8 @@ module.exports = class Peer {
       ));
     }
 
-    const world = new World(this.server, name);
-    const packet = await world.serialize(true);
+    const world = new World(this.server, { name });
+    const packet = await world.serialize();
 
     this.send(packet);
 
@@ -161,6 +132,10 @@ module.exports = class Peer {
 
     const x = mainDoor?.x ?? 0;
     const y = mainDoor?.y ?? 0;
+
+    this.data.x = x * 32;
+    this.data.y = y * 32;
+    this.data.currentWorld = name;
     
     await this.saveToCache();
 
@@ -171,13 +146,45 @@ module.exports = class Peer {
 netID|${this.data.connectID}
 userID|${this.data.userID}
 colrect|0|0|20|30
-posXY|${x * 32}|${y * 32}
-name|${this.data.displayName}
+posXY|${this.data.x}|${this.data.y}
+name|${this.data.displayName}\`\`
 country|${this.data.country}
 invis|0
 mstate|0
 smstate|1
-type|local
-`));
+type|local`));
+
+    // loop through each player
+    this.server.forEach("player", (otherPeer) => {
+      if (otherPeer.data.userID !== this.data.userID && otherPeer.data.currentWorld === this.data.currentWorld && otherPeer.data.currentWorld !== "EXIT") {
+        // send ourselves to the other peers
+        otherPeer.send(Variant.from(
+          "OnSpawn",
+          `spawn|avatar
+netID|${this.data.connectID}
+userID|${this.data.userID}
+colrect|0|0|20|30
+posXY|${this.data.x}|${this.data.y}
+name|${this.data.displayName}\`\`
+country|${this.data.country}
+invis|0
+mstate|0
+smstate|1`));
+
+        // send the peer to ourselves
+        this.send(Variant.from(
+          "OnSpawn",
+          `spawn|avatar
+netID|${otherPeer.data.connectID}
+userID|${otherPeer.data.userID}
+colrect|0|0|20|30
+posXY|${otherPeer.data.x}|${otherPeer.data.y}
+name|${otherPeer.data.displayName}\`\`
+country|${otherPeer.data.country}
+invis|0
+mstate|0
+smstate|1`))
+      }
+    });
   }
 }
