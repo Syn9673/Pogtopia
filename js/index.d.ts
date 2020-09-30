@@ -268,9 +268,9 @@ export class World {
   /**
    * Creates a new instances of the world class.
    * @param server The server object
-   * @param name The nme of the world
+   * @param data The world data
    */
-  constructor(public server: Server, private name: string);
+  constructor(public server: Server, private data?: WorldData);
 
   /**
    * Whether or not the world has it's data.
