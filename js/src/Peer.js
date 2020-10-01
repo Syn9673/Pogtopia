@@ -1,6 +1,7 @@
 const Native = require("./NativeWrapper");
 const World = require("./World");
 const Variant = require("./Packet/Variant");
+const TextPacket = require("./Packet/TextPacket");
 
 module.exports = class Peer {
   constructor(server, data = {}) {
@@ -186,5 +187,14 @@ mstate|0
 smstate|1`))
       }
     });
+  }
+
+  audio(file, delay = 0) {
+    this.send(TextPacket.from(
+      0x3,
+      "action|play_sfx",
+      `file|${file}.wav`,
+      `delayMS|${delay}`
+    ));
   }
 }

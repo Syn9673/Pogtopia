@@ -1,18 +1,28 @@
 const TankPacket = require("./TankPacket");
 const VARIANT_TYPES = require("../Structs/VariantTypes");
 
-const write4BytesToArr = (arr, int) => {
-  arr.push(int & 0x000000ff);
-  arr.push((int & 0x0000ff00) >> 8);
-  arr.push((int & 0x00ff0000) >> 16);
-  arr.push((int & 0xff000000) >> 24);
+const write4BytesToArr = (arr, int, isFloat = false) => {
+  if (!isFloat) {
+    arr.push(int & 0x000000ff);
+    arr.push((int & 0x0000ff00) >> 8);
+    arr.push((int & 0x00ff0000) >> 16);
+    arr.push((int & 0xff000000) >> 24);
+  } else {
+    const floats = new Float32Array(1);
+    floats[0] = int;
+
+    const buffer = Buffer.from(floats.buffer);
+    for (const byte of buffer) {
+      arr.push(byte);
+    }
+  };
 }
 
 module.exports = class Variant {
   constructor(options, args) {
     this.options = {
-      delay: options.delay || 0,
-      netID: options.netID || -1
+      delay: options.delay ?? 0,
+      netID: options.netID ?? -1
     };
 
     this.args = args;
@@ -70,7 +80,7 @@ module.exports = class Variant {
                 bytes.push(type);
 
                 for (const float of floats)
-                  write4BytesToArr(bytes, float);
+                  write4BytesToArr(bytes, float, true);
               }
 
               index++;
@@ -79,6 +89,7 @@ module.exports = class Variant {
           }
 
         bytes[0] = index;         // set the arg count
+
         return Buffer.from(bytes);
       }
     }).parse();

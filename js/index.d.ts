@@ -6,7 +6,6 @@ import * as Mongo from "mongodb";
 
 
 
-
 /**
  * Options for the CDN to use
  */
@@ -194,6 +193,11 @@ interface PeerData {
    * Position of a player on the y-axis
    */
   y?: number
+
+  /**
+   * Whether or not each player has moved
+   */
+  hasMovedInWorld?: boolean;
 }
 
 
@@ -563,6 +567,13 @@ export class Peer {
    * @param name The name of the world
    */
   public async join(name: string): Promise<void>;
+
+  /**
+   * Plays an audio file.
+   * @param file The name of the file
+   * @param delay The delay, in ms on when to play.
+   */
+  public audio(file: string, delay: number = 0)
 }
 
 

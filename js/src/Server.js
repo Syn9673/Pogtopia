@@ -31,7 +31,7 @@ module.exports = class Server extends EventEmitter {
     // OnSuperMainArgs
     this.OnSuperMainArgs = {
       arg3: "cc.cz.madkite.freedom org.aqua.gg idv.aqua.bulldog com.cih.gamecih2 com.cih.gamecih com.cih.game_cih cn.maocai.gamekiller com.gmd.speedtime org.dax.attack com.x0.strai.frep com.x0.strai.free org.cheatengine.cegui org.sbtools.gamehack com.skgames.traffikrider org.sbtoods.gamehaca com.skype.ralder org.cheatengine.cegui.xx.multi1458919170111 com.prohiro.macro me.autotouch.autotouch com.cygery.repetitouch.free com.cygery.repetitouch.pro com.proziro.zacro com.slash.gamebuster",
-      arg4: "proto=110|choosemusic=audio/mp3/theme3.mp3|active_holiday=7|server_tick=61370149|clash_active=1|drop_lavacheck_faster=1|isPayingUser=0|usingStoreNavigation=1|enableInventoryTab=1|bigBackpack=1|"
+      arg4: "proto=110|choosemusic=audio/mp3/about_theme.mp3|active_holiday=7|server_tick=61370149|clash_active=1|drop_lavacheck_faster=1|isPayingUser=1|usingStoreNavigation=1|enableInventoryTab=1|bigBackpack=1|"
     }
 
     // handle events that are emitted from the core
@@ -61,6 +61,8 @@ module.exports = class Server extends EventEmitter {
         delete player["_id"];
 
         const peer = new Peer(this, player);
+        peer.data.hasMovedInWorld = false;
+
         await peer.saveToDb();
 
         count++;
@@ -185,7 +187,7 @@ module.exports = class Server extends EventEmitter {
     const stringPerLine = stringbytes.split("\n");
 
     for (const line of stringPerLine) {
-      const pair = line.split("|");
+      const pair = line.split("|").filter(i => i);
       if (!pair[0] || !pair[1]) continue;
 
       if (pair[1][pair[1].length - 1] == "\x00")
