@@ -591,27 +591,21 @@ export class TextPacket {
 
 
 
-interface TankPacket extends TankOptions {}
 /**
  * A class that represents a TankPacket
  */
-export class TankPacket {
+export class TankPacket implements TankOptions {
   /**
    * Creates a new instance of the TankPacket
-   * @param options The options for the TankPacket
+   * @param data The data for the TankPacket
    */
-  constructor(private options: TankOptions);
-
-  /**
-   * Setup the properties of the TankPacket
-   */
-  private setup();
+  constructor(public data: TankOptions);
 
   /**
    * Create a new TankPacket
-   * @param options The options for the TankPacket or the Buffer to convert to a TankPacket
+   * @param data The options for the TankPacket or the Buffer to convert to a TankPacket
    */
-  public static from(options: TankOptions | Buffer): TankPacket;
+  public static from(data: TankOptions | Buffer): TankPacket;
 
   /**
    * Parse the TankPacket to bytes
