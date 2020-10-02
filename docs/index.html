@@ -1,0 +1,227 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>pogtopia</title>
+	<meta name="description" content="Documentation for pogtopia">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">pogtopia</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>pogtopia</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#pogtopia" id="pogtopia" style="color: inherit; text-decoration: none;">
+					<h1>Pogtopia</h1>
+				</a>
+				<p>A simple to use API for creating private servers for Growtopia.</p>
+				<a href="#installations" id="installations" style="color: inherit; text-decoration: none;">
+					<h2>Installations</h2>
+				</a>
+				<p><strong>Requirements</strong>  </p>
+				<ul>
+					<li><code>node-gyp</code>  </li>
+					<li>Python <strong>2.7</strong> (3+ can be used)  </li>
+					<li>Windows Build Tools/Build Essential  </li>
+				</ul>
+				<p><strong>Installing the Requirements</strong>
+				Simply run this as Administrator in Windows Powershell,<br><code>$ npm install windows-build-tools node-gyp -g</code>  </p>
+				<p>If on Linux, simply install <code>build-essential</code> first with,<br><code>$ sudo (yum/apt-get/etc...) install build-essential</code>  </p>
+				<p>After that, install node-gyp by doing<br><code>$ npm install node-gyp -g</code>  </p>
+				<p>After installing everything (windows or linux), simply run<br><code>$ npm install pogtopia</code> to install the latest version on NPM, or<br><code>$ npm install Alexander9673/Pogtopia</code> to install the version on Github.</p>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> Pogtopia = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;pogtopia&quot;</span>);
+<span class="hljs-keyword">const</span> server = <span class="hljs-keyword">new</span> Pogtopia({
+    <span class="hljs-attr">server</span>: {
+        <span class="hljs-attr">port</span>: <span class="hljs-number">17091</span> <span class="hljs-comment">// set port to 17091,</span>
+        <span class="hljs-attr">cdn</span>: { <span class="hljs-comment">// CDN Options for the server, this will not be updated, you will have to find the CDN yourselves.</span>
+            <span class="hljs-attr">host</span>: <span class="hljs-string">&quot;ubistatic-a.akamaihd.net&quot;</span>,
+            <span class="hljs-attr">url</span>: <span class="hljs-string">&quot;0098/87996/cache/&quot;</span>
+        }
+    }
+});
+
+<span class="hljs-comment">// uncomment this line to enable the built-in HTTP Server</span>
+<span class="hljs-comment">// Pogtopia.HTTP.start({ serverIP: &quot;127.0.0.1&quot;, serverPort: 17091, httpsEnabled: false });</span>
+
+server.setHandler(<span class="hljs-string">&quot;connect&quot;</span>, <span class="hljs-function">(<span class="hljs-params">peer</span>) =&gt;</span> peer.requestLoginInformation()); <span class="hljs-comment">// request login information from the peer</span>
+
+server.setHandler(<span class="hljs-string">&quot;disconnect&quot;</span>, <span class="hljs-function">(<span class="hljs-params">peer</span>) =&gt;</span> {}); <span class="hljs-comment">// handle peer disconnections</span>
+
+server.setHandler(<span class="hljs-string">&quot;receive&quot;</span>, <span class="hljs-function">(<span class="hljs-params">peer, packet</span>) =&gt;</span> {
+    <span class="hljs-comment">// handle packets here</span>
+});
+
+server.start();</code></pre>
+				<p>Check the <code>js/tests/server.js</code> file for a much better example.  </p>
+				<a href="#questions" id="questions" style="color: inherit; text-decoration: none;">
+					<h2>Questions</h2>
+				</a>
+				<p>Join our <strong><a href="https://discord.gg/S7WKAeh">Discord Server</a></strong> about questions.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/packetmessagetypes.html" class="tsd-kind-icon">Packet<wbr>Message<wbr>Types</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/varianttypes.html" class="tsd-kind-icon">Variant<wbr>Types</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/peer.html" class="tsd-kind-icon">Peer</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/server.html" class="tsd-kind-icon">Server</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/tankpacket.html" class="tsd-kind-icon">Tank<wbr>Packet</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/textpacket.html" class="tsd-kind-icon">Text<wbr>Packet</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/variant.html" class="tsd-kind-icon">Variant</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/world.html" class="tsd-kind-icon">World</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/cdnoptions.html" class="tsd-kind-icon">CDNOptions</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/collections.html" class="tsd-kind-icon">Collections</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/config.html" class="tsd-kind-icon">Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/httpoptions.html" class="tsd-kind-icon">HTTPOptions</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/inventoryitem.html" class="tsd-kind-icon">Inventory<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/itemsdat.html" class="tsd-kind-icon">Items<wbr>Dat</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/onsupermainargs.html" class="tsd-kind-icon">On<wbr>Super<wbr>Main<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/peerdata.html" class="tsd-kind-icon">Peer<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/peerinventory.html" class="tsd-kind-icon">Peer<wbr>Inventory</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/serverconfig.html" class="tsd-kind-icon">Server<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/tankoptions.html" class="tsd-kind-icon">Tank<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/variantoptions.html" class="tsd-kind-icon">Variant<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/worlddata.html" class="tsd-kind-icon">World<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/worldtile.html" class="tsd-kind-icon">World<wbr>Tile</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#http" class="tsd-kind-icon">Http</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
