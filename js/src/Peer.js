@@ -2,6 +2,7 @@ const Native = require("./NativeWrapper");
 const World = require("./World");
 const Variant = require("./Packet/Variant");
 const TextPacket = require("./Packet/TextPacket");
+const TankPacket = require("./Packet/TankPacket");
 
 module.exports = class Peer {
   constructor(server, data = {}) {
@@ -196,5 +197,29 @@ smstate|1`))
       `file|${file}.wav`,
       `delayMS|${delay}`
     ));
+  }
+
+  inventory() {
+    const tank = TankPacket.from({
+      type: 0x9,
+      extraData: () => {
+        const buffer = Buffer.alloc(6 + (this.data.inventory.items.length * 4));
+        buffer.writeUInt32BE(this.data.inventory.items.length, 2);
+
+        let pos = 6;
+
+        for (const item of this.data.inventory.items) {
+          buffer.writeUInt32LE(item.id | (item.amount << 16), pos);
+          pos += 4;
+        }
+
+        return buffer;
+      }
+    });
+
+    const tankbuffer = tank.parse();
+    tankbuffer.writeUInt32BE(this.data.inventory.maxSize, 58);
+
+    this.send(tankbuffer);
   }
 }

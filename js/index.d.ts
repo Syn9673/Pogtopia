@@ -148,6 +148,49 @@ interface VariantOptions {
 
 
 
+/**
+ * A representation of an item in an inventory
+ */
+interface InventoryItem {
+  /**
+   * The id of the item
+   */
+  id: number
+
+  /**
+   * The amount of that item in the inventory
+   */
+  amount: number
+}
+
+
+
+
+
+
+/**
+ * The inventory data of a peer
+ */
+interface PeerInventory {
+  /**
+   * The max slots of a peer's inventory
+   */
+  maxSize: number
+
+  /**
+   * The items in the inventory
+   */
+  items: InventoryItem[]
+}
+
+
+
+
+
+
+/**
+ * The complete user data of a peer
+ */
 interface PeerData {
   /**
    * The connectID of a user
@@ -198,6 +241,11 @@ interface PeerData {
    * Whether or not each player has moved
    */
   hasMovedInWorld?: boolean;
+
+  /**
+   * Inventory data of each peer
+   */
+  inventory?: PeerInventory
 }
 
 
@@ -205,9 +253,23 @@ interface PeerData {
 
 
 
+/**
+ * Items Dat buffers
+ */
 interface ItemsDat {
+  /**
+   * The TankPacket to send when requesting `refresh_item_data`
+   */
   packet: TankPacket
+
+  /**
+   * The contents of the items.dat file
+   */
   content: Buffer
+
+  /**
+   * The hash of the items.dat file
+   */
   hash: number
 }
 
@@ -216,6 +278,9 @@ interface ItemsDat {
 
 
 
+/**
+ * Mongodb collections
+ */
 interface Collections {
   players: Mongo.Collection,
   worlds: Mongo.Collection
@@ -235,13 +300,48 @@ interface OnSuperMainArgs {
 
 
 
+/**
+ * Representation of a block of a world
+ */
 interface WorldTile {
+  /**
+   * The forground block
+   */
   fg: number
+
+  /**
+   * The background block
+   */
   bg: number
+
+  /**
+   * The position of the block on the X axis of the world
+   */
   x: number
+
+  /**
+   * The position of the block on the Y axis of the world
+   */
   y: number
+
+  /**
+   * Whether or not the block represents a door
+   */
+  isDoor?: boolean
+
+  /**
+   * Whehter or not the door is closed
+   */
   doorClosed?: boolean
+
+  /**
+   * The label of the block
+   */
   label?: string
+
+  /**
+   * The world destination of a block. (For doors)
+   */
   doorDestination?: string
 }
 
@@ -250,11 +350,33 @@ interface WorldTile {
 
 
 
+/**
+ * Data of a world
+ */
 interface WorldData {
+  /**
+   * Name of the world, all caps
+   */
   name: string
+
+  /**
+   * The width of the world
+   */
   width?: number
+
+  /**
+   * The height of the world
+   */
   height?: number
+
+  /**
+   * The amount of maximum tiles in the world
+   */
   tileCount?: number
+
+  /**
+   * An array of tiles in the world
+   */
   tiles?: WorldTile[]
 }
 
@@ -263,6 +385,9 @@ interface WorldData {
 
 
 
+/**
+ * A class that represents a world
+ */
 export class World {
   /**
    * The data of the world
@@ -447,6 +572,9 @@ export class Variant {
 
 
 
+/**
+ * A class that represents a TextPacket
+ */
 export class TextPacket {
   /**
    * Creates a new Text Packet
@@ -468,7 +596,6 @@ export class TextPacket {
 
 
 
-interface TankPacket extends TankOptions { }
 /**
  * A class that represents a TankPacket
  */
@@ -573,7 +700,12 @@ export class Peer {
    * @param file The name of the file
    * @param delay The delay, in ms on when to play.
    */
-  public audio(file: string, delay: number = 0)
+  public audio(file: string, delay: number = 0): void;
+
+  /**
+   * Sends the inventory packet
+   */
+  public inventory(): void;
 }
 
 
