@@ -390,16 +390,11 @@ interface WorldData {
  */
 export class World {
   /**
-   * The data of the world
-   */
-  public data: WorldData;
-
-  /**
    * Creates a new instances of the world class.
    * @param server The server object
    * @param data The world data
    */
-  constructor(public server: Server, private data?: WorldData);
+  constructor(public server: Server, public data?: WorldData);
 
   /**
    * Whether or not the world has it's data.
@@ -596,6 +591,7 @@ export class TextPacket {
 
 
 
+interface TankPacket extends TankOptions {}
 /**
  * A class that represents a TankPacket
  */
