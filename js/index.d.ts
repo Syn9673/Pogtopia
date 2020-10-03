@@ -218,6 +218,11 @@ interface PeerData {
   userID?: number
 
   /**
+   * Whether or not a peer is a guest
+   */
+  isGuest?: boolean;
+
+  /**
    * The country of the player
    */
   country?: string
