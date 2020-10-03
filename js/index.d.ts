@@ -218,9 +218,9 @@ interface PeerData {
   userID?: number
 
   /**
-   * Whether or not a peer is a guest
+   * Whehter or not a player is a guest
    */
-  isGuest?: boolean;
+  isGuest?: boolean
 
   /**
    * The country of the player
