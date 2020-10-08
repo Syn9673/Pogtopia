@@ -251,6 +251,11 @@ interface PeerData {
    * Inventory data of each peer
    */
   inventory?: PeerInventory
+
+  /**
+   * A unique id for each account (optional, not used in server code)
+   */
+  stringID?: string
 }
 
 
@@ -288,7 +293,8 @@ interface ItemsDat {
  */
 interface Collections {
   players: Mongo.Collection,
-  worlds: Mongo.Collection
+  worlds: Mongo.Collection,
+  server: Mongo.Collection
 }
 
 
@@ -470,6 +476,11 @@ export class Server extends EventEmitter {
    * Arguments for the OnSuperMain packet
    */
   public OnSuperMainArgs: OnSuperMainArgs;
+
+  /**
+   * The epoch on when the server production started
+   */
+  public epoch: BigInt;
 
   /**
    * Creates a new instance of the Server class

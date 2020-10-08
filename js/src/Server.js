@@ -28,6 +28,9 @@ module.exports = class Server extends EventEmitter {
     // last available user id
     this.availableUserID = null;
 
+    // The epoch on when the server production started
+    this.epoch = 1597077000000n
+
     // OnSuperMainArgs
     this.OnSuperMainArgs = {
       arg3: "cc.cz.madkite.freedom org.aqua.gg idv.aqua.bulldog com.cih.gamecih2 com.cih.gamecih com.cih.game_cih cn.maocai.gamekiller com.gmd.speedtime org.dax.attack com.x0.strai.frep com.x0.strai.free org.cheatengine.cegui org.sbtools.gamehack com.skgames.traffikrider org.sbtoods.gamehaca com.skype.ralder org.cheatengine.cegui.xx.multi1458919170111 com.prohiro.macro me.autotouch.autotouch com.cygery.repetitouch.free com.cygery.repetitouch.pro com.proziro.zacro com.slash.gamebuster",
@@ -131,7 +134,8 @@ module.exports = class Server extends EventEmitter {
     // set mongo collections
     this.collections = {
       players: database.collection("players"),
-      worlds: database.collection("worlds")
+      worlds: database.collection("worlds"),
+      server: database.collection("server")
     }
 
     await this.log("Mongo Collections now available to use.");

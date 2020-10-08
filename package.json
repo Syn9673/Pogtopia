@@ -1,18 +1,18 @@
 {
   "name": "pogtopia",
-  "version": "0.2.0-github",
+  "version": "0.2.1-github",
   "description": "",
   "main": "./js/index.js",
   "dependencies": {
     "ioredis": "^4.17.3",
     "mongodb": "^3.6.2",
-    "node-addon-api": "^3.0.0",
-    "@types/mongodb": "^3.5.27"
+    "node-addon-api": "^3.0.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "node ./js/tests/server.js",
-    "install": "cd native && node-gyp rebuild -j 8"
+    "install": "cd native && node-gyp rebuild -j 8",
+    "docs": "typedoc --options typedoc.json"
   },
   "repository": {
     "url": "https://github.com/Alexander9673/Pogtopia"
