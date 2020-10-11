@@ -21,7 +21,7 @@
 				],
 				['OS=="win"', {
 						"libraries": [
-							"<(module_root_dir)/lib/enet64.lib",
+							"<(module_root_dir)/lib/enet.lib",
 							"winmm.lib",
 							"ws2_32.lib"
 						]
