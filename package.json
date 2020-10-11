@@ -11,7 +11,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "node ./js/tests/server.js",
-    "install": "cd native && node-gyp clean configure build -j 8 --arch=ia32",
+    "install": "cd native && node-gyp clean configure build -j 8",
     "docs": "typedoc --options typedoc.json"
   },
   "repository": {
