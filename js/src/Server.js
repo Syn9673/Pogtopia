@@ -14,7 +14,12 @@ module.exports = class Server extends EventEmitter {
     this.config = config
 
     // create our redis connection
-    this.redis = new Redis();
+    try {
+      this.redis = new Redis();
+    } catch(err) {
+      console.log('Failed connecting to Redis Server:', err.message)
+      return process.exit()
+    }
 
     // create other event emitters for users to use
     this.events = new EventEmitter();
@@ -55,6 +60,8 @@ module.exports = class Server extends EventEmitter {
 
     // handle on exit
     process.on("SIGINT", async () => {
+      if (!this.redis || !this.collections?.players || !this.collections?.worlds) return process.exit()
+
       const players = JSON.parse(await this.redis.get("players"));
       let count = 0;
 
@@ -126,8 +133,14 @@ module.exports = class Server extends EventEmitter {
 
     listen(); // listen for events
 
-    const mongoClient = new mongo.MongoClient("mongodb://127.0.0.1", { useUnifiedTopology: true });
-    await mongoClient.connect(); // connect to mongodb
+    let mongoClient;
+    try {
+      mongoClient = new mongo.MongoClient("mongodb://127.0.0.1", { useUnifiedTopology: true });
+      await mongoClient.connect(); // connect to mongodb
+    } catch (err) {
+      console.log('Failed connecting to MongoDB. Error:', err.message)
+      return process.exit();
+    }
 
     const database = mongoClient.db("pogtopia");
 
