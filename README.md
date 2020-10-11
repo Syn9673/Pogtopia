@@ -6,6 +6,7 @@ A simple to use API for creating private servers for Growtopia.
   - `node-gyp`  
   - Python **2.7** (3+ can be used)  
   - Windows Build Tools/Build Essential  
+	- NodeJS v14+  
 
 **Installing the Requirements**
 Simply run this as Administrator in Windows Powershell,  
