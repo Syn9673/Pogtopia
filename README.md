@@ -27,7 +27,8 @@ After installing everything (windows or linux), simply run
 ## Example
 ```js
 const Pogtopia = require("pogtopia");
-const server = new Pogtopia({
+const { readFileSync } = require("fs");
+const server = new Pogtopia.Server({
 	server: {
 		port: 17091, // set port to 17091,
 		cdn: { // CDN Options for the server, this will not be updated, you will have to find the CDN yourselves.
@@ -38,7 +39,10 @@ const server = new Pogtopia({
 });
 
 // uncomment this line to enable the built-in HTTP Server
-// Pogtopia.HTTP.start({ serverIP: "127.0.0.1", serverPort: 17091, httpsEnabled: false });
+// Pogtopia.Http.start({ serverIP: "127.0.0.1", serverPort: 17091, httpsEnabled: false });
+
+const itemsDatFile = readFileSync("/path/to/items.dat")
+server.setItemsDat(itemsDatFile)
 
 server.setHandler("connect", (peer) => peer.requestLoginInformation()); // request login information from the peer
 
