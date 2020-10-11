@@ -20,6 +20,11 @@
 					}
 				],
 				['OS=="win"', {
+						"msbuild_settings": {
+							"Link": {
+								"ImageHasSafeExceptionHandlers": "false"
+							}
+						},
 						"libraries": [
 							"<(module_root_dir)/lib/enet.lib",
 							"winmm.lib",
