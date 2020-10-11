@@ -26,7 +26,7 @@ After installing everything (windows or linux), simply run
 const Pogtopia = require("pogtopia");
 const server = new Pogtopia({
 	server: {
-		port: 17091 // set port to 17091,
+		port: 17091, // set port to 17091,
 		cdn: { // CDN Options for the server, this will not be updated, you will have to find the CDN yourselves.
 			host: "ubistatic-a.akamaihd.net",
 			url: "0098/87996/cache/"
