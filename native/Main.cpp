@@ -105,10 +105,10 @@ void js_send_packet(NCP) {
 	auto bytes = buf.Data();
 
 	for (int i = 0; i < host->peerCount; ++i) {
-		if (host->peers[i].data != nullptr && *reinterpret_cast<unsigned int*>(host->peers[i].data) == connectID && host->peers[i].state == ENET_PEER_STATE_CONNECTED) {
-			ENetPacket* packet = enet_packet_create(bytes, buf.Length(), ENET_PACKET_FLAG_RELIABLE);
-			enet_peer_send(&host->peers[i], 0, packet);
-		}
+		if (!host->peers[i].data || host->peers[i].data == nullptr || host->peers[i].state != ENET_PEER_STATE_CONNECTED) continue;
+
+		ENetPacket* packet = enet_packet_create(bytes, buf.Length(), ENET_PACKET_FLAG_RELIABLE);
+		enet_peer_send(&host->peers[i], 0, packet);
 	}
 }
 
@@ -117,22 +117,22 @@ void js_peer_disconnect(NCP) {
 	auto connectID = info[1].As<Napi::Number>().Uint32Value();
 
 	for (int i = 0; i < host->peerCount; ++i) {
-		if (host->peers[i].data != nullptr && *reinterpret_cast<unsigned int*>(host->peers[i].data) == connectID && host->peers[i].state == ENET_PEER_STATE_CONNECTED) {
-			switch (type) {
-				case 0: {
-					enet_peer_disconnect(&host->peers[i], 0);
-					break;
-				}
+		if (!host->peers[i].data || host->peers[i].data == nullptr || host->peers[i].state != ENET_PEER_STATE_CONNECTED) continue;
 
-				case 1: {
-					enet_peer_disconnect_now(&host->peers[i], 0);
-					break;
-				}
+		switch (type) {
+			case 0: {
+				enet_peer_disconnect(&host->peers[i], 0);
+				break;
+			}
 
-				case 2: {
-					enet_peer_disconnect_later(&host->peers[i], 0);
-					break;
-				}
+			case 1: {
+				enet_peer_disconnect_now(&host->peers[i], 0);
+				break;
+			}
+
+			case 2: {
+				enet_peer_disconnect_later(&host->peers[i], 0);
+				break;
 			}
 		}
 	}
