@@ -26,7 +26,7 @@
 							}
 						},
 						"libraries": [
-							"<(module_root_dir)/lib/enet.lib",
+							"<(module_root_dir)/lib/enet<!@(node -p \"process.arch === 'x64' ? '64' : ''\").lib",
 							"winmm.lib",
 							"ws2_32.lib"
 						]
