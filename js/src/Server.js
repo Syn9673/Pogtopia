@@ -16,8 +16,6 @@ module.exports = class Server extends EventEmitter {
     if (!Buffer.isBuffer(this.config.server?.itemsDatFile))
       throw new Error('Please supply the contents of the items.dat file.')
 
-    this.setItemsDat(this.config.server?.itemsDatFile)
-
     // create our redis connection
     try {
       this.redis = new Redis();
@@ -123,7 +121,9 @@ module.exports = class Server extends EventEmitter {
   }
 
   async start() {
-    if (!this.items || this.events.listenerCount < 2)
+    this.setItemsDat(this.config.server?.itemsDatFile)
+
+    if (!this.items)
       throw new Error("There are some stuff missing in-order to make the server online. Please check if you have set the handlers for each events, and the items.dat file");
 
     Native.Init(this.config.server.port);    // set our server port
@@ -184,6 +184,8 @@ module.exports = class Server extends EventEmitter {
   }
 
   setItemsDat(file) {
+    if (!file) return
+
     this.items = {
       content: file,
       packet: TankPacket.from({

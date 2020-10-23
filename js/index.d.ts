@@ -61,7 +61,7 @@ interface Config {
    * A custom function to calculate the size of the world packet to allocate, excluding the necessary data of a world. (Basically just for tiles)
    * @param tiles The tiles in the world
    */
-  worldTilesSize: (tiles: WorldTile[]) => number
+  worldTilesSize?: (tiles: WorldTile[]) => number
 
   /**
    * A custom function to replace for world serialization. This gets called after the buffer size is determinded. The "packet" argument is a reference to the buffer to use. Take note that this is not called in a loop, this is only called once.
@@ -69,7 +69,7 @@ interface Config {
    * @param packet The world packet to modify
    * @param tiles The tiles in the world
    */
-  worldSerializationCall: (pos: number, packet: Buffer, tiles: WorldTile[]) => void
+  worldSerializationCall?: (pos: number, packet: Buffer, tiles: WorldTile[]) => void
 }
 
 
