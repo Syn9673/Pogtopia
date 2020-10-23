@@ -15,10 +15,10 @@ module.exports = class Server extends EventEmitter {
 
     this.config = config
     if (!this.config.server?.serverDatPath)
-      this.config.server?.serverDatPath = SERVER_DAT_DEFAULT_PATH
+      this.config.server.serverDatPath = SERVER_DAT_DEFAULT_PATH
 
-    if (!Buffer.isBuffer(this.config.server?.itemsDatFile))
-      throw new Error('Please supply the contents of the items.dat file.')
+    if (typeof this.config.server?.itemsDatFile !== 'string')
+      throw new Error('Please supply a proper path to items.dat')
 
     // create our redis connection
     try {
@@ -189,14 +189,22 @@ module.exports = class Server extends EventEmitter {
 
   setItemsDat(path) {
     if (!path) return
-    const file = readFileSync(path)
+    let file;
+
+    try {
+      file = fs.readFileSync(path)
+    } catch(err) {
+      throw new Error('Failed finding items.dat at path:', path)
+    }
 
     this.items = {
       content: file,
+
       packet: TankPacket.from({
         type: 0x10,
         extraData: () => file
       }),
+      
       hash: (() => {
         let h = 0x55555555;
 
