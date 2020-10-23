@@ -206,22 +206,28 @@ smstate|1`))
     const tank = TankPacket.from({
       type: 0x9,
       extraData: () => {
-        const buffer = Buffer.alloc(6 + (this.data.inventory.items.length * 4));
-        buffer.writeUInt32BE(this.data.inventory.items.length, 2);
+        const buffer = Buffer.alloc(7 + (this.data.inventory.items.length * 4));
 
-        let pos = 6;
+        buffer.writeUInt8(0x1)
+        buffer.writeUInt32LE(this.data.inventory.maxSize, 1)
+        buffer.writeUInt16LE(this.data.inventory.items.length, 5)
 
-        for (const item of this.data.inventory.items) {
-          buffer.writeUInt32LE(item.id | (item.amount << 16), pos);
-          pos += 4;
-        }
+        let pos = 7
+        
+        this.data.inventory.items.forEach(
+          item => {
+            buffer.writeUInt16LE(item.id, pos)
+            buffer.writeUInt16LE(item.amount, pos + 2)
+
+            pos += 4
+          }
+        )
 
         return buffer;
       }
     });
 
     const tankbuffer = tank.parse();
-    tankbuffer.writeUInt32BE(this.data.inventory.maxSize, 58);
 
     this.send(tankbuffer);
   }

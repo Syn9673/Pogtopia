@@ -35,7 +35,8 @@ const server = new Pogtopia.Server({
 			host: "ubistatic-a.akamaihd.net",
 			url: "0098/87996/cache/"
 		},
-		itemsDatFile: readFileSync("/path/to/items.dat") // the contents of the items.dat file
+		itemsDatFile: "/path/to/items.dat", // Path to items.dat
+		serverDatFile: "/path/to/your/server.dat" // Optional. The path to the server.dat file
 	}
 });
 

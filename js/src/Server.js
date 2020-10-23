@@ -7,11 +7,15 @@ const mongo = require("mongodb");
 const fs = require("fs");
 const World = require("./World");
 
+const SERVER_DAT_DEFAULT_PATH = `${__dirname}/Data/server.dat`
+
 module.exports = class Server extends EventEmitter {
   constructor(config) {
     super();
 
     this.config = config
+    if (!this.config.server?.serverDatPath)
+      this.config.server?.serverDatPath = SERVER_DAT_DEFAULT_PATH
 
     if (!Buffer.isBuffer(this.config.server?.itemsDatFile))
       throw new Error('Please supply the contents of the items.dat file.')
@@ -106,14 +110,14 @@ module.exports = class Server extends EventEmitter {
       serverDat.write(HEADER);
       serverDat.writeUInt32LE(this.availableUserID, HEADER.length);
 
-      fs.writeFileSync(`${__dirname}/Data/server.dat`, serverDat); // save the server.dat file
+      fs.writeFileSync(this.config.server.serverDatPath, serverDat); // save the server.dat file
 
       process.exit();
     });
   }
 
   getCDN() {
-    return this.config.server.cdn ?? null;
+    return this.config.server.cdn ?? { host: '', url: '' };
   }
 
   clearServerDat() {
@@ -159,7 +163,7 @@ module.exports = class Server extends EventEmitter {
     await this.log("Mongo Collections now available to use.");
 
     // check serverDat
-    const serverDat = fs.existsSync(`${__dirname}/Data/server.dat`) ? fs.readFileSync(`${__dirname}/Data/server.dat`) : Buffer.alloc(0);
+    const serverDat = fs.existsSync(this.config.server.serverDatPath) ? fs.readFileSync(this.config.server.serverDatPath) : Buffer.alloc(0);
     const HEADER = "POGTOPIA";
     const TOTAL_LEN = HEADER.length + 4;
 
@@ -183,8 +187,9 @@ module.exports = class Server extends EventEmitter {
     this.events.on(type, callback);
   }
 
-  setItemsDat(file) {
-    if (!file) return
+  setItemsDat(path) {
+    if (!path) return
+    const file = readFileSync(path)
 
     this.items = {
       content: file,

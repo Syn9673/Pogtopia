@@ -38,12 +38,17 @@ interface ServerConfig {
   /**
    * The options for the CDN
    */
-  cdn: CDNOptions
+  cdn?: CDNOptions
 
   /**
-   * The contents of the items.dat file
+   * The path to the items.dat file
    */
-  itemsDatFile: Buffer
+  itemsDatFile: string
+
+  /**
+   * The location to save the server.dat file. Default is "/js/src/Data/server.dat" of the Pogtopia folder.
+   */
+  serverDatPath?: string
 }
 
 
