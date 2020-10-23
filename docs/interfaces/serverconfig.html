@@ -89,6 +89,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="serverconfig.html#cdn" class="tsd-kind-icon">cdn</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="serverconfig.html#itemsdatfile" class="tsd-kind-icon">items<wbr>Dat<wbr>File</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="serverconfig.html#port" class="tsd-kind-icon">port</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="serverconfig.html#serverdatpath" class="tsd-kind-icon">server<wbr>Dat<wbr>Path</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,11 +99,11 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="cdn" class="tsd-anchor"></a>
-					<h3>cdn</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> cdn</h3>
 					<div class="tsd-signature tsd-kind-icon">cdn<span class="tsd-signature-symbol">:</span> <a href="cdnoptions.html" class="tsd-signature-type">CDNOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f71c91f/js/index.d.ts#L41">index.d.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/d8e2acb/js/index.d.ts#L41">index.d.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -114,15 +115,15 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="itemsdatfile" class="tsd-anchor"></a>
 					<h3>items<wbr>Dat<wbr>File</h3>
-					<div class="tsd-signature tsd-kind-icon">items<wbr>Dat<wbr>File<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
+					<div class="tsd-signature tsd-kind-icon">items<wbr>Dat<wbr>File<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f71c91f/js/index.d.ts#L46">index.d.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/d8e2acb/js/index.d.ts#L46">index.d.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The contents of the items.dat file</p>
+							<p>The path to the items.dat file</p>
 						</div>
 					</div>
 				</section>
@@ -132,12 +133,27 @@
 					<div class="tsd-signature tsd-kind-icon">port<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f71c91f/js/index.d.ts#L36">index.d.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/d8e2acb/js/index.d.ts#L36">index.d.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The port for the server to use</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="serverdatpath" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> server<wbr>Dat<wbr>Path</h3>
+					<div class="tsd-signature tsd-kind-icon">server<wbr>Dat<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/d8e2acb/js/index.d.ts#L51">index.d.ts:51</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The location to save the server.dat file. Default is &quot;/js/src/Data/server.dat&quot; of the Pogtopia folder.</p>
 						</div>
 					</div>
 				</section>
@@ -217,6 +233,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="serverconfig.html#port" class="tsd-kind-icon">port</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="serverconfig.html#serverdatpath" class="tsd-kind-icon">server<wbr>Dat<wbr>Path</a>
 							</li>
 						</ul>
 					</li>
