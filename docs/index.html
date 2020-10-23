@@ -73,7 +73,12 @@
 				<ul>
 					<li><code>node-gyp</code>  </li>
 					<li>Python <strong>2.7</strong> (3+ can be used)  </li>
-					<li>Windows Build Tools/Build Essential  </li>
+					<li>Windows Build Tools/Build Essential  <ul>
+							<li>NodeJS v14+  </li>
+							<li>MongoDB  </li>
+							<li>Redis Server</li>
+						</ul>
+					</li>
 				</ul>
 				<p><strong>Installing the Requirements</strong>
 				Simply run this as Administrator in Windows Powershell,<br><code>$ npm install windows-build-tools node-gyp -g</code>  </p>
@@ -84,18 +89,20 @@
 					<h2>Example</h2>
 				</a>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> Pogtopia = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;pogtopia&quot;</span>);
-<span class="hljs-keyword">const</span> server = <span class="hljs-keyword">new</span> Pogtopia({
+<span class="hljs-keyword">const</span> { readFileSync } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);
+<span class="hljs-keyword">const</span> server = <span class="hljs-keyword">new</span> Pogtopia.Server({
     <span class="hljs-attr">server</span>: {
-        <span class="hljs-attr">port</span>: <span class="hljs-number">17091</span> <span class="hljs-comment">// set port to 17091,</span>
+        <span class="hljs-attr">port</span>: <span class="hljs-number">17091</span>, <span class="hljs-comment">// set port to 17091,</span>
         <span class="hljs-attr">cdn</span>: { <span class="hljs-comment">// CDN Options for the server, this will not be updated, you will have to find the CDN yourselves.</span>
             <span class="hljs-attr">host</span>: <span class="hljs-string">&quot;ubistatic-a.akamaihd.net&quot;</span>,
             <span class="hljs-attr">url</span>: <span class="hljs-string">&quot;0098/87996/cache/&quot;</span>
-        }
+        },
+        <span class="hljs-attr">itemsDatFile</span>: readFileSync(<span class="hljs-string">&quot;/path/to/items.dat&quot;</span>) <span class="hljs-comment">// the contents of the items.dat file</span>
     }
 });
 
 <span class="hljs-comment">// uncomment this line to enable the built-in HTTP Server</span>
-<span class="hljs-comment">// Pogtopia.HTTP.start({ serverIP: &quot;127.0.0.1&quot;, serverPort: 17091, httpsEnabled: false });</span>
+<span class="hljs-comment">// Pogtopia.Http.start({ serverIP: &quot;127.0.0.1&quot;, serverPort: 17091, httpsEnabled: false });</span>
 
 server.setHandler(<span class="hljs-string">&quot;connect&quot;</span>, <span class="hljs-function">(<span class="hljs-params">peer</span>) =&gt;</span> peer.requestLoginInformation()); <span class="hljs-comment">// request login information from the peer</span>
 
@@ -207,10 +214,11 @@ server.start();</code></pre>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>

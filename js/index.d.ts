@@ -39,6 +39,11 @@ interface ServerConfig {
    * The options for the CDN
    */
   cdn: CDNOptions
+
+  /**
+   * The contents of the items.dat file
+   */
+  itemsDatFile: Buffer
 }
 
 
@@ -524,10 +529,10 @@ export class Server extends EventEmitter {
   public setHandler(type: "receive", callback: (peer: Peer, packet: Buffer) => void): void;
 
   /**
-   * Set the items.dat to use, this will create the packet and the hash
+   * Set the items.dat to use, this will create the packet and the hash. Do not use if already set in server config.
    * @param file The items.dat file content
    */
-  public setItemsDat(file: Buffer): void;
+  private setItemsDat(file: Buffer): void;
 
   /**
    * Converts a string packet data to map, this will split the `\n` and `|`.

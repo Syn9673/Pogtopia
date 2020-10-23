@@ -34,15 +34,13 @@ const server = new Pogtopia.Server({
 		cdn: { // CDN Options for the server, this will not be updated, you will have to find the CDN yourselves.
 			host: "ubistatic-a.akamaihd.net",
 			url: "0098/87996/cache/"
-		}
+		},
+		itemsDatFile: readFileSync("/path/to/items.dat") // the contents of the items.dat file
 	}
 });
 
 // uncomment this line to enable the built-in HTTP Server
 // Pogtopia.Http.start({ serverIP: "127.0.0.1", serverPort: 17091, httpsEnabled: false });
-
-const itemsDatFile = readFileSync("/path/to/items.dat")
-server.setItemsDat(itemsDatFile)
 
 server.setHandler("connect", (peer) => peer.requestLoginInformation()); // request login information from the peer
 

@@ -12,7 +12,7 @@
   "scripts": {
     "test": "node ./js/tests/server.js",
     "install": "cd native && node-gyp clean configure build -j 8",
-    "docs": "typedoc --options typedoc.json"
+    "docs": "typedoc --options typedoc.json && cd docs && echo pogtopia.js.org > CNAME"
   },
   "repository": {
     "url": "https://github.com/Alexander9673/Pogtopia"

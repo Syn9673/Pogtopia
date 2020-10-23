@@ -13,6 +13,11 @@ module.exports = class Server extends EventEmitter {
 
     this.config = config
 
+    if (!Buffer.isBuffer(this.config.server?.itemsDatFile))
+      throw new Error('Please supply the contents of the items.dat file.')
+
+    this.setItemsDat(this.config.server?.itemsDatFile)
+
     // create our redis connection
     try {
       this.redis = new Redis();
