@@ -95,13 +95,17 @@ module.exports = class World {
     let totalBufferSize = 0;
 
     // calculate total buffer size
-    for (const tile of this.data.tiles) {
-      totalBufferSize += 8;
-
-      switch (tile.fg) {
-        case 6: { // main door
-          totalBufferSize += 4 + (tile.label.length || 0);
-          break;
+    if (typeof this.server.config.worldTilesSize === 'function')
+      totalBufferSize = this.server.config.worldTilesSize(this.data.tiles)
+    else {
+      for (const tile of this.data.tiles) {
+        totalBufferSize += 8;
+  
+        switch (tile.fg) {
+          case 6: { // main door
+            totalBufferSize += 4 + (tile.label.length || 0);
+            break;
+          }
         }
       }
     }
@@ -126,7 +130,9 @@ module.exports = class World {
 
     let pos = 20 + WORLD_NAME.length;
 
-    for (const tile of this.data.tiles) {
+    if (typeof this.server.config.worldSerializationCall === 'function')
+      this.server.config.worldSerializationCall(pos, buffer, this.data.tiles)
+    else for (const tile of this.data.tiles) {
       buffer.writeUInt16LE(tile.fg, pos);
       buffer.writeUInt16LE(tile.bg, pos + 2);
       

@@ -87,6 +87,8 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#server" class="tsd-kind-icon">server</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#worldserializationcall" class="tsd-kind-icon">world<wbr>Serialization<wbr>Call</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#worldtilessize" class="tsd-kind-icon">world<wbr>Tiles<wbr>Size</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,9 +102,103 @@
 					<div class="tsd-signature tsd-kind-icon">server<span class="tsd-signature-symbol">:</span> <a href="serverconfig.html" class="tsd-signature-type">ServerConfig</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/4ff64a2/js/index.d.ts#L58">index.d.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f71c91f/js/index.d.ts#L58">index.d.ts:58</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="worldserializationcall" class="tsd-anchor"></a>
+					<h3>world<wbr>Serialization<wbr>Call</h3>
+					<div class="tsd-signature tsd-kind-icon">world<wbr>Serialization<wbr>Call<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, packet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span>, tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f71c91f/js/index.d.ts#L72">index.d.ts:72</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A custom function to replace for world serialization. This gets called after the buffer size is determinded. The &quot;packet&quot; argument is a reference to the buffer to use. Take note that this is not called in a loop, this is only called once.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The starting position for writing to buffers, use this to keep track on the current position when writing to the buffer.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>The world packet to modify</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>The tiles in the world</p>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, packet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span>, tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>pos: <span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li>
+												<h5>packet: <span class="tsd-signature-type">Buffer</span></h5>
+											</li>
+											<li>
+												<h5>tiles: <a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="worldtilessize" class="tsd-anchor"></a>
+					<h3>world<wbr>Tiles<wbr>Size</h3>
+					<div class="tsd-signature tsd-kind-icon">world<wbr>Tiles<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f71c91f/js/index.d.ts#L64">index.d.ts:64</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A custom function to calculate the size of the world packet to allocate, excluding the necessary data of a world. (Basically just for tiles)</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The tiles in the world</p>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>tiles: <a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -153,6 +249,12 @@
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="config.html#server" class="tsd-kind-icon">server</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="config.html#worldserializationcall" class="tsd-kind-icon">world<wbr>Serialization<wbr>Call</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="config.html#worldtilessize" class="tsd-kind-icon">world<wbr>Tiles<wbr>Size</a>
 							</li>
 						</ul>
 					</li>

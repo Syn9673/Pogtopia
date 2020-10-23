@@ -56,6 +56,20 @@ interface ServerConfig {
  */
 interface Config {
   server: ServerConfig
+
+  /**
+   * A custom function to calculate the size of the world packet to allocate, excluding the necessary data of a world. (Basically just for tiles)
+   * @param tiles The tiles in the world
+   */
+  worldTilesSize: (tiles: WorldTile[]) => number
+
+  /**
+   * A custom function to replace for world serialization. This gets called after the buffer size is determinded. The "packet" argument is a reference to the buffer to use. Take note that this is not called in a loop, this is only called once.
+   * @param pos The starting position for writing to buffers, use this to keep track on the current position when writing to the buffer.
+   * @param packet The world packet to modify
+   * @param tiles The tiles in the world
+   */
+  worldSerializationCall: (pos: number, packet: Buffer, tiles: WorldTile[]) => void
 }
 
 
@@ -491,7 +505,7 @@ export class Server extends EventEmitter {
    * Creates a new instance of the Server class
    * @param config The configuration for the server
    */
-  constructor(config: Config);
+  constructor(public config: Config);
 
   /**
    * Fetches the CDN Data passed from the config

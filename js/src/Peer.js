@@ -111,9 +111,12 @@ module.exports = class Peer {
   }
 
   async join(name) {
+    if (!name)
+      name = ''
+
     name = name.toUpperCase().trim();
 
-    if (!this.hasPlayerData() || name.match(/\W+|_/g) || name.length > 26) {
+    if (!this.hasPlayerData() || name.match(/\W+|_/g) || name.length > 24 || name.length < 1) {
       this.send(Variant.from(
         "OnFailedToEnterWorld",
         1
