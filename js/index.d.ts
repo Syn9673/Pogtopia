@@ -306,6 +306,11 @@ interface PeerData {
    * Clothing of a player
    */
   clothes?: PeerClothes
+
+  /**
+   * Skin color of a player
+   */
+  skinColor?: number
 }
 
 

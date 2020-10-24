@@ -3,6 +3,7 @@ const World = require("./World");
 const Variant = require("./Packet/Variant");
 const TextPacket = require("./Packet/TextPacket");
 const TankPacket = require("./Packet/TankPacket");
+const Constants = require('./Constants')
 
 module.exports = class Peer {
   constructor(server, data = {}) {
@@ -259,7 +260,7 @@ smstate|1`))
       [this.data.clothes.hair, this.data.clothes.shirt, this.data.clothes.pants],
       [this.data.clothes.shoes, this.data.clothes.face, this.data.clothes.hand],
       [this.data.clothes.back, this.data.clothes.mask, this.data.clothes.necklace],
-      this.data.skinColor,
+      this.data.skinColor ?? Constants.DEFAULT_SKIN,
       [this.data.clothes.ances, silenced ? 0 : 1, 0]
     )
   }
