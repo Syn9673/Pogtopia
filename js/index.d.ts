@@ -213,6 +213,27 @@ interface PeerInventory {
 
 
 /**
+ * Clothing of a peer
+ */
+interface PeerClothes {
+  hair: number
+  shirt: number
+  pants: number
+  face: number
+  hand: number
+  back: number
+  mask: number
+  necklace: number
+  shoes: number
+  ances: number
+}
+
+
+
+
+
+
+/**
  * The complete user data of a peer
  */
 interface PeerData {
@@ -280,6 +301,11 @@ interface PeerData {
    * A unique id for each account (optional, not used in server code)
    */
   stringID?: string
+
+  /**
+   * Clothing of a player
+   */
+  clothes?: PeerClothes
 }
 
 
@@ -432,6 +458,13 @@ export class World {
   constructor(public server: Server, public data?: WorldData);
 
   /**
+   * Creates a new instance of the world class.
+   * @param server The server class
+   * @param name The name of the world
+   */
+  public static create(server: Server, name: string): World;
+
+  /**
    * Whether or not the world has it's data.
    */
   public hasData(): boolean;
@@ -496,16 +529,6 @@ export class Server extends EventEmitter {
    * The current avaiable user id
    */
   public availableUserID: number;
-
-  /**
-   * Arguments for the OnSuperMain packet
-   */
-  public OnSuperMainArgs: OnSuperMainArgs;
-
-  /**
-   * The epoch on when the server production started
-   */
-  public epoch: BigInt;
 
   /**
    * Creates a new instance of the Server class
@@ -744,6 +767,12 @@ export class Peer {
    * @param fetchDataAfter Whether or not to auto-fetch the world data from either cache or the database.
    */
   public world(name?: string | boolean, fetchDataAfter?: boolean = false): World;
+
+  /**
+   * Returns the packet for clothing
+   * @param silenced Whether or not to play the sfx when wearing clothes
+   */
+  public cloth_packet(silenced: boolean = false): Variant | void;
 }
 
 
@@ -803,4 +832,29 @@ export enum VariantTypes {
   FLOAT_3   = 0x4,
   UINT      = 0x5,
   INT       = 0x9
+}
+
+
+
+
+
+
+/**
+ * Some constants for helping the server
+ */
+export interface Constants {
+  /**
+   * Server epoch, date when pogtopia started development
+   */
+  SERVER_EPOCH: BigInt
+
+  /**
+   * Default skin color for players
+   */
+  DEFAULT_SKIN: number
+
+  /**
+   * Arguments for OnSuperMain
+   */
+  OnSuperMainArgs: OnSuperMainArgs
 }

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Config | pogtopia</title>
+	<title>Constants | pogtopia</title>
 	<meta name="description" content="Documentation for pogtopia">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="config.html">Config</a>
+					<a href="constants.html">Constants</a>
 				</li>
 			</ul>
-			<h1>Interface Config</h1>
+			<h1>Interface Constants</h1>
 		</div>
 	</div>
 </header>
@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The general configuration</p>
+						<p>Some constants for helping the server</p>
 					</div>
 				</div>
 			</section>
@@ -75,7 +75,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Config</span>
+						<span class="target">Constants</span>
 					</li>
 				</ul>
 			</section>
@@ -86,9 +86,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#server" class="tsd-kind-icon">server</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#worldserializationcall" class="tsd-kind-icon">world<wbr>Serialization<wbr>Call</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#worldtilessize" class="tsd-kind-icon">world<wbr>Tiles<wbr>Size</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="constants.html#default_skin" class="tsd-kind-icon">DEFAULT_<wbr>SKIN</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="constants.html#onsupermainargs" class="tsd-kind-icon">On<wbr>Super<wbr>Main<wbr>Args</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="constants.html#server_epoch" class="tsd-kind-icon">SERVER_<wbr>EPOCH</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,107 +97,48 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="server" class="tsd-anchor"></a>
-					<h3>server</h3>
-					<div class="tsd-signature tsd-kind-icon">server<span class="tsd-signature-symbol">:</span> <a href="serverconfig.html" class="tsd-signature-type">ServerConfig</a></div>
+					<a name="default_skin" class="tsd-anchor"></a>
+					<h3>DEFAULT_<wbr>SKIN</h3>
+					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SKIN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/be58e5a/js/index.d.ts#L63">index.d.ts:63</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="worldserializationcall" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> world<wbr>Serialization<wbr>Call</h3>
-					<div class="tsd-signature tsd-kind-icon">world<wbr>Serialization<wbr>Call<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, packet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span>, tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/be58e5a/js/index.d.ts#L77">index.d.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/be58e5a/js/index.d.ts#L854">index.d.ts:854</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A custom function to replace for world serialization. This gets called after the buffer size is determinded. The &quot;packet&quot; argument is a reference to the buffer to use. Take note that this is not called in a loop, this is only called once.</p>
+							<p>Default skin color for players</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>The starting position for writing to buffers, use this to keep track on the current position when writing to the buffer.</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>The world packet to modify</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>The tiles in the world</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, packet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span>, tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>pos: <span class="tsd-signature-type">number</span></h5>
-											</li>
-											<li>
-												<h5>packet: <span class="tsd-signature-type">Buffer</span></h5>
-											</li>
-											<li>
-												<h5>tiles: <a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="worldtilessize" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> world<wbr>Tiles<wbr>Size</h3>
-					<div class="tsd-signature tsd-kind-icon">world<wbr>Tiles<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></div>
+					<a name="onsupermainargs" class="tsd-anchor"></a>
+					<h3>On<wbr>Super<wbr>Main<wbr>Args</h3>
+					<div class="tsd-signature tsd-kind-icon">On<wbr>Super<wbr>Main<wbr>Args<span class="tsd-signature-symbol">:</span> <a href="onsupermainargs.html" class="tsd-signature-type">OnSuperMainArgs</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/be58e5a/js/index.d.ts#L69">index.d.ts:69</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/be58e5a/js/index.d.ts#L859">index.d.ts:859</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A custom function to calculate the size of the world packet to allocate, excluding the necessary data of a world. (Basically just for tiles)</p>
+							<p>Arguments for OnSuperMain</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>The tiles in the world</p>
-							</dd>
-						</dl>
 					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>tiles: <a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-									</li>
-								</ul>
-							</li>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="server_epoch" class="tsd-anchor"></a>
+					<h3>SERVER_<wbr>EPOCH</h3>
+					<div class="tsd-signature tsd-kind-icon">SERVER_<wbr>EPOCH<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BigInt</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/be58e5a/js/index.d.ts#L849">index.d.ts:849</a></li>
 						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Server epoch, date when pogtopia started development</p>
+						</div>
 					</div>
 				</section>
 			</section>
@@ -242,27 +183,27 @@
 					<li class=" tsd-kind-interface">
 						<a href="collections.html" class="tsd-kind-icon">Collections</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="config.html" class="tsd-kind-icon">Config</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="config.html" class="tsd-kind-icon">Config</a>
+						<a href="constants.html" class="tsd-kind-icon">Constants</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="config.html#server" class="tsd-kind-icon">server</a>
+								<a href="constants.html#default_skin" class="tsd-kind-icon">DEFAULT_<wbr>SKIN</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="config.html#worldserializationcall" class="tsd-kind-icon">world<wbr>Serialization<wbr>Call</a>
+								<a href="constants.html#onsupermainargs" class="tsd-kind-icon">On<wbr>Super<wbr>Main<wbr>Args</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="config.html#worldtilessize" class="tsd-kind-icon">world<wbr>Tiles<wbr>Size</a>
+								<a href="constants.html#server_epoch" class="tsd-kind-icon">SERVER_<wbr>EPOCH</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="constants.html" class="tsd-kind-icon">Constants</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="httpoptions.html" class="tsd-kind-icon">HTTPOptions</a>
 					</li>

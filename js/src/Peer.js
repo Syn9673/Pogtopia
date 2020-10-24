@@ -247,4 +247,20 @@ smstate|1`))
 
     return world
   }
+
+  cloth_packet(silenced = false) {
+    if (!this.hasPlayerData()) return
+
+    return Variant.from(
+      {
+        netID: this.data.connectID
+      },
+      'OnSetClothing',
+      [this.data.clothes.hair, this.data.clothes.shirt, this.data.clothes.pants],
+      [this.data.clothes.shoes, this.data.clothes.face, this.data.clothes.hand],
+      [this.data.clothes.back, this.data.clothes.mask, this.data.clothes.necklace],
+      this.data.skinColor,
+      [this.data.clothes.ances, silenced ? 0 : 1, 0]
+    )
+  }
 }

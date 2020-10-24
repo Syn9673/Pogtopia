@@ -6,6 +6,12 @@ module.exports = class World {
     this.data = data;
   }
 
+  static create(server, name) {
+    if (!name) return
+
+    return new World(server, { name })
+  }
+
   hasData() {
     const keys = Object.keys(this.data).filter(key => key !== "name");
 
