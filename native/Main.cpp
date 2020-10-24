@@ -105,7 +105,7 @@ void js_send_packet(NCP) {
 	auto bytes = buf.Data();
 
 	for (int i = 0; i < host->peerCount; ++i) {
-		if (!host->peers[i].data || host->peers[i].data == nullptr || host->peers[i].state != ENET_PEER_STATE_CONNECTED) continue;
+		if (!host->peers[i].data || host->peers[i].state != ENET_PEER_STATE_CONNECTED) continue;
 
 		ENetPacket* packet = enet_packet_create(bytes, buf.Length(), ENET_PACKET_FLAG_RELIABLE);
 		enet_peer_send(&host->peers[i], 0, packet);
@@ -117,7 +117,7 @@ void js_peer_disconnect(NCP) {
 	auto connectID = info[1].As<Napi::Number>().Uint32Value();
 
 	for (int i = 0; i < host->peerCount; ++i) {
-		if (!host->peers[i].data || host->peers[i].data == nullptr || host->peers[i].state != ENET_PEER_STATE_CONNECTED) continue;
+		if (!host->peers[i].data || host->peers[i].state != ENET_PEER_STATE_CONNECTED) continue;
 
 		switch (type) {
 			case 0: {

@@ -438,8 +438,9 @@ export class World {
 
   /**
    * Fetches the world data from the cache, or db if not present. This will set the `.data` property. This doesn't auto generate worlds if not present.
+   * @param shouldGenerate Whether or not to auto generate a world if not present in cache or the database.
    */
-  public async fetch(): Promise<void>;
+  public async fetch(shouldGenerate?: boolean = true): Promise<void>;
   
   /**
    * Generates a world, it will save to cache after generating
@@ -736,6 +737,13 @@ export class Peer {
    * Sends the inventory packet
    */
   public inventory(): void;
+
+  /**
+   * Creates a new world class then returns it.
+   * @param name The name of the world
+   * @param fetchDataAfter Whether or not to auto-fetch the world data from either cache or the database.
+   */
+  public world(name?: string | boolean, fetchDataAfter?: boolean = false): World;
 }
 
 

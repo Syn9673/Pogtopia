@@ -231,4 +231,20 @@ smstate|1`))
 
     this.send(tankbuffer);
   }
+
+  async world(name, fetchDataAfter = false) {
+    if (!name || typeof name !== 'string')
+      name = this.data.currentWorld
+    else name = name?.toUpperCase()
+
+    if (typeof name === 'boolean')
+      fetchDataAfter = name
+
+    const world = new World(this.server, { name })
+
+    if (fetchDataAfter)
+      await world.fetch(false)
+
+    return world
+  }
 }

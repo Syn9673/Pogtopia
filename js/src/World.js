@@ -12,7 +12,7 @@ module.exports = class World {
     return keys.length < 1 ? false : true;
   }
 
-  async fetch() {
+  async fetch(shouldGenerate = true) {
     if (!this.data.name) return;
     
     const worldStr = await this.server.redis.get(`world:${this.data.name}`);
@@ -24,7 +24,7 @@ module.exports = class World {
       const width = this.data.name === "TINY" ? 50 : 100;
       const height = this.data.name === "TALL" ? 100 : (this.data.name === "TINY" ? 50 : 60);
 
-      if (!world) // generate
+      if (!world && shouldGenerate) // generate
         await this.generate(width, height);
       else {
         this.data = world;
