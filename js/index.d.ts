@@ -777,7 +777,7 @@ export class Peer {
    * Returns the packet for clothing
    * @param silenced Whether or not to play the sfx when wearing clothes
    */
-  public cloth_packet(silenced: boolean = false): Variant | void;
+  public cloth_packet(silenced: boolean = false): Variant;
 }
 
 
