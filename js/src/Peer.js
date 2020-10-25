@@ -36,6 +36,8 @@ module.exports = class Peer {
     type = type?.toLowerCase();
 
     Native.disconnect(type, this.data.connectID);
+    await this.saveToDb()
+
     const players = JSON.parse(await this.server.redis.get("players"));
 
     if (!Array.isArray(players) || !players[this.data.connectID]) return;
@@ -111,7 +113,7 @@ module.exports = class Peer {
     }
   }
 
-  async join(name) {
+  async join(name, isSuperMod = false) {
     if (!name)
       name = ''
 
@@ -157,7 +159,7 @@ name|${this.data.displayName}\`\`
 country|${this.data.country}
 invis|0
 mstate|0
-smstate|1
+smstate|${isSuperMod ? 1 : 0}
 type|local`));
 
     // loop through each player
@@ -175,7 +177,7 @@ name|${this.data.displayName}\`\`
 country|${this.data.country}
 invis|0
 mstate|0
-smstate|1`));
+smstate|${isSuperMod ? 1 : 0}`));
 
         // send the peer to ourselves
         this.send(Variant.from(
@@ -189,7 +191,7 @@ name|${otherPeer.data.displayName}\`\`
 country|${otherPeer.data.country}
 invis|0
 mstate|0
-smstate|1`))
+smstate|0`))
       }
     });
   }

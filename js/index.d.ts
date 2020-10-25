@@ -751,8 +751,9 @@ export class Peer {
   /**
    * Joins a world
    * @param name The name of the world
+   * @param isSuperMod Whether or not the player joining is a super mod.
    */
-  public async join(name: string): Promise<void>;
+  public async join(name: string, isSuperMod: boolean = false): Promise<void>;
 
   /**
    * Plays an audio file.
