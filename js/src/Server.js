@@ -239,4 +239,9 @@ module.exports = class Server extends EventEmitter {
       // todo: world
     } else if (type === "world") {}
   }
+
+  async find(type, filter) {
+    if (type === "player") return await this.collections.players.find(filter).toArray()
+    else if (type === "world") return await this.collections.worlds.find(filter).toArray()
+  }
 }

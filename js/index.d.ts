@@ -311,6 +311,11 @@ interface PeerData {
    * Skin color of a player
    */
   skinColor?: number
+
+  /**
+   * Email address of a peer
+   */
+  email?: string
 }
 
 
@@ -423,7 +428,7 @@ interface WorldData {
   /**
    * Name of the world, all caps
    */
-  name: string
+  name?: string
 
   /**
    * The width of the world
@@ -601,6 +606,20 @@ export class Server extends EventEmitter {
    * @param callback The callback to run per element
    */
   public async forEach(type: "world", callback: (world: World) => void): Promise<void>;
+
+  /**
+   * Finds players or worlds inside the database with a filter.
+   * @param type The type to find
+   * @param filter The filter for that data
+   */
+  public async find(type: "player", filter: PeerData): PeerData[]
+
+  /**
+   * Finds players or worlds inside the database with a filter.
+   * @param type The type to find
+   * @param filter The filter for that data
+   */
+  public async find(type: "world", filter: WorldData): WorldData[]
 }
 
 
