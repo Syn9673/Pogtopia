@@ -33,8 +33,10 @@ module.exports = class World {
       if (!world && shouldGenerate) // generate
         await this.generate(width, height);
       else {
-        this.data = world;
-        await this.server.redis.set(`world:${this.data.name}`, JSON.stringify(this.data));
+        if (world) {
+          this.data = world;
+          await this.server.redis.set(`world:${this.data.name}`, JSON.stringify(this.data));
+        }
       }
     }
   }
