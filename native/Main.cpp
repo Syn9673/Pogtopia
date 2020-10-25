@@ -9,7 +9,7 @@ ENetHost* host;
 Napi::FunctionReference emit;
 int port;
 unsigned int connectID = 0;
-std::unordered_map<std::string, ENetPeer*> peers;
+std::unordered_map<unsigned int, ENetPeer*> peers;
 
 void Finalizer(Napi::Env env, uint8_t* data) {
 	delete[] data; // free created data by C++
@@ -64,7 +64,7 @@ void js_host_event_recieve(NCP) {
 				event.peer->data = new uint8_t[sizeof(int)];
 				memcpy(event.peer->data, &connID, sizeof(int));
 
-				peers[std::to_string(connID)] = event.peer;
+				peers[connID] = event.peer;
 
 				emit.Call({
 					Napi::String::New(env, "connect"),
@@ -91,7 +91,7 @@ void js_host_event_recieve(NCP) {
 
 			case ENET_EVENT_TYPE_DISCONNECT: {
 				auto connID	= *(unsigned int*)event.peer->data;
-				auto key = std::to_string(connID);
+				auto key = connID;
 
 				emit.Call({
 					Napi::String::New(env, "disconnect"),
@@ -113,7 +113,7 @@ void js_send_packet(NCP) {
 	auto connectIDFromJS = info[1].As<Napi::Number>().Uint32Value();
 
 	auto bytes = buf.Data();
-	auto peer = peers[std::to_string(connectIDFromJS)];
+	auto peer = peers[connectIDFromJS];
 	auto packet = enet_packet_create(bytes, buf.Length(), ENET_PACKET_FLAG_RELIABLE);
 
 	enet_peer_send(peer, 0, packet);
@@ -122,7 +122,7 @@ void js_send_packet(NCP) {
 void js_peer_disconnect(NCP) {
 	auto type = info[0].As<Napi::Number>().Uint32Value();
 	auto connectIDFromJS = info[1].As<Napi::Number>().Uint32Value();
-	auto key = std::to_string(connectIDFromJS);
+	auto key = connectIDFromJS;
 
 	if (peers.find(key) != peers.end()) {
 		auto peer	= peers[key];
