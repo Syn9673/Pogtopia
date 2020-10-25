@@ -612,14 +612,14 @@ export class Server extends EventEmitter {
    * @param type The type to find
    * @param filter The filter for that data
    */
-  public async find(type: "player", filter: PeerData): PeerData[]
+  public async find(type: "player", filter: PeerData): Promise<PeerData[]>
 
   /**
    * Finds players or worlds inside the database with a filter.
    * @param type The type to find
    * @param filter The filter for that data
    */
-  public async find(type: "world", filter: WorldData): WorldData[]
+  public async find(type: "world", filter: WorldData): Promise<WorldData[]>
 }
 
 
