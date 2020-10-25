@@ -1,5 +1,8 @@
 # Pogtopia
-A simple to use API for creating private servers for Growtopia.
+A simple to use API for creating private servers for Growtopia with nodejs.
+
+## Documentation
+The documentation [here](https://pogtopia.js.org) matches the code on the **Github** repo and not on NPM.
 
 ## Installations
 **Requirements**  

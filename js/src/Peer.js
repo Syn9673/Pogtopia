@@ -36,7 +36,8 @@ module.exports = class Peer {
     type = type?.toLowerCase();
 
     Native.disconnect(type, this.data.connectID);
-    await this.saveToDb()
+    if (this.hasPlayerData())
+      await this.saveToDb()
 
     const players = JSON.parse(await this.server.redis.get("players"));
 
