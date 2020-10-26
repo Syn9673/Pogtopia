@@ -279,4 +279,39 @@ smstate|0`))
       [this.data.clothes.ances, silenced ? 0 : 1, 0]
     )
   }
+
+  async remove_item_from_inventory(id, amount = 1) {
+    const item = this.data.inventory.items.find(item => item.id === id)
+    if (!item ||
+        item.amount < 1) return
+
+    item.amount -= amount
+
+    if (item.amount < 1)
+      this.data.inventory.items = this.data.inventory.items.filter(item => item.id !== id)
+
+    await this.saveToCache()
+  }
+
+  async add_item_to_inventory(id, amount = 1) {
+    if (typeof amount !== 'string' ||
+        amount > 200)
+      amount = 1
+
+    const item = this.data.inventory.items.find(item => item.id === id)
+    if (!item &&
+        this.data.inventory.items.length < this.data.inventory.maxSize) {
+      this.data.inventory.items.push(
+        {
+          id: id,
+          amount
+        }
+      )
+    } else if (item) {
+      if (item.amount + amount > 200) return
+      item.amount += amount
+    }
+
+    await this.saveToCache()
+  }
 }

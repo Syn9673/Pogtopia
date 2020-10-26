@@ -680,6 +680,12 @@ export class Server extends EventEmitter {
    * @param filter The filter for that data
    */
   public find(type: "world", filter: WorldData): Promise<WorldData[]>
+
+  /**
+   * Sets the item metadata.
+   * @param meta The metadata of the items
+   */
+  public setItemMeta(meta: ItemsDatMeta): void
 }
 
 
@@ -893,6 +899,20 @@ export class Peer {
    * @param silenced Whether or not to play the sfx when wearing clothes
    */
   public cloth_packet(silenced?: boolean): Variant;
+
+  /**
+   * Removes an item from the inventory
+   * @param id The id of the item
+   * @param amount The amount to remove
+   */
+  public remove_item_from_inventory(id: number, amount?: number): Promise<void>;
+
+  /**
+   * Adds an item from the inventory
+   * @param id The id of the item
+   * @param amount The amount to add
+   */
+  public add_item_to_inventory(id: number, amount?: number): Promise<void>;
 }
 
 

@@ -191,23 +191,19 @@ module.exports = class Server extends EventEmitter {
       throw new Error('Failed finding items.dat at path:', path)
     }
 
-    this.items = {
-      content: file,
+    this.items.content = file
+    this.items.packet  = TankPacket.from({
+      type: 0x10,
+      extraData: () => file
+    })
+    this.items.hash    = (() => {
+      let h = 0x55555555;
 
-      packet: TankPacket.from({
-        type: 0x10,
-        extraData: () => file
-      }),
-      
-      hash: (() => {
-        let h = 0x55555555;
+      for (const byte of file)
+        h = (h >>> 27) + (h << 5) + byte;
 
-        for (const byte of file)
-          h = (h >>> 27) + (h << 5) + byte;
-
-        return h;
-      })()
-    }
+      return h;
+    })()
   }
 
   stringPacketToMap(packet) {
@@ -246,5 +242,9 @@ module.exports = class Server extends EventEmitter {
   async find(type, filter) {
     if (type === "player") return await this.collections.players.find(filter).toArray()
     else if (type === "world") return await this.collections.worlds.find(filter).toArray()
+  }
+
+  setItemMeta(meta) {
+    this.items.meta = meta
   }
 }
