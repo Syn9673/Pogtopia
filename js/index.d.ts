@@ -65,13 +65,13 @@ interface CacheManager {
    * @param key The unique key of the value
    * @param val The value of that key
    */
-  set: (key: string, val: string) => void
+  set: (key: string, val: any) => void
 
   /**
    * Fetches a value from the cache with a key
    * @param key The key to fetch
    */
-  get: (key: string) => string
+  get: (key: string) => any
 
   /**
    * Deletes a key-value pair from the cache.
@@ -948,13 +948,13 @@ export class CustomCache {
    * @param key The unique key of the value
    * @param val The value of that key
    */
-  public set: (key: string, val: string) => void
+  public set: (key: string, val: any) => void
 
   /**
    * Fetches a value from the cache with a key
    * @param key The key to fetch
    */
-  public get: (key: string) => string
+  public get: (key: string) => any
 
   /**
    * Deletes a key-value pair from the cache.
