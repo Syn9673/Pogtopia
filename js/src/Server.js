@@ -32,7 +32,7 @@ module.exports = class Server extends EventEmitter {
     this.events = new EventEmitter();
 
     // this is for the items dat
-    this.items = null;
+    this.items = { meta: null };
 
     // mongo collections
     this.collections = null;
@@ -118,7 +118,10 @@ module.exports = class Server extends EventEmitter {
   async start() {
     this.setItemsDat(this.config.server?.itemsDatFile)
 
-    if (!this.items)
+    const itemKeys = Object.keys(this.items)
+                            .filter(key => key !== 'meta')
+
+    if (itemKeys.length < 1)
       throw new Error("There are some stuff missing in-order to make the server online. Please check if you have set the handlers for each events, and the items.dat file");
 
     Native.Init(this.config.server.port);    // set our server port

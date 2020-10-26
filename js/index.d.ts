@@ -381,6 +381,11 @@ export interface ItemsDat {
    * The hash of the items.dat file
    */
   hash: number
+
+  /**
+   * Metadata for the items.dat
+   */
+  meta?: ItemsDatMeta
 }
 
 
