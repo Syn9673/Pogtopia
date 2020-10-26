@@ -108,5 +108,5 @@ node_modules
 .vs
 server.dat
 
-docs/
 items.dat
+docs

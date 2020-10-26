@@ -107,3 +107,5 @@ node_modules
 *.vcxproj.*
 .vs
 server.dat
+
+items.dat
