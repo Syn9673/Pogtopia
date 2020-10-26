@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import * as Redis from "ioredis";
+import IORedis from 'ioredis'
 import * as Mongo from "mongodb";
 
 
@@ -505,7 +505,7 @@ export class World {
    * @param server The server object
    * @param data The world data
    */
-  constructor(public server: Server, public data?: WorldData);
+  constructor(server: Server, data?: WorldData);
 
   /**
    * Creates a new instance of the world class.
@@ -523,32 +523,32 @@ export class World {
    * Fetches the world data from the cache, or db if not present. This will set the `.data` property. This doesn't auto generate worlds if not present.
    * @param shouldGenerate Whether or not to auto generate a world if not present in cache or the database.
    */
-  public async fetch(shouldGenerate?: boolean = true): Promise<void>;
+  public fetch(shouldGenerate?: boolean): Promise<void>;
   
   /**
    * Generates a world, it will save to cache after generating
    */
-  public async generate(): Promise<void>;
+  public generate(): Promise<void>;
 
   /**
    * Serilizes the world packet. Fetches automatically from either the cache or database, if not present. Will also try to generate the world.
    */
-  public async serialize(): Promise<TankPacket>;
+  public serialize(): Promise<TankPacket>;
 
   /**
    * Saves world data to cache
    */
-  public async saveToCache(): Promise<void>;
+  public saveToCache(): Promise<void>;
 
   /**
    * Saves world data to the database
    */
-  public async saveToDb(): Promise<void>;
+  public saveToDb(): Promise<void>;
 
   /**
    * Deletes the world from cache
    */
-  public async uncache(): Promise<void>;
+  public uncache(): Promise<void>;
 }
 
 
@@ -563,7 +563,7 @@ export class Server extends EventEmitter {
   /**
    * Our redis client
    */
-  public redis: Redis;
+  public cache: IORedis.Redis | CustomCache;
 
   /**
    * Items dat object
@@ -584,7 +584,7 @@ export class Server extends EventEmitter {
    * Creates a new instance of the Server class
    * @param config The configuration for the server
    */
-  constructor(public config: Config);
+  constructor(config: Config);
 
   /**
    * Fetches the CDN Data passed from the config
@@ -638,28 +638,28 @@ export class Server extends EventEmitter {
    * @param type The type to loop
    * @param callback The callback to run per element
    */
-  public async forEach(type: "player", callback: (peer: Peer) => void): Promise<void>;
+  public forEach(type: "player", callback: (peer: Peer) => void): Promise<void>;
 
   /**
    * Loops through each world in the cache
    * @param type The type to loop
    * @param callback The callback to run per element
    */
-  public async forEach(type: "world", callback: (world: World) => void): Promise<void>;
+  public forEach(type: "world", callback: (world: World) => void): Promise<void>;
 
   /**
    * Finds players or worlds inside the database with a filter.
    * @param type The type to find
    * @param filter The filter for that data
    */
-  public async find(type: "player", filter: PeerData): Promise<PeerData[]>
+  public find(type: "player", filter: PeerData): Promise<PeerData[]>
 
   /**
    * Finds players or worlds inside the database with a filter.
    * @param type The type to find
    * @param filter The filter for that data
    */
-  public async find(type: "world", filter: WorldData): Promise<WorldData[]>
+  public find(type: "world", filter: WorldData): Promise<WorldData[]>
 }
 
 
@@ -676,7 +676,7 @@ export class Variant {
    * @param options The options for the Variant
    * @param args The arguments for the Variant
    */
-  constructor(public options: VariantOptions, public args: (string | number | number[])[]);
+  constructor(options: VariantOptions, args: (string | number | number[])[]);
 
   /**
    * Parse the Variant Packet, convert it to bytes.
@@ -704,7 +704,7 @@ export class TextPacket {
    * @param type The type to use
    * @param text The text/string for it to contain
    */
-  constructor(public type: number, public text?: string);
+  constructor(type: number, text?: string);
 
   /**
    * Converts a text or a packet to a TextPacket class
@@ -722,12 +722,12 @@ export class TextPacket {
 /**
  * A class that represents a TankPacket
  */
-export class TankPacket implements TankOptions {
+export class TankPacket {
   /**
    * Creates a new instance of the TankPacket
    * @param data The data for the TankPacket
    */
-  constructor(public data: TankOptions);
+  constructor(data: TankOptions);
 
   /**
    * Create a new TankPacket
@@ -755,14 +755,14 @@ export class Peer {
    * @param {Server} server The instance of the server
    * @param {PeerData} data The user data of the peer
    */
-  constructor(private server: Server, public data: PeerData = {});
+  constructor(server: Server, data?: PeerData)
 
   /**
    * Creates a new player to be saved to the database. This will also set the `data` property of a peer
    * @param data The data of the peer to create
    * @param saveToCache Whether or not to save the data to cache as well
    */
-  public async create(data: PeerData, saveToCache?: boolean): Promise<void>;
+  public create(data: PeerData, saveToCache?: boolean): Promise<void>;
 
   /**
    * Sends the packet to the peer
@@ -774,7 +774,7 @@ export class Peer {
    * Disconnects a peer
    * @param type The type of disconnection.
    */
-  public async disconnect(type?: "later" | "now"): Promise<void>;
+  public disconnect(type?: "later" | "now"): Promise<void>;
 
   /**
    * Request the login information from the peer. This will emit the "receive" event.
@@ -784,12 +784,12 @@ export class Peer {
   /**
    * Saves the player to the database.
    */
-  public async saveToDb(): Promise<void>;
+  public saveToDb(): Promise<void>;
 
   /**
    * Saves player data to the cache.
    */
-  public async saveToCache(): Promise<void>;
+  public saveToCache(): Promise<void>;
 
   /**
    * Check if proper player data is present.
@@ -799,27 +799,27 @@ export class Peer {
   /**
    * Whether or not a player is already in cache
    */
-  public async alreadyInCache(): Promise<boolean>;
+  public alreadyInCache(): Promise<boolean>;
 
   /**
    * Fetches the peer data from the cache or database
    * @param type Where to fetch the data
    */
-  public async fetch(type: "cache" | "db", filter: PeerData = {}): Promise<void>;
+  public fetch(type: "cache" | "db", filter: PeerData): Promise<void>;
 
   /**
    * Joins a world
    * @param name The name of the world
    * @param isSuperMod Whether or not the player joining is a super mod.
    */
-  public async join(name: string, isSuperMod: boolean = false): Promise<void>;
+  public join(name: string, isSuperMod?: boolean): Promise<void>;
 
   /**
    * Plays an audio file.
    * @param file The name of the file
    * @param delay The delay, in ms on when to play.
    */
-  public audio(file: string, delay: number = 0): void;
+  public audio(file: string, delay?: number): void;
 
   /**
    * Sends the inventory packet
@@ -831,13 +831,13 @@ export class Peer {
    * @param name The name of the world
    * @param fetchDataAfter Whether or not to auto-fetch the world data from either cache or the database.
    */
-  public world(name?: string | boolean, fetchDataAfter?: boolean = false): World;
+  public world(name?: string | boolean, fetchDataAfter?: boolean): World;
 
   /**
    * Returns the packet for clothing
    * @param silenced Whether or not to play the sfx when wearing clothes
    */
-  public cloth_packet(silenced: boolean = false): Variant;
+  public cloth_packet(silenced?: boolean): Variant;
 }
 
 
@@ -859,7 +859,7 @@ interface HTTPOptions {
 /**
  * The http server handler
  */
-export const Http = {
+export interface Http {
   /**
    * Start the HTTP server
    * @param opts Options for the HTTP Server
@@ -907,7 +907,7 @@ export enum VariantTypes {
 /**
  * Some constants for helping the server
  */
-export const Constants = {
+export interface Constants {
   /**
    * Server epoch, date when pogtopia started development
    */
@@ -936,12 +936,12 @@ export const Constants = {
  * A custom cache manager built-in for pogtopia
  */
 export class CustomCache {
-  private container: any = {}
+  private container: any
 
   /**
    * Create a new instance of the cache manager
    */
-  constructor() {}
+  constructor()
   
   /**
    * Sets the value of a key to the cache

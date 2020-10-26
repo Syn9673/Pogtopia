@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>InventoryItem | pogtopia</title>
+	<title>Http | pogtopia</title>
 	<meta name="description" content="Documentation for pogtopia">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="inventoryitem.html">InventoryItem</a>
+					<a href="http.html">Http</a>
 				</li>
 			</ul>
-			<h1>Interface InventoryItem</h1>
+			<h1>Interface Http</h1>
 		</div>
 	</div>
 </header>
@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A representation of an item in an inventory</p>
+						<p>The http server handler</p>
 					</div>
 				</div>
 			</section>
@@ -75,7 +75,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">InventoryItem</span>
+						<span class="target">Http</span>
 					</li>
 				</ul>
 			</section>
@@ -84,46 +84,46 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="inventoryitem.html#amount" class="tsd-kind-icon">amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="inventoryitem.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="http.html#start" class="tsd-kind-icon">start</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="amount" class="tsd-anchor"></a>
-					<h3>amount</h3>
-					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/8f10b59/js/index.d.ts#L227">index.d.ts:227</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The amount of that item in the inventory</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/8f10b59/js/index.d.ts#L222">index.d.ts:222</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The id of the item</p>
-						</div>
-					</div>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="start" class="tsd-anchor"></a>
+					<h3>start</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><a href="httpoptions.html" class="tsd-signature-type">HTTPOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/8f10b59/js/index.d.ts#L867">index.d.ts:867</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Start the HTTP server</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> opts: <a href="httpoptions.html" class="tsd-signature-type">HTTPOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options for the HTTP Server</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -182,24 +182,21 @@
 					<li class=" tsd-kind-interface">
 						<a href="httpoptions.html" class="tsd-kind-icon">HTTPOptions</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="http.html" class="tsd-kind-icon">Http</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="inventoryitem.html" class="tsd-kind-icon">Inventory<wbr>Item</a>
+						<a href="http.html" class="tsd-kind-icon">Http</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="inventoryitem.html#amount" class="tsd-kind-icon">amount</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="inventoryitem.html#id" class="tsd-kind-icon">id</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="http.html#start" class="tsd-kind-icon">start</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="inventoryitem.html" class="tsd-kind-icon">Inventory<wbr>Item</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="itemsdat.html" class="tsd-kind-icon">Items<wbr>Dat</a>
 					</li>
