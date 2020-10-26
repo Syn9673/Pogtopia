@@ -968,3 +968,80 @@ export class CustomCache {
    */
   public keys: (pattern: string) => string[]
 }
+
+
+
+
+
+
+/**
+ * Items dat meta data and the items itself
+ */
+export interface ItemsDat {
+  version: number
+  itemCount: number
+
+  items: ItemDefinition[]
+}
+
+
+
+
+
+
+/**
+ * Item definition for each item in the items.dat
+ */
+export interface ItemDefinition {
+  id?: number
+
+  editableType?: number
+  itemCategory?: number
+  actionType?: number
+  hitSoundType?: number
+
+  name?: string
+  
+  texture?: string
+  textureHash?: number
+  itemKind?: number
+  
+  textureX?: number
+  textureY?: number
+  spreadType?: number
+  isStripeyWallpaper?: number
+  collisionType?: number
+
+  breakHits?: number
+
+  resetStateAfter?: number
+  clothingType?: number
+  blockType?: number
+  growTime?: number
+  rarity?: number
+  maxAmount?: number
+  extraFile?: string
+  extraFileHash?: number
+  audioVolume?: number
+
+  petName?: string
+  petPrefix?: string
+  petSuffix?: string
+  petAbility?: string
+
+  seedBase?: number
+  seedOverlay?: number
+  treeBase?: number
+  treeLeaves?: number
+
+  seedColor?: number
+  seedOverlayColor?: number
+  isMultiFace?: number
+  
+  isRayman?: number
+  
+  extraOptions?: string
+  texture2?: string
+  extraOptions2?: string
+  punchOptions?: string
+}
