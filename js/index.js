@@ -11,5 +11,5 @@ module.exports = {
   World: require("./src/World"),
   Constants: require("./src/Constants"),
   CustomCache: require("./src/CustomCache"),
-  ItemsDat: require("./src/ItemsDat")
+  ItemsDatUtils: require("./src/ItemsDat")
 }
