@@ -855,7 +855,7 @@ export class Peer {
    * Fetches the peer data from the cache or database
    * @param type Where to fetch the data
    */
-  public fetch(type: "cache" | "db", filter: PeerData): Promise<void>;
+  public fetch(type: "cache" | "db", filter?: PeerData): Promise<void>;
 
   /**
    * Joins a world
@@ -957,7 +957,7 @@ export enum VariantTypes {
 /**
  * Some constants for helping the server
  */
-export interface Constants {
+export const Constants = {
   /**
    * Server epoch, date when pogtopia started development
    */
