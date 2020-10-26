@@ -133,7 +133,7 @@ module.exports = class Peer {
     }
 
     if (name === 'EXIT') {
-      return this.send(Variant.from(
+      this.send(Variant.from(
         "OnFailedToEnterWorld",
         1
       ))
