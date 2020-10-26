@@ -501,6 +501,16 @@ interface WorldData {
  */
 export class World {
   /**
+   * The server object
+   */
+  private server: Server
+
+  /**
+   * The world data
+   */
+  public data?: WorldData
+
+  /**
    * Creates a new instances of the world class.
    * @param server The server object
    * @param data The world data
@@ -560,6 +570,11 @@ export class World {
  * A class that represents the Server
  */
 export class Server extends EventEmitter {
+  /**
+   * The configuration for the server
+   */
+  public config: Config
+
   /**
    * Our redis client
    */
@@ -672,6 +687,16 @@ export class Server extends EventEmitter {
  */
 export class Variant {
   /**
+   * The options for the Variant
+   */
+  public options: VariantOptions
+
+  /**
+   * The arguments for the Variant
+   */
+  public args: (string | number | number[])[]
+
+  /**
    * Creates a new Variant
    * @param options The options for the Variant
    * @param args The arguments for the Variant
@@ -700,6 +725,16 @@ export class Variant {
  */
 export class TextPacket {
   /**
+   * The type to use
+   */
+  public type: number
+
+  /**
+   * The text/string for it to contain
+   */
+  public text?: string
+
+  /**
    * Creates a new Text Packet
    * @param type The type to use
    * @param text The text/string for it to contain
@@ -723,6 +758,11 @@ export class TextPacket {
  * A class that represents a TankPacket
  */
 export class TankPacket {
+  /**
+   * The data for the TankPacket
+   */
+  public data: TankOptions
+
   /**
    * Creates a new instance of the TankPacket
    * @param data The data for the TankPacket
@@ -750,6 +790,16 @@ export class TankPacket {
  * A class that represents a connected peer
  */
 export class Peer {
+  /**
+   * The instance of the server
+   */
+  private server: Server
+
+  /**
+   * The user data of the peer
+   */
+  public data?: PeerData
+
   /**
    * Creates a new instance of the peer
    * @param {Server} server The instance of the server

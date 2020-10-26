@@ -10,5 +10,6 @@ module.exports = {
   Http: require("./src/Http"),
   World: require("./src/World"),
   Constants: require("./src/Constants"),
-  CustomCache: require("./src/CustomCache")
+  CustomCache: require("./src/CustomCache"),
+  ItemsDat: require("./src/ItemsDat")
 }

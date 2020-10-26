@@ -67,7 +67,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Items Dat buffers</p>
+						<p>Items Dat buffers
+						Items dat meta data and the items itself</p>
 					</div>
 				</div>
 			</section>
@@ -88,7 +89,10 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="itemsdat.html#content" class="tsd-kind-icon">content</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="itemsdat.html#hash" class="tsd-kind-icon">hash</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="itemsdat.html#itemcount" class="tsd-kind-icon">item<wbr>Count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="itemsdat.html#items" class="tsd-kind-icon">items</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="itemsdat.html#packet" class="tsd-kind-icon">packet</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="itemsdat.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,7 +106,7 @@
 					<div class="tsd-signature tsd-kind-icon">content<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/8f10b59/js/index.d.ts#L378">index.d.ts:378</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/33bdafa/js/index.d.ts#L378">index.d.ts:378</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -117,7 +121,7 @@
 					<div class="tsd-signature tsd-kind-icon">hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/8f10b59/js/index.d.ts#L383">index.d.ts:383</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/33bdafa/js/index.d.ts#L383">index.d.ts:383</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -127,12 +131,32 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="itemcount" class="tsd-anchor"></a>
+					<h3>item<wbr>Count</h3>
+					<div class="tsd-signature tsd-kind-icon">item<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/33bdafa/js/index.d.ts#L1032">index.d.ts:1032</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="items" class="tsd-anchor"></a>
+					<h3>items</h3>
+					<div class="tsd-signature tsd-kind-icon">items<span class="tsd-signature-symbol">:</span> <a href="itemdefinition.html" class="tsd-signature-type">ItemDefinition</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/33bdafa/js/index.d.ts#L1034">index.d.ts:1034</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="packet" class="tsd-anchor"></a>
 					<h3>packet</h3>
 					<div class="tsd-signature tsd-kind-icon">packet<span class="tsd-signature-symbol">:</span> <a href="../classes/tankpacket.html" class="tsd-signature-type">TankPacket</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/8f10b59/js/index.d.ts#L373">index.d.ts:373</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/33bdafa/js/index.d.ts#L373">index.d.ts:373</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -140,6 +164,16 @@
 							<p>The TankPacket to send when requesting <code>refresh_item_data</code></p>
 						</div>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="version" class="tsd-anchor"></a>
+					<h3>version</h3>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/33bdafa/js/index.d.ts#L1031">index.d.ts:1031</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -204,6 +238,9 @@
 					<li class=" tsd-kind-interface">
 						<a href="inventoryitem.html" class="tsd-kind-icon">Inventory<wbr>Item</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="itemdefinition.html" class="tsd-kind-icon">Item<wbr>Definition</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
@@ -216,7 +253,16 @@
 								<a href="itemsdat.html#hash" class="tsd-kind-icon">hash</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="itemsdat.html#itemcount" class="tsd-kind-icon">item<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="itemsdat.html#items" class="tsd-kind-icon">items</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="itemsdat.html#packet" class="tsd-kind-icon">packet</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="itemsdat.html#version" class="tsd-kind-icon">version</a>
 							</li>
 						</ul>
 					</li>
