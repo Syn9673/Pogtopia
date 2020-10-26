@@ -175,7 +175,7 @@ module.exports = class Server extends EventEmitter {
   }
 
   setHandler(type, callback) {
-    this.events.on(type, callback);
+    this.events.on(type, async (...args) => await callback(...args));
   }
 
   setItemsDat(path) {
