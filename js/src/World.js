@@ -24,7 +24,7 @@ module.exports = class World {
     const worldStr = await this.server.cache.get(`world:${this.data.name}`);
     
     if (worldStr)
-      this.data = JSON.parse(worldStr);
+      this.data = worldStr;
     else {
       const world = await this.server.collections.worlds.findOne({ name: this.data.name });
       const width = this.data.name === "TINY" ? 50 : 100;

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Config | pogtopia</title>
+	<title>CacheManager | pogtopia</title>
 	<meta name="description" content="Documentation for pogtopia">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="config.html">Config</a>
+					<a href="cachemanager.html">CacheManager</a>
 				</li>
 			</ul>
-			<h1>Interface Config</h1>
+			<h1>Interface CacheManager</h1>
 		</div>
 	</div>
 </header>
@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The general configuration</p>
+						<p>A cache manager</p>
 					</div>
 				</div>
 			</section>
@@ -75,7 +75,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Config</span>
+						<span class="target">CacheManager</span>
 					</li>
 				</ul>
 			</section>
@@ -86,10 +86,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#cache" class="tsd-kind-icon">cache</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#server" class="tsd-kind-icon">server</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#worldserializationcall" class="tsd-kind-icon">world<wbr>Serialization<wbr>Call</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="config.html#worldtilessize" class="tsd-kind-icon">world<wbr>Tiles<wbr>Size</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachemanager.html#del" class="tsd-kind-icon">del</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachemanager.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachemanager.html#keys" class="tsd-kind-icon">keys</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachemanager.html#set" class="tsd-kind-icon">set</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,52 +98,21 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="cache" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> cache</h3>
-					<div class="tsd-signature tsd-kind-icon">cache<span class="tsd-signature-symbol">:</span> <a href="cachemanager.html" class="tsd-signature-type">CacheManager</a></div>
+					<a name="del" class="tsd-anchor"></a>
+					<h3>del</h3>
+					<div class="tsd-signature tsd-kind-icon">del<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/49daeb5/js/index.d.ts#L117">index.d.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/49daeb5/js/index.d.ts#L80">index.d.ts:80</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The cache handler to replace redis.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="server" class="tsd-anchor"></a>
-					<h3>server</h3>
-					<div class="tsd-signature tsd-kind-icon">server<span class="tsd-signature-symbol">:</span> <a href="serverconfig.html" class="tsd-signature-type">ServerConfig</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/49daeb5/js/index.d.ts#L98">index.d.ts:98</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="worldserializationcall" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> world<wbr>Serialization<wbr>Call</h3>
-					<div class="tsd-signature tsd-kind-icon">world<wbr>Serialization<wbr>Call<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, packet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span>, tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/49daeb5/js/index.d.ts#L112">index.d.ts:112</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A custom function to replace for world serialization. This gets called after the buffer size is determinded. The &quot;packet&quot; argument is a reference to the buffer to use. Take note that this is not called in a loop, this is only called once.</p>
+							<p>Deletes a key-value pair from the cache.</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>param</dt>
-							<dd><p>The starting position for writing to buffers, use this to keep track on the current position when writing to the buffer.</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>The world packet to modify</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>The tiles in the world</p>
+							<dd><p>The key to delete</p>
 							</dd>
 						</dl>
 					</div>
@@ -152,20 +121,14 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, packet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span>, tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>pos: <span class="tsd-signature-type">number</span></h5>
-											</li>
-											<li>
-												<h5>packet: <span class="tsd-signature-type">Buffer</span></h5>
-											</li>
-											<li>
-												<h5>tiles: <a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span></h5>
+												<h5>key: <span class="tsd-signature-type">string</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -176,21 +139,21 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="worldtilessize" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> world<wbr>Tiles<wbr>Size</h3>
-					<div class="tsd-signature tsd-kind-icon">world<wbr>Tiles<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></div>
+					<a name="get" class="tsd-anchor"></a>
+					<h3>get</h3>
+					<div class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/49daeb5/js/index.d.ts#L104">index.d.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/49daeb5/js/index.d.ts#L74">index.d.ts:74</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A custom function to calculate the size of the world packet to allocate, excluding the necessary data of a world. (Basically just for tiles)</p>
+							<p>Fetches a value from the cache with a key</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>param</dt>
-							<dd><p>The tiles in the world</p>
+							<dd><p>The key to fetch</p>
 							</dd>
 						</dl>
 					</div>
@@ -199,17 +162,105 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>tiles<span class="tsd-signature-symbol">: </span><a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>tiles: <a href="worldtile.html" class="tsd-signature-type">WorldTile</a><span class="tsd-signature-symbol">[]</span></h5>
+												<h5>key: <span class="tsd-signature-type">string</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="keys" class="tsd-anchor"></a>
+					<h3>keys</h3>
+					<div class="tsd-signature tsd-kind-icon">keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>pattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/49daeb5/js/index.d.ts#L86">index.d.ts:86</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Fetches keys that match with a pattern</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The pattern to match</p>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>pattern: <span class="tsd-signature-type">string</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="set" class="tsd-anchor"></a>
+					<h3>set</h3>
+					<div class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/49daeb5/js/index.d.ts#L68">index.d.ts:68</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Sets the value of a key to the cache</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The unique key of the value</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>The value of that key</p>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>key: <span class="tsd-signature-type">string</span></h5>
+											</li>
+											<li>
+												<h5>val: <span class="tsd-signature-type">string</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -258,33 +309,33 @@
 					<li class=" tsd-kind-interface">
 						<a href="cdnoptions.html" class="tsd-kind-icon">CDNOptions</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="cachemanager.html" class="tsd-kind-icon">Cache<wbr>Manager</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="collections.html" class="tsd-kind-icon">Collections</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="config.html" class="tsd-kind-icon">Config</a>
+						<a href="cachemanager.html" class="tsd-kind-icon">Cache<wbr>Manager</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="config.html#cache" class="tsd-kind-icon">cache</a>
+								<a href="cachemanager.html#del" class="tsd-kind-icon">del</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="config.html#server" class="tsd-kind-icon">server</a>
+								<a href="cachemanager.html#get" class="tsd-kind-icon">get</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="config.html#worldserializationcall" class="tsd-kind-icon">world<wbr>Serialization<wbr>Call</a>
+								<a href="cachemanager.html#keys" class="tsd-kind-icon">keys</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="config.html#worldtilessize" class="tsd-kind-icon">world<wbr>Tiles<wbr>Size</a>
+								<a href="cachemanager.html#set" class="tsd-kind-icon">set</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="collections.html" class="tsd-kind-icon">Collections</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="config.html" class="tsd-kind-icon">Config</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="httpoptions.html" class="tsd-kind-icon">HTTPOptions</a>
 					</li>

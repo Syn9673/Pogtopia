@@ -58,5 +58,16 @@ server.start();
 ```  
 Check the `js/tests/server.js` file for a much better example.  
 
+## Custom Cache
+You can implement a custom cache instead of redis.  
+When implementing your own cache, you have to have these methods with these return types:  
+```ts
+public set: (key: string, val: string) => void
+public get: (key: string) => any
+public del: (key: string) => void
+public keys: (pattern: string) => string[]
+```  
+If you are wondering why the return type for `get` is `any`, it's because the value can be anything from js objects, to js arrays. Anything that can be parsed from a JSON string is converted.
+
 ## Questions
 Join our **[Discord Server](https://discord.gg/S7WKAeh)** about questions.

@@ -4,9 +4,8 @@ class CustomCache {
   }
 
   set(key, val) {
-    if (typeof val !== 'string' ||
-        typeof key !== 'string')
-      throw new TypeError('Key or value must be strings.')
+    if (typeof key !== 'string')
+      throw new TypeError('Key must be a string.')
 
     this.container[key] = val
   }
@@ -29,12 +28,15 @@ class CustomCache {
     if (typeof pattern !== 'string')
       throw new TypeError('Pattern must be a string.')
 
-    const keys = Object.keys(container)
-    pattern = pattern.replaceAll('*', '\\w*?')
+    const keys = Object.keys(this.container)
+    pattern = pattern.replace(
+      new RegExp('\\*', 'g'),
+      '\\w*?'
+    )
 
     return keys.filter(
       key => key.match(
-        new RegExp("pattern", "g")
+        new RegExp(pattern, "g")
       )
     )
   }

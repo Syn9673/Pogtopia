@@ -1,16 +1,8 @@
 const Redis = require('ioredis')
 
-class Redis {
+class CustomRedis extends Redis {
   constructor(...args) {
-    this.cache = new Redis(...args)
-
-    const keys = Object.keys(this.cache)
-                        .filter(key => key !== 'set' && key !== 'get')
-                      
-    for (const key of keys) {
-      console.log(key)
-      this[key] = this.cache[key]
-    }
+    super(...args)
   }
 
   async set(key, val) {
@@ -18,11 +10,11 @@ class Redis {
       val = JSON.stringify(val)
     } catch(err) {}
 
-    await this.cache.set(key, val)
+    await super.set(key, val)
   }
 
   async get(key) {
-    let result = await this.cache.get(key)
+    let result = await super.get(key)
 
     try {
       result = JSON.parse(result)
@@ -31,3 +23,5 @@ class Redis {
     return result
   }
 }
+
+module.exports = CustomRedis
