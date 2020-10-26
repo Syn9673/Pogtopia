@@ -57,6 +57,41 @@ interface ServerConfig {
 
 
 /**
+ * A cache manager
+ */
+interface CacheManager {
+  /**
+   * Sets the value of a key to the cache
+   * @param key The unique key of the value
+   * @param val The value of that key
+   */
+  set: (key: string, val: string) => void
+
+  /**
+   * Fetches a value from the cache with a key
+   * @param key The key to fetch
+   */
+  get: (key: string) => string
+
+  /**
+   * Deletes a key-value pair from the cache.
+   * @param key The key to delete
+   */
+  del: (key: string) => void
+
+  /**
+   * Fetches keys that match with a pattern
+   * @param pattern The pattern to match
+   */
+  keys: (pattern: string) => string[]
+}
+
+
+
+
+
+
+/**
  * The general configuration
  */
 interface Config {
@@ -75,6 +110,16 @@ interface Config {
    * @param tiles The tiles in the world
    */
   worldSerializationCall?: (pos: number, packet: Buffer, tiles: WorldTile[]) => void
+
+  /**
+   * The cache handler to replace redis.
+   */
+  cache?: CacheManager
+
+  /**
+   * The memory limit for the node process. (in GB)
+   */
+  memoryLimit: number = 0.5
 }
 
 
@@ -885,4 +930,46 @@ export const Constants = {
     arg3: "cc.cz.madkite.freedom org.aqua.gg idv.aqua.bulldog com.cih.gamecih2 com.cih.gamecih com.cih.game_cih cn.maocai.gamekiller com.gmd.speedtime org.dax.attack com.x0.strai.frep com.x0.strai.free org.cheatengine.cegui org.sbtools.gamehack com.skgames.traffikrider org.sbtoods.gamehaca com.skype.ralder org.cheatengine.cegui.xx.multi1458919170111 com.prohiro.macro me.autotouch.autotouch com.cygery.repetitouch.free com.cygery.repetitouch.pro com.proziro.zacro com.slash.gamebuster",
     arg4: "proto=110|choosemusic=audio/mp3/about_theme.mp3|active_holiday=7|server_tick=61370149|clash_active=1|drop_lavacheck_faster=1|isPayingUser=1|usingStoreNavigation=1|enableInventoryTab=1|bigBackpack=1|"
   }
+}
+
+
+
+
+
+
+/**
+ * A custom cache manager built-in for pogtopia
+ */
+export class CustomCache {
+  private container: any = {}
+
+  /**
+   * Create a new instance of the cache manager
+   */
+  constructor() {}
+  
+  /**
+   * Sets the value of a key to the cache
+   * @param key The unique key of the value
+   * @param val The value of that key
+   */
+  public set: (key: string, val: string) => void
+
+  /**
+   * Fetches a value from the cache with a key
+   * @param key The key to fetch
+   */
+  public get: (key: string) => string
+
+  /**
+   * Deletes a key-value pair from the cache.
+   * @param key The key to delete
+   */
+  public del: (key: string) => void
+
+  /**
+   * Fetches keys that match with a pattern
+   * @param pattern The pattern to match
+   */
+  public keys: (pattern: string) => string[]
 }

@@ -21,7 +21,7 @@ module.exports = class World {
   async fetch(shouldGenerate = true) {
     if (!this.data.name) return;
     
-    const worldStr = await this.server.redis.get(`world:${this.data.name}`);
+    const worldStr = await this.server.cache.get(`world:${this.data.name}`);
     
     if (worldStr)
       this.data = JSON.parse(worldStr);
@@ -35,7 +35,7 @@ module.exports = class World {
       else {
         if (world) {
           this.data = world;
-          await this.server.redis.set(`world:${this.data.name}`, JSON.stringify(this.data));
+          await this.server.cache.set(`world:${this.data.name}`, JSON.stringify(this.data));
         }
       }
     }
@@ -93,7 +93,7 @@ module.exports = class World {
     };
 
     await this.server.collections.worlds.replaceOne({ name: this.data.name }, this.data, { upsert: true });
-    await this.server.redis.set(`world:${this.data.name}`, JSON.stringify(this.data));
+    await this.server.cache.set(`world:${this.data.name}`, JSON.stringify(this.data));
   }
 
   async serialize() {
@@ -175,7 +175,7 @@ module.exports = class World {
   async saveToCache() {
     if (!this.hasData()) return;
 
-    await this.server.redis.set(`world:${this.data.name}`, JSON.stringify(this.data));
+    await this.server.cache.set(`world:${this.data.name}`, JSON.stringify(this.data));
   }
 
   async saveToDb() {
@@ -186,6 +186,6 @@ module.exports = class World {
   }
 
   async uncache() {
-    await this.server.redis.del(`world:${this.data.name}`);
+    await this.server.cache.del(`world:${this.data.name}`);
   }
 }

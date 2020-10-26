@@ -20,9 +20,9 @@ module.exports = class Server extends EventEmitter {
     if (typeof this.config.server?.itemsDatFile !== 'string')
       throw new Error('Please supply a proper path to items.dat')
 
-    // create our redis connection
+    // create our cache, or redis connection
     try {
-      this.redis = new Redis();
+      this.cache = this.config.cache || new Redis();
     } catch(err) {
       console.log('Failed connecting to Redis Server:', err.message)
       return process.exit()
@@ -58,9 +58,9 @@ module.exports = class Server extends EventEmitter {
 
     // handle on exit
     process.on("SIGINT", async () => {
-      if (!this.redis || !this.collections?.players || !this.collections?.worlds) return process.exit()
+      if (!this.cache || !this.collections?.players || !this.collections?.worlds) return process.exit()
 
-      const players = JSON.parse(await this.redis.get("players"));
+      const players = JSON.parse(await this.cache.get("players"));
       let count = 0;
 
       for (const player of players) {
@@ -76,10 +76,10 @@ module.exports = class Server extends EventEmitter {
         count++;
       }
 
-      await this.redis.del("player");
+      await this.cache.del("player");
       await this.log("Saved", count, `player${count === 1 ? "" : "s"}.`);
 
-      const worldKeys = await this.redis.keys("world:*");
+      const worldKeys = await this.cache.keys("world:*");
       count = 0;
 
       for (const key of worldKeys) {
@@ -167,7 +167,7 @@ module.exports = class Server extends EventEmitter {
 
     await this.log("Server.dat file processed.");
 
-    await this.redis.set("players", JSON.stringify([])); // set an empty array for players cache
+    await this.cache.set("players", JSON.stringify([])); // set an empty array for players cache
   }
 
   log(...args) {
@@ -229,7 +229,7 @@ module.exports = class Server extends EventEmitter {
 
   async forEach(type, callback) {
     if (type === "player") {
-      const players = JSON.parse(await this.redis.get("players"));
+      const players = JSON.parse(await this.cache.get("players"));
       if (!Array.isArray(players)) return;
 
       for (const player of players) {
