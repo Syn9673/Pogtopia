@@ -366,7 +366,7 @@ interface PeerData {
 /**
  * Items Dat buffers
  */
-interface ItemsDat {
+export interface ItemsDat {
   /**
    * The TankPacket to send when requesting `refresh_item_data`
    */
@@ -909,12 +909,12 @@ interface HTTPOptions {
 /**
  * The http server handler
  */
-export interface Http {
+export const Http = {
   /**
    * Start the HTTP server
    * @param opts Options for the HTTP Server
    */
-  start(opts?: HTTPOptions): void
+  start(opts?: HTTPOptions): void {}
 }
 
 
@@ -1027,7 +1027,7 @@ export class CustomCache {
 /**
  * Items dat meta data and the items itself
  */
-export interface ItemsDat {
+export interface ItemsDatMeta {
   version: number
   itemCount: number
 
@@ -1055,6 +1055,8 @@ export interface ItemDefinition {
   texture?: string
   textureHash?: number
   itemKind?: number
+
+  itemVal?: number
   
   textureX?: number
   textureY?: number
@@ -1094,4 +1096,22 @@ export interface ItemDefinition {
   texture2?: string
   extraOptions2?: string
   punchOptions?: string
+
+  unknownOptions?: string
+}
+
+
+
+
+
+
+/**
+ * Utilities for items.dat
+ */
+export const ItemsDatUtils = {
+  /**
+   * Decodes the items.dat file
+   * @param file The content of the items.dat file
+   */
+  decode: (file: Buffer): ItemsDatMeta => {}
 }

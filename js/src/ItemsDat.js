@@ -11,8 +11,10 @@ const decodeStr =
       let str = ''
 
       for (let i = 0; i < length; i++) {
-        str += file.readUInt8(pos) ^ String.fromCharCode(
-          SECRET[(i + id) % SECRET.length]
+        str += String.fromCharCode(
+          file[pos] ^ SECRET.charCodeAt(
+            (id + i) % SECRET.length
+          )
         )
 
         pos++
@@ -23,193 +25,189 @@ const decodeStr =
   }
 
 const decode =
-  (file) => {
-    if (!Buffer.isBuffer(file))
-      throw new TypeError('File must be a buffer')
-
-    const meta  = {}
-    const tiles = []
-
-    let pos       = 0
-    const version = file.readUInt16LE(pos)
-    pos += 2
-
-    const itemCount = file.readUInt32LE(pos)
-    pos += 4
-
-    for (let i = 0; i < itemCount; i++) {
-      const tile = {}
-      
-      tile.id = file.readUInt32LE(pos)
-      pos += 4
-
-      if (tile.id !== i)
-        throw new Error('Unordered items.dat found. Currently at ID:', i, 'Received ID:', tile.id)
-
-      tile.editableType = file.readUInt8(pos)
-      pos++
-
-      tile.itemCategory = file.readUInt8(pos)
-      pos++
-
-      tile.actionType = file.readUInt8(pos)
-      pos++
-
-      tile.hitSoundType = file.readUInt8(pos)
-      pos++
-
-      let strLen = file.readUInt16LE(pos)
-      pos += 2
-
-      tile.name = decodeStr(tile.id, strLen, file, pos, true)
-      pos += strLen
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-
-      tile.texture = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      tile.textureHash = file.readUInt32LE(pos)
-      pos += 4
-
-      tile.itemKind = file.readUInt8(pos)
-      pos++
-
-      // skip val1
-      pos += 4
-
-      tile.textureX = file.readUInt8(pos)
-      pos++
-
-      tile.textureY = file.readUInt8(pos)
-      pos++
-
-      tile.spreadType = file.readUInt8(pos)
-      pos++
-
-      tile.isStripeyWallpaper = file.readUInt8(pos)
-      pos++
-
-      tile.collisionType = file.readUInt8(pos)
-      pos++
-
-      tile.breakHits = file.readUInt8(pos) / 6
-      pos++
-
-      tile.resetAfter = file.readUInt32LE(pos)
-      pos += 4
-
-      tile.clothingType = file.readUInt8(pos)
-      pos++
-
-      tile.rarity = file.readUInt16LE(pos)
-      pos += 2
-
-      tile.maxAmount = file.readUInt8(pos)
-      pos++
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-
-      tile.extraFile = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      tile.extraFileHash = file.readUInt32LE(pos)
-      pos += 4
-
-      tile.audioVolume = file.readUInt32LE(pos)
-      pos += 4
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-
-      tile.petName = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-
-      tile.petPrefix = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-
-      tile.petSuffix = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-
-      tile.petAbility = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      tile.seedBase = file.readUInt8(pos)
-      pos++
-
-      tile.seedOverlay = file.readUInt8(pos)
-      pos++
-
-      tile.treeBase = file.readUInt8(pos)
-      pos++
-
-      tile.treeLeaves = file.readUInt8(pos)
-      pos++
-
-      tile.seedColor = file.readUInt32LE(pos)
-      pos += 4
-      
-      tile.seedColorOverlay = file.readUInt32LE(pos)
-      pos += 4
-
-      // ??
-      pos += 4
-
-      tile.growTime = file.readUInt32LE(pos)
-      pos += 4
-
-      // skip val2
-      pos += 4
-
-      tile.isRayman = file.readUInt16LE(pos)
-      pos += 2
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-  
-      tile.extraOptions = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-  
-      tile.texture2 = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      strLen = file.readUInt16LE(pos)
-      pos += 2
-  
-      tile.extraOptions2 = decodeStr(null, strLen, file, pos)
-      pos += strLen
-
-      pos += 80
-      if (version >= 11) {
-        strLen = file.readUInt16LE(pos)
-        pos += 2
-  
-        tile.punchOptions = decodeStr(null, strLen, file, pos)
-        pos += strLen
-      } else tile.punchOptions = ''
-
-      tiles.push(tile)
+  (data) => {
+    const meta = {
+      items: []
     }
 
-    meta.version   = version
-    meta.itemCount = itemCount
-    meta.tiles     = tiles
+    let mempos = 0;
 
-    return meta
+    meta.version = data.readUIntLE(mempos, 2);
+    mempos += 2;
+
+    meta.itemCount = data.readUInt32LE(mempos);
+    mempos += 4;
+
+    for (let k = 0; k < meta.itemCount; k++) {
+      const item = {};
+
+      item.id = data.readIntLE(mempos, 4)
+      mempos += 4;
+
+      item.editableType = data[mempos]
+      mempos += 1;
+
+      item.itemCategory = data[mempos]
+      mempos += 1;
+
+      item.actionType = data[mempos]
+      mempos += 1;
+
+      item.hitSoundType = data[mempos];
+      mempos += 1;
+
+      const nameLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.name = decodeStr(item.id, nameLength, data, mempos, true)
+      mempos += nameLength
+        
+      const textureLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.texture = decodeStr(item.id, textureLength, data, mempos)
+      mempos += textureLength
+
+      item.textureHash = data.readIntLE(mempos, 4);
+      mempos += 4;
+
+      item.itemKind = data[mempos];
+      mempos += 1;
+
+      // skip val 1
+      mempos += 4;
+
+      item.textureX = data[mempos];
+      mempos += 1;
+
+      item.textureY = data[mempos];
+      mempos += 1;
+
+      item.spreadType = data[mempos];
+      mempos += 1;
+
+      item.isStripeyWallpaper = data[mempos];
+      mempos += 1;
+
+      item.collisionType = data[mempos];
+      mempos += 1;
+
+      item.breakHits = data[mempos] / 6;
+      mempos += 1;
+
+      item.resetAfter = data.readIntLE(mempos, 4);
+      mempos += 4;
+
+      item.clothingType = data[mempos];
+      mempos += 1;
+
+      item.rarity = data.readIntLE(mempos, 2);
+      mempos += 2;
+
+      item.maxAmount = data[mempos];
+      mempos += 1;
+
+      const extraFileLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.extraFile = decodeStr(item.id, extraFileLength, data, mempos)
+      mempos += extraFileLength
+
+      item.extraFileHash = data.readIntLE(mempos, 4);
+      mempos += 4;
+
+      item.audioVolume = data.readIntLE(mempos, 4);
+      mempos += 4;
+
+      const petNameLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.petName = decodeStr(item.id, petNameLength, data, mempos)
+      mempos += petNameLength
+
+      const petPrefixLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.petPrefix = decodeStr(item.id, petPrefixLength, data, mempos)
+       mempos += petPrefixLength
+
+      const petSuffixLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.petSuffix = decodeStr(item.id, petSuffixLength, data, mempos)
+      mempos += petSuffixLength
+
+      const petAbilityLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.petAbility = decodeStr(item.id, petAbilityLength, data, mempos)
+      mempos += petAbilityLength
+
+      item.seedBase = data[mempos];
+      mempos += 1;
+
+      item.seedOverlay = data[mempos];
+      mempos += 1;
+
+      item.treeBase = data[mempos];
+      mempos += 1;
+
+      item.treeLeaves = data[mempos];
+      mempos += 1;
+
+
+      item.seedColor = data.readIntLE(mempos, 4);
+      mempos += 4;
+
+      item.seedOverlayColor = data.readIntLE(mempos, 4);
+      mempos += 4;
+
+      mempos += 4; /* Ingredients Ignored */
+
+      item.growTime = data.readIntLE(mempos, 4);
+      mempos += 4;
+
+      // skip val2
+      mempos += 2;
+
+      item.isRayman = data.readIntLE(mempos, 2);
+      mempos += 2;
+
+      const extraOptionsLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.extraOptions = decodeStr(item.id, extraOptionsLength, data, mempos)
+      mempos += extraOptionsLength
+
+      const textureTwoLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.texture2 = decodeStr(item.id, textureTwoLength, data, mempos)
+      mempos += textureTwoLength
+
+      const extraOptionsTwoLength = data.readInt16LE(mempos);
+      mempos += 2;
+
+      item.extraOptions2 = decodeStr(item.id, extraOptionsTwoLength, data, mempos)
+      mempos += extraOptionsTwoLength
+
+      item.unknownOptions = data.slice(mempos, mempos + 80);
+      mempos += 80;
+
+      item.punchOptions = "";
+
+      if (meta.version >= 11) {
+        const punchOptionsLength = data.readInt16LE(mempos);
+        mempos += 2;
+
+        item.punchOptions = decodeStr(item.id, punchOptionsLength, data, mempos)
+        mempos += punchOptionsLength
+      }
+
+      meta.items.push(item);
+    }
+
+    return meta;
   }
 
 module.exports = {
