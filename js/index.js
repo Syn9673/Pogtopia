@@ -1,15 +1,3 @@
-const { writeFileSync } = require('fs')
-const Path = require('path')
-
-writeFileSync(
-  Path.resolve('./'),
-  'NODE_OPTIONS=--max-old-space=1024'
-)
-
-require('dotenv').config()
-
-console.log(process.env)
-
 module.exports = {
   Server: require("./src/Server"),
   Peer: require("./src/Peer"),

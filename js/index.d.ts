@@ -115,11 +115,6 @@ interface Config {
    * The cache handler to replace redis.
    */
   cache?: CacheManager
-
-  /**
-   * The memory limit for the node process. (in GB)
-   */
-  memoryLimit: number = 0.5
 }
 
 

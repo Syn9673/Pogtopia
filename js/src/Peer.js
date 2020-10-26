@@ -18,11 +18,11 @@ module.exports = class Peer {
     this.data = data;
 
     if (saveToCache) {
-      const players = JSON.parse(await this.server.cache.get("players"));
+      const players = await this.server.cache.get("players");
       if (!Array.isArray(players)) return;
 
       players[this.data.connectID] = this.data;
-      await this.server.cache.set("players", JSON.stringify(players));
+      await this.server.cache.set("players", players);
     }
 
     await this.server.collections.players.insertOne(data);
@@ -39,12 +39,12 @@ module.exports = class Peer {
     if (this.hasPlayerData())
       await this.saveToDb()
 
-    const players = JSON.parse(await this.server.cache.get("players"));
+    const players = await this.server.cache.get("players");
 
     if (!Array.isArray(players) || !players[this.data.connectID]) return;
     players[this.data.connectID] = null;
 
-    await this.server.cache.set("players", JSON.stringify(players));
+    await this.server.cache.set("players", players);
   }
 
   requestLoginInformation() {
@@ -61,12 +61,12 @@ module.exports = class Peer {
   }
 
   async saveToCache() {
-    const players = JSON.parse(await this.server.cache.get("players"));
+    const players = await this.server.cache.get("players");
 
     if (!Array.isArray(players)) return;
     players[this.data.connectID] = this.data;
 
-    await this.server.cache.set("players", JSON.stringify(players));
+    await this.server.cache.set("players", players);
   }
 
   hasPlayerData() {
@@ -74,7 +74,7 @@ module.exports = class Peer {
   }
 
   async alreadyInCache() {
-    const players = JSON.parse(await this.server.cache.get("players"));
+    const players = await this.server.cache.get("players");
     if (!Array.isArray(players)) return;
     
     if (!players[this.data.connectID])
@@ -87,7 +87,7 @@ module.exports = class Peer {
 
     switch (type) {
       case "cache": {
-        const players = JSON.parse(await this.server.cache.get("players"));
+        const players = await this.server.cache.get("players");
         if (!Array.isArray(players)) return;
 
         const data = players[this.data.connectID];

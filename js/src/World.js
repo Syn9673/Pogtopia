@@ -35,7 +35,7 @@ module.exports = class World {
       else {
         if (world) {
           this.data = world;
-          await this.server.cache.set(`world:${this.data.name}`, JSON.stringify(this.data));
+          await this.server.cache.set(`world:${this.data.name}`, this.data);
         }
       }
     }
@@ -93,7 +93,7 @@ module.exports = class World {
     };
 
     await this.server.collections.worlds.replaceOne({ name: this.data.name }, this.data, { upsert: true });
-    await this.server.cache.set(`world:${this.data.name}`, JSON.stringify(this.data));
+    await this.server.cache.set(`world:${this.data.name}`, this.data);
   }
 
   async serialize() {
@@ -175,7 +175,7 @@ module.exports = class World {
   async saveToCache() {
     if (!this.hasData()) return;
 
-    await this.server.cache.set(`world:${this.data.name}`, JSON.stringify(this.data));
+    await this.server.cache.set(`world:${this.data.name}`, this.data);
   }
 
   async saveToDb() {

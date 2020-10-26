@@ -1,7 +1,7 @@
 const Native = require("./NativeWrapper");
 const Peer = require("./Peer");
 const { EventEmitter } = require("events");
-const Redis = require("ioredis");
+const Redis = require("./Redis");
 const TankPacket = require("./Packet/TankPacket");
 const mongo = require("mongodb");
 const fs = require("fs");
@@ -60,7 +60,7 @@ module.exports = class Server extends EventEmitter {
     process.on("SIGINT", async () => {
       if (!this.cache || !this.collections?.players || !this.collections?.worlds) return process.exit()
 
-      const players = JSON.parse(await this.cache.get("players"));
+      const players = await this.cache.get("players");
       let count = 0;
 
       for (const player of players) {
@@ -167,7 +167,7 @@ module.exports = class Server extends EventEmitter {
 
     await this.log("Server.dat file processed.");
 
-    await this.cache.set("players", JSON.stringify([])); // set an empty array for players cache
+    await this.cache.set("players", []); // set an empty array for players cache
   }
 
   log(...args) {
@@ -229,7 +229,7 @@ module.exports = class Server extends EventEmitter {
 
   async forEach(type, callback) {
     if (type === "player") {
-      const players = JSON.parse(await this.cache.get("players"));
+      const players = await this.cache.get("players");
       if (!Array.isArray(players)) return;
 
       for (const player of players) {
