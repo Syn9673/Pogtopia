@@ -132,6 +132,18 @@ module.exports = class Peer {
       ));
     }
 
+    if (name === 'EXIT') {
+      return this.send(Variant.from(
+        "OnFailedToEnterWorld",
+        1
+      ))
+
+      return this.send(Variant.from(
+        "OnConsoleMessage",
+        "`wEXIT`` from what?"
+      ))
+    }
+
     const world = new World(this.server, { name });
     const packet = await world.serialize();
 
