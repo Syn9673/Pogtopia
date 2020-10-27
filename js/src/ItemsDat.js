@@ -95,7 +95,7 @@ const decode =
       item.breakHits = data[mempos] / 6;
       mempos += 1;
 
-      item.resetAfter = data.readIntLE(mempos, 4);
+      item.resetStateAfter = data.readIntLE(mempos, 4);
       mempos += 4;
 
       item.clothingType = data[mempos];

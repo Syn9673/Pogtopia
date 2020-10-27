@@ -99,6 +99,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#add_item_to_inventory" class="tsd-kind-icon">add_<wbr>item_<wbr>to_<wbr>inventory</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#alreadyincache" class="tsd-kind-icon">already<wbr>InCache</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#audio" class="tsd-kind-icon">audio</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#cloth_packet" class="tsd-kind-icon">cloth_<wbr>packet</a></li>
@@ -108,6 +109,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#hasplayerdata" class="tsd-kind-icon">has<wbr>Player<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#inventory" class="tsd-kind-icon">inventory</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#join" class="tsd-kind-icon">join</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#remove_item_from_inventory" class="tsd-kind-icon">remove_<wbr>item_<wbr>from_<wbr>inventory</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#requestlogininformation" class="tsd-kind-icon">request<wbr>Login<wbr>Information</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#savetocache" class="tsd-kind-icon">save<wbr>ToCache</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="peer.html#savetodb" class="tsd-kind-icon">save<wbr>ToDb</a></li>
@@ -130,7 +132,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L806">index.d.ts:806</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L822">index.d.ts:822</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -170,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="../interfaces/peerdata.html" class="tsd-signature-type">PeerData</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L806">index.d.ts:806</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L822">index.d.ts:822</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -185,7 +187,7 @@
 					<div class="tsd-signature tsd-kind-icon">server<span class="tsd-signature-symbol">:</span> <a href="server.html" class="tsd-signature-type">Server</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L801">index.d.ts:801</a></li>
+							<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L817">index.d.ts:817</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,6 +200,43 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="add_item_to_inventory" class="tsd-anchor"></a>
+					<h3>add_<wbr>item_<wbr>to_<wbr>inventory</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add_<wbr>item_<wbr>to_<wbr>inventory<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, amount<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L925">index.d.ts:925</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds an item from the inventory</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The id of the item</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> amount: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The amount to add</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="alreadyincache" class="tsd-anchor"></a>
 					<h3>already<wbr>InCache</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -207,7 +246,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L857">index.d.ts:857</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L873">index.d.ts:873</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -229,7 +268,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L877">index.d.ts:877</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L893">index.d.ts:893</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -266,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L895">index.d.ts:895</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L911">index.d.ts:911</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -297,7 +336,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L820">index.d.ts:820</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L836">index.d.ts:836</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -334,7 +373,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L832">index.d.ts:832</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L848">index.d.ts:848</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -365,7 +404,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L863">index.d.ts:863</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L879">index.d.ts:879</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -399,7 +438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L852">index.d.ts:852</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L868">index.d.ts:868</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -421,7 +460,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L882">index.d.ts:882</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L898">index.d.ts:898</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -443,7 +482,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L870">index.d.ts:870</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L886">index.d.ts:886</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -471,6 +510,43 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="remove_item_from_inventory" class="tsd-anchor"></a>
+					<h3>remove_<wbr>item_<wbr>from_<wbr>inventory</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove_<wbr>item_<wbr>from_<wbr>inventory<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, amount<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L918">index.d.ts:918</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes an item from the inventory</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The id of the item</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> amount: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The amount to remove</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="requestlogininformation" class="tsd-anchor"></a>
 					<h3>request<wbr>Login<wbr>Information</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -480,7 +556,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L837">index.d.ts:837</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L853">index.d.ts:853</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -502,7 +578,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L847">index.d.ts:847</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L863">index.d.ts:863</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -524,7 +600,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L842">index.d.ts:842</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L858">index.d.ts:858</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -546,7 +622,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L826">index.d.ts:826</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L842">index.d.ts:842</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -577,7 +653,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/3f6c45d/js/index.d.ts#L889">index.d.ts:889</a></li>
+									<li>Defined in <a href="https://github.com/Alexander9673/Pogtopia/blob/f3f7c74/js/index.d.ts#L905">index.d.ts:905</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -640,6 +716,9 @@
 								<a href="peer.html#server" class="tsd-kind-icon">server</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="peer.html#add_item_to_inventory" class="tsd-kind-icon">add_<wbr>item_<wbr>to_<wbr>inventory</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="peer.html#alreadyincache" class="tsd-kind-icon">already<wbr>InCache</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -665,6 +744,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="peer.html#join" class="tsd-kind-icon">join</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="peer.html#remove_item_from_inventory" class="tsd-kind-icon">remove_<wbr>item_<wbr>from_<wbr>inventory</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="peer.html#requestlogininformation" class="tsd-kind-icon">request<wbr>Login<wbr>Information</a>

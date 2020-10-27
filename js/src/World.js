@@ -62,7 +62,8 @@ module.exports = class World {
         fg: 0,
         bg: 0,
         x,
-        y
+        y,
+        hitsTaken: 0
       }
 
       if (y >= BEDROCK_START_LEVEL || (y === DIRT_START_LEVEL && x === mainDoorPosition)) {

@@ -459,6 +459,16 @@ interface WorldTile {
    * The world destination of a block. (For doors)
    */
   doorDestination?: string
+
+  /**
+   * The amount of hits a block has taken
+   */
+  hitsTaken?: number
+
+  /**
+   * The date on when the breakHits shall reset. (You would have to implement it yourself.)
+   */
+  resetAfter?: number
 }
 
 
