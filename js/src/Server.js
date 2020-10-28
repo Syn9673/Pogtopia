@@ -235,8 +235,16 @@ module.exports = class Server extends EventEmitter {
         if (!player) continue;
         callback(new Peer(this, player));
       }
-      // todo: world
-    } else if (type === "world") {}
+    } else if (type === "world") {
+      const worldKeys = await this.cache.keys('world:*')
+                                        .filter(key => key.toLowerCase().startsWith('world'))
+
+      for (const key of worldKeys) {
+        const world = await this.cache.get(key)
+
+        callback(new World(this, world))
+      }
+    }
   }
 
   async find(type, filter) {
