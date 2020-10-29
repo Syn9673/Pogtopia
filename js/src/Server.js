@@ -138,9 +138,9 @@ module.exports = class Server extends EventEmitter {
 
     let mongoClient;
     try {
-      const { user, password, host, port } = this.config.db
+      const { user, pass, host, port } = this.config.db
 
-      mongoClient = new mongo.MongoClient(`mongodb://${user}:${password}@${host || 'localhost'}:${port || 27017}`, { useUnifiedTopology: true });
+      mongoClient = new mongo.MongoClient(`mongodb://${user}:${pass}@${host || 'localhost'}:${port || 27017}`, { useUnifiedTopology: true });
       await mongoClient.connect(); // connect to mongodb
     } catch (err) {
       console.log('Failed connecting to MongoDB. Error:', err.message)
