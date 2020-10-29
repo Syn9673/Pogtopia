@@ -1,6 +1,6 @@
 {
   "name": "pogtopia",
-  "version": "0.3.1-github",
+  "version": "0.3.2-github",
   "description": "",
   "main": "./js/index.js",
   "dependencies": {

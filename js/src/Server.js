@@ -22,7 +22,7 @@ module.exports = class Server extends EventEmitter {
 
     // create our cache, or redis connection
     try {
-      this.cache = this.config.cache || new Redis();
+      this.cache = this.config.cache || new Redis(this.config.redis);
     } catch(err) {
       console.log('Failed connecting to Redis Server:', err.message)
       return process.exit()
@@ -138,7 +138,9 @@ module.exports = class Server extends EventEmitter {
 
     let mongoClient;
     try {
-      mongoClient = new mongo.MongoClient("mongodb://127.0.0.1", { useUnifiedTopology: true });
+      const { user, password, host, port } = this.config.db
+
+      mongoClient = new mongo.MongoClient(`mongodb://${user}:${password}@${host || 'localhost'}:${port || 27017}`, { useUnifiedTopology: true });
       await mongoClient.connect(); // connect to mongodb
     } catch (err) {
       console.log('Failed connecting to MongoDB. Error:', err.message)

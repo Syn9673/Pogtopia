@@ -92,10 +92,53 @@ interface CacheManager {
 
 
 /**
+ * Configuration for the database
+ */
+interface DatabaseConfig {
+  /**
+   * Your username at the mongodb database
+   */
+  user: string
+
+  /**
+   * Your password at the mongodb database
+   */
+  pass: string
+
+  /**
+   * The host to connect to for mongo
+   */
+  host?: string
+
+  /**
+   * The port associated with the host
+   */
+  port?: string
+}
+
+
+
+
+
+
+/**
  * The general configuration
  */
 interface Config {
+  /**
+   * Server config
+   */
   server: ServerConfig
+
+  /**
+   * Database Config
+   */
+  db: DatabaseConfig
+
+  /**
+   * Redis config
+   */
+  redis?: IORedis.RedisOptions
 
   /**
    * A custom function to calculate the size of the world packet to allocate, excluding the necessary data of a world. (Basically just for tiles)
