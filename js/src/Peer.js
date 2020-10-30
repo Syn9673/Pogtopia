@@ -101,6 +101,8 @@ module.exports = class Peer {
       }
 
       case "db": {
+        if (!this.server.collections) return
+
         let result = await this.server.collections.players.findOne(filter);
         if (!result)
           result = {};

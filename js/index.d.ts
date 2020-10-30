@@ -667,12 +667,17 @@ export class Server extends EventEmitter {
   /**
    * Reset the values of the server.dat file
    */
-  clearServerDat(): void;
+  public clearServerDat(): void;
+
+  /**
+   * Whether or not mongodb collections are in place
+   */
+  public hasCollections(): boolean;
 
   /**
    * Start the server
    */
-  public start(): void;
+  public start(): Promise<void>;
 
   /**
    * Pretty much a console.log but it's asynchronous

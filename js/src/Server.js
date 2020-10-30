@@ -115,6 +115,12 @@ module.exports = class Server extends EventEmitter {
     this.availableUserID = 0;
   }
 
+  hasCollections() {
+    return this.collections.players &&
+            this.collections.server &&
+            this.collections.worlds
+  }
+
   async start() {
     this.setItemsDat(this.config.server?.itemsDatFile)
 
