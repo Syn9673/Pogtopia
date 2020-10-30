@@ -116,9 +116,12 @@ module.exports = class Server extends EventEmitter {
   }
 
   hasCollections() {
-    return this.collections.players &&
-            this.collections.server &&
-            this.collections.worlds
+    return this.collections ? (
+      this.collections.server &&
+      this.collections.players &&
+      this.collections.worlds
+    ) :
+    false
   }
 
   async start() {
