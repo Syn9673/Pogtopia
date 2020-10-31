@@ -129,7 +129,7 @@ void js_send_multiple_packets(NCP) {
 
 	for (int i = 0; i < count; ++i) {
 		auto buffer = packets.Get(i).As<Napi::Buffer<uint8_t>>();
-		auto packet = enet_packet_create(buffer, buffer.Length(), ENET_PACKET_FLAG_RELIABLE);
+		auto packet = enet_packet_create(buffer.Data(), buffer.Length(), ENET_PACKET_FLAG_RELIABLE);
 
 		enet_peer_send(peer, 0, packet);
 	}

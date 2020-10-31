@@ -40,8 +40,10 @@ module.exports = class Peer {
     type = type?.toLowerCase();
 
     Native.disconnect(type, this.data.connectID);
-    if (this.hasPlayerData())
+    if (this.hasPlayerData()) {
+      this.data.hasMovedInWorld = false
       await this.saveToDb()
+    }
 
     const players = await this.server.cache.get("players");
 
