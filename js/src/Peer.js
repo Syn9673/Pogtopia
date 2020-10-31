@@ -32,6 +32,10 @@ module.exports = class Peer {
     Native.send(data, this.data.connectID);
   }
 
+  send_multiple(...data) {
+    Native.send_multiple(data, this.data.connectID)
+  }
+
   async disconnect(type) {
     type = type?.toLowerCase();
 
@@ -123,29 +127,29 @@ module.exports = class Peer {
 
     name = name.toUpperCase().trim();
 
-    if (!this.hasPlayerData() || name.match(/\W+|_/g) || name.length > 24 || name.length < 1) {
-      this.send(Variant.from(
-        "OnFailedToEnterWorld",
-        1
-      ));
+    if (!this.hasPlayerData() || name.match(/\W+|_/g) || name.length > 24 || name.length < 1)
+      return this.send_multiple(
+        Variant.from(
+          "OnFailedToEnterWorld",
+          1
+        ),
+        Variant.from(
+          "OnConsoleMessage",
+          "Something went wrong. Please try again."
+        )
+      )
 
-      return this.send(Variant.from(
-        "OnConsoleMessage",
-        "Something went wrong. Please try again."
-      ));
-    }
-
-    if (name === 'EXIT') {
-      this.send(Variant.from(
-        "OnFailedToEnterWorld",
-        1
-      ))
-
-      return this.send(Variant.from(
-        "OnConsoleMessage",
-        "`wEXIT`` from what?"
-      ))
-    }
+    if (name === 'EXIT')
+      return this.send_multiple(
+        Variant.from(
+          "OnFailedToEnterWorld",
+          1
+        ),
+        Variant.from(
+          "OnConsoleMessage",
+          "`wEXIT`` from what?"
+        )
+      )
 
     const world = new World(this.server, { name });
     const packet = await world.serialize();

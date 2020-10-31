@@ -555,6 +555,16 @@ interface WorldData {
 
 
 /**
+ * A type that describes what are the values that can be sent to a peer.
+ */
+export type SendableData = Buffer | TextPacket | TankPacket | Variant
+
+
+
+
+
+
+/**
  * A class that represents a world
  */
 export class World {
@@ -887,7 +897,13 @@ export class Peer {
    * Sends the packet to the peer
    * @param data The packet to send
    */
-  public send(data: Buffer | TextPacket | Variant | TankPacket): void;
+  public send(data: SendableData): void;
+
+  /**
+   * Sends multiple packets to a peer.
+   * @param data The data to send. Not an array but argument parameters.
+   */
+  public send_multiple(...data: SendableData[]): void;
 
   /**
    * Disconnects a peer

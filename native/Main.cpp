@@ -119,6 +119,22 @@ void js_send_packet(NCP) {
 	enet_peer_send(peer, 0, packet);
 }
 
+void js_send_multiple_packets(NCP) {
+	auto packets 				 = info[0].ToObject();
+	auto count	 				 = info[1].As<Napi::Number>().Uint32Value();
+	auto connectIDFromJS = info[2].As<Napi::Number>().Uint32Value();
+
+	// peers
+	auto peer = peers[connectIDFromJS];
+
+	for (int i = 0; i < count; ++i) {
+		auto buffer = packets.Get(i).As<Napi::Buffer<uint8_t>>();
+		auto packet = enet_packet_create(bytes, buffer.Length(), ENET_PACKET_FLAG_RELIABLE);
+
+		enet_peer_send(packet, 0, packet)
+	}
+}
+
 void js_peer_disconnect(NCP) {
 	auto type = info[0].As<Napi::Number>().Uint32Value();
 	auto connectIDFromJS = info[1].As<Napi::Number>().Uint32Value();
@@ -147,12 +163,13 @@ void js_peer_disconnect(NCP) {
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-	exports["init"] = Napi::Function::New(env, js_init);
-	exports["set_event_emitter"] = Napi::Function::New(env, js_set_event_emitter);
-	exports["host_create"] = Napi::Function::New(env, js_host_create);
+	exports["init"] 							= Napi::Function::New(env, js_init);
+	exports["set_event_emitter"] 	= Napi::Function::New(env, js_set_event_emitter);
+	exports["host_create"] 				= Napi::Function::New(env, js_host_create);
 	exports["host_event_recieve"] = Napi::Function::New(env, js_host_event_recieve);
-	exports["send_packet"] = Napi::Function::New(env, js_send_packet);
-	exports["peer_disconnect"] = Napi::Function::New(env, js_peer_disconnect);
+	exports["send_packet"] 				= Napi::Function::New(env, js_send_packet);
+	exports["peer_disconnect"] 		= Napi::Function::New(env, js_peer_disconnect);
+	exports["send_multiple"]			= Napi::Function::New(env, js_send_multiple_packets);
 
 	return exports;
 }

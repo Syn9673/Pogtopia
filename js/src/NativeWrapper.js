@@ -85,6 +85,51 @@ module.exports = class NativeWrapper {
   }
 
   /**
+   * Sends multiple packets to the specific connectID.
+   * @static
+   * @param {(Buffer|TextPacket|Variant|TankPacket)[]} packets
+   * @param {number} connectID
+   */
+  static send_multiple(packets, connectID) {
+    packets = packets.map(
+      packet => {
+        let val;
+
+        switch (packet.constructor.name) {    
+          case "TextPacket": {
+            const buffer = (() => {
+              const buf = Buffer.alloc(5 + packet.text.length);
+    
+              buf.writeUInt32LE(packet.type);
+              buf.write(packet.text, 4);
+    
+              return buf;
+            })();
+    
+            val = buffer;
+            break;
+          }
+    
+          case "TankPacket":
+          case "Variant": {
+            val = packet.parse()
+            break;
+          }
+
+          default: {
+            val = packet;
+            break;
+          }
+        }
+
+        return val
+      }
+    )
+
+    native.send_multiple(packets, packets.length, connectID)
+  }
+
+  /**
    * Disconnect a peer
    * @param {"now"|"later"} [type] What type of disconnect method
    * @param {number} connectID The connectID of the peer
