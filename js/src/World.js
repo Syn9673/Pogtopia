@@ -42,6 +42,9 @@ module.exports = class World {
   }
 
   async generate(width = 100, height = 60) {
+    if (typeof this.server.config.worldGenerator === 'function')
+      this.server.config.worldGenerator(this, width, height)
+
     const tileCount = width * height;
     const tiles = []
     const mainDoorPosition = Math.floor(Math.random() * width);
@@ -78,6 +81,7 @@ module.exports = class World {
         // Main Door options
         tile.label = "EXIT";
         tile.doorDestination = "EXIT";
+        tile.isDoor = true;
       }
 
       tiles.push(tile);
