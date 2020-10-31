@@ -1,7 +1,6 @@
 const Native = require("./NativeWrapper");
 const Peer = require("./Peer");
 const { EventEmitter } = require("events");
-const Redis = require("./Redis");
 const TankPacket = require("./Packet/TankPacket");
 const mongo = require("mongodb");
 const fs = require("fs");
@@ -20,13 +19,14 @@ module.exports = class Server extends EventEmitter {
     if (typeof this.config.server?.itemsDatFile !== 'string')
       throw new Error('Please supply a proper path to items.dat')
 
-    // create our cache, or redis connection
-    try {
-      this.cache = this.config.cache || new Redis(this.config.redis);
-    } catch(err) {
-      console.log('Failed connecting to Redis Server:', err.message)
-      return process.exit()
-    }
+    // use/create cache connection
+    let cache;
+    if (!this.config.cache)
+      cache = new (require('./Redis'))(this.config.redis)
+    else cache = this.config.cache
+
+    // apply the cache to the server prop
+    this.cache = cache
 
     // create other event emitters for users to use
     this.events = new EventEmitter();
