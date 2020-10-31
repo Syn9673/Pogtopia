@@ -42,8 +42,10 @@ module.exports = class World {
   }
 
   async generate(width = 100, height = 60) {
-    if (typeof this.server.config.worldGenerator === 'function')
-      this.server.config.worldGenerator(this, width, height)
+    if (typeof this.server.config.worldGenerator === 'function') {
+      this.data = await this.server.config.worldGenerator(this, width, height)
+      return
+    }
 
     const tileCount = width * height;
     const tiles = []

@@ -155,12 +155,12 @@ interface Config {
   worldSerializationCall?: (pos: number, packet: Buffer, tiles: WorldTile[]) => void
 
   /**
-   * A custom funtion to replace world generation. It returns nothing because you would have to modify the `data` property of the world object itself. And also save the world to cache and database.
+   * A custom funtion to replace world generation.
    * @param world The world object.
    * @param width The width of the world.
    * @param height The height of the world.
    */
-  worldGenerator?: (world: World, width?: number, height?: number) => Promise<void>
+  worldGenerator?: (world: World, width?: number, height?: number) => Promise<WorldData>
 
   /**
    * The cache handler to replace redis.
