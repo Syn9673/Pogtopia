@@ -323,9 +323,9 @@ smstate|0`))
   }
 
   async leave(sendToMenu) {
-    if (this.data.currentWorld === 'EXIT') return
+    if (this.data.currentWorld === 'EXIT' || !this.data.currentWorld) return
 
-    const world = await this.world(name, true)
+    const world = await this.world(this.data.currentWorld, true)
     world.data.playerCount--
 
     if (sendToMenu)
