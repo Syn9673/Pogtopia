@@ -345,7 +345,7 @@ smstate|0`))
     await this.server.forEach(
       'player',
       eachPeer => {
-        if (eachPeer.data.currentWorld === world.name &&
+        if (eachPeer.data.currentWorld === world.data.name &&
             eachPeer.data.connectID !== this.data.connectID)
           eachPeer.send(
             Variant.from(
