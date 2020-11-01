@@ -86,6 +86,8 @@ module.exports = class Server extends EventEmitter {
         const world = new World(this, { name: key.split(":")[1] }); // world:NAME_HERE
         await world.fetch();
 
+        world.data.playerCount = 0
+
         await world.saveToDb();
         await world.uncache();
 

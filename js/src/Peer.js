@@ -356,9 +356,15 @@ smstate|0`))
       }
     )
 
+    if (world.playerCount < 1) { // remove to cache if empty
+      world.data.playerCount = 0
+
+      await world.saveToDb()
+      await world.uncache()
+    } else await world.saveToCache()
+
     this.data.currentWorld = 'EXIT'
     
     await this.saveToCache()
-    await world.saveToCache()
   }
 }
