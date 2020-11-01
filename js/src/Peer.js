@@ -62,9 +62,14 @@ module.exports = class Peer {
 
   async saveToDb() {
     delete this.data["_id"]; // we need this gone if present
-    this.data.displayName = this.data.displayName.replace(/`.|`/g, '')
+    const data = Object.assign(
+      {},
+      this.data
+    )
 
-    await this.server.collections.players.replaceOne({ userID: this.data.userID }, this.data, { upsert: true });
+    data.displayName = data.displayName.replace(/`.|`/g, '')
+
+    await this.server.collections.players.replaceOne({ userID: data.userID }, data, { upsert: true });
   }
 
   async saveToCache() {

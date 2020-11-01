@@ -70,6 +70,7 @@ module.exports = class Server extends EventEmitter {
 
         const peer = new Peer(this, player);
         peer.data.hasMovedInWorld = false;
+        peer.data.currentWorld    = 'EXIT'
 
         await peer.saveToDb();
 
