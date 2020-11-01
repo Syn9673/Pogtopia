@@ -153,12 +153,14 @@ module.exports = class Peer {
         )
       )
 
-    const world = new World(this.server, { name });
+    const world  = new World(this.server, { name });
     const packet = await world.serialize();
 
     this.send(packet);
 
     const mainDoor = world.data.tiles.find(tile => tile.fg === 6);
+
+    world.data.playerCount++
 
     const x = mainDoor?.x ?? 0;
     const y = mainDoor?.y ?? 0;
@@ -168,6 +170,7 @@ module.exports = class Peer {
     this.data.currentWorld = name;
     
     await this.saveToCache();
+    await world.saveToCache()
 
     // send OnSpawn call
     this.send(Variant.from(
