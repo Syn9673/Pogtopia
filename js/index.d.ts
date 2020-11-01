@@ -555,6 +555,11 @@ interface WorldData {
    * An array of tiles in the world
    */
   tiles?: WorldTile[]
+
+  /**
+   * Amount of players in the world
+   */
+  playerCount?: number
 }
 
 
@@ -607,7 +612,7 @@ export class World {
 
   /**
    * Fetches the world data from the cache, or db if not present. This will set the `.data` property. This doesn't auto generate worlds if not present.
-   * @param shouldGenerate Whether or not to auto generate a world if not present in cache or the database.
+   * @param shouldGenerate Whether or not to auto generate a world if not present in cache or the database. Defaults to true
    */
   public fetch(shouldGenerate?: boolean): Promise<void>;
   
@@ -635,6 +640,11 @@ export class World {
    * Deletes the world from cache
    */
   public uncache(): Promise<void>;
+
+  /**
+   * Fixes the world data and checks for invalid values.
+   */
+  public fixData(): void;
 }
 
 
@@ -897,7 +907,7 @@ export class Peer {
   /**
    * Creates a new player to be saved to the database. This will also set the `data` property of a peer
    * @param data The data of the peer to create
-   * @param saveToCache Whether or not to save the data to cache as well
+   * @param saveToCache Whether or not to save the data to cache as well. Defaults to false
    */
   public create(data: PeerData, saveToCache?: boolean): Promise<void>;
 
@@ -953,7 +963,7 @@ export class Peer {
   /**
    * Joins a world
    * @param name The name of the world
-   * @param isSuperMod Whether or not the player joining is a super mod.
+   * @param isSuperMod Whether or not the player joining is a super mod. Defaults to false
    */
   public join(name: string, isSuperMod?: boolean): Promise<void>;
 
@@ -972,13 +982,19 @@ export class Peer {
   /**
    * Creates a new world class then returns it.
    * @param name The name of the world
-   * @param fetchDataAfter Whether or not to auto-fetch the world data from either cache or the database.
+   * @param fetchDataAfter Whether or not to auto-fetch the world data from either the cache or the database. Defaults to false.
    */
-  public world(name?: string | boolean, fetchDataAfter?: boolean): World;
+  public world(name: string, fetchDataAfter?: boolean): World;
+
+  /**
+   * Creates a new world class then returns it
+   * @param fetchDataAfter Whehter or not to auto-fetch the world data from either the cache or the database. Defaults to false
+   */
+  public world(fetchDataAfter?: boolean): World;
 
   /**
    * Returns the packet for clothing
-   * @param silenced Whether or not to play the sfx when wearing clothes
+   * @param silenced Whether or not to play the sfx when wearing clothes. Defaults to false
    */
   public cloth_packet(silenced?: boolean): Variant;
 
@@ -995,6 +1011,12 @@ export class Peer {
    * @param amount The amount to add
    */
   public add_item_to_inventory(id: number, amount?: number): Promise<void>;
+
+  /**
+   * Makes the current peer leave the current world he is in.
+   * @param sendToMenu Whether or not to send the peer to the world menu. Defaults to false.
+   */
+  public leave(sendToMenu?: boolean): Promise<void>;
 }
 
 

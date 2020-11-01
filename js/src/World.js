@@ -23,9 +23,10 @@ module.exports = class World {
     
     const worldStr = await this.server.cache.get(`world:${this.data.name}`);
     
-    if (worldStr)
+    if (worldStr) {
       this.data = worldStr;
-    else {
+      this.fixData()
+    } else {
       const world = await this.server.collections.worlds.findOne({ name: this.data.name });
       const width = this.data.name === "TINY" ? 50 : 100;
       const height = this.data.name === "TALL" ? 100 : (this.data.name === "TINY" ? 50 : 60);
@@ -35,6 +36,8 @@ module.exports = class World {
       else {
         if (world) {
           this.data = world;
+          this.fixData()
+
           await this.server.cache.set(`world:${this.data.name}`, this.data);
         }
       }
@@ -96,7 +99,8 @@ module.exports = class World {
       tiles,
       tileCount,
       width,
-      height
+      height,
+      playerCount: 0
     };
 
     await this.server.collections.worlds.replaceOne({ name: this.data.name }, this.data, { upsert: true });
@@ -194,5 +198,51 @@ module.exports = class World {
 
   async uncache() {
     await this.server.cache.del(`world:${this.data.name}`);
+  }
+
+  fixData() {
+    if (!this.hasData()) return
+
+    const types = {
+      name: 'string',
+      width: 'number',
+      height: 'number',
+      tileCount: 'number',
+      tiles: 'array',
+      playerCount: 'number'
+    }
+
+    const keys = Object.entries(types)
+    keys.forEach(
+      entry => {
+        const key = entry[0]
+        const val = entry[1]
+
+        switch (val) {
+          case 'array': {
+            if (!Array.isArray(this.data[key]))
+              this.data[key] = []
+            break
+          }
+          
+          case 'string': {
+            if (typeof this.data[key] !== 'string')
+              this.data[key] = ''
+            break
+          }
+
+          case 'number': {
+            if (typeof this.data[key] !== 'number')
+              this.data[key] = 0
+            break
+          }
+
+          default: {
+            this.data[key] = {}
+            break
+          }
+        }
+      }
+    )
   }
 }

@@ -123,7 +123,7 @@ module.exports = class Peer {
     }
   }
 
-  async join(name, isSuperMod = false) {
+  async join(name, isSuperMod) {
     if (!name)
       name = ''
 
@@ -257,23 +257,21 @@ smstate|0`))
     this.send(tankbuffer);
   }
 
-  async world(name, fetchDataAfter = false) {
-    if (!name || typeof name !== 'string')
-      name = this.data.currentWorld
-    else name = name?.toUpperCase()
-
+  async world(name, fetchDataAfter) {
     if (typeof name === 'boolean')
       fetchDataAfter = name
 
-    const world = new World(this.server, { name })
+    if (typeof name !== 'string')
+      name = this.data.currentWorld
 
+    const world = new World(this.server, { name })
     if (fetchDataAfter)
       await world.fetch(false)
 
     return world
   }
 
-  cloth_packet(silenced = false) {
+  cloth_packet(silenced) {
     if (!this.hasPlayerData()) return
 
     return Variant.from(
@@ -322,5 +320,36 @@ smstate|0`))
     }
 
     await this.saveToCache()
+  }
+
+  async leave(sendToMenu) {
+    if (this.data.currentWorld === 'EXIT') return
+
+    const world = await this.world(name, true)
+    world.data.playerCount--
+
+    if (sendToMenu)
+      this.send(
+        Variant.from('OnRequestWorldSelectMenu')
+      )
+
+    await this.server.forEach(
+      'player',
+      eachPeer => {
+        if (eachPeer.data.currentWorld === world.name &&
+            eachPeer.data.connectID !== this.data.connectID)
+          eachPeer.send(
+            Variant.from(
+              'OnRemove',
+              `netID|${this.data.connectID}`
+            )
+          )
+      }
+    )
+
+    this.data.currentWorld = 'EXIT'
+    
+    await this.saveToCache()
+    await world.saveToCache()
   }
 }
