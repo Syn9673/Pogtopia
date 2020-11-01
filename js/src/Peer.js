@@ -328,6 +328,8 @@ smstate|0`))
     const world = await this.world(this.data.currentWorld, true)
     world.data.playerCount--
 
+    this.data.hasMovedInWorld = false
+
     if (sendToMenu)
       this.send(
         Variant.from('OnRequestWorldSelectMenu')
