@@ -329,6 +329,10 @@ smstate|0`))
     world.data.playerCount--
 
     this.data.hasMovedInWorld = false
+    this.data.displayName     = this.data.displayName.replace(
+                                  /`./g,
+                                  ''
+                                )
 
     if (sendToMenu)
       this.send(
