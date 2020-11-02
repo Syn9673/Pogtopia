@@ -171,7 +171,7 @@ Napi::Boolean js_is_connected(NCP) {
 	auto connectIDFromJS = info[0].As<Napi::Number>().Uint32Value();
 	auto peer		     = peers[connectIDFromJS];
 
-	return Napi::Boolean::New(env, peer && peer.state == ENET_PEER_STATE_CONNECTED)
+	return Napi::Boolean::New(info.Env(), peer && peer->state == ENET_PEER_STATE_CONNECTED)
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
