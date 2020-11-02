@@ -42,6 +42,8 @@ module.exports = class Peer {
     Native.disconnect(type, this.data.connectID);
     if (this.hasPlayerData()) {
       this.data.hasMovedInWorld = false
+      this.data.online          = false
+
       await this.saveToDb()
     }
 
@@ -83,6 +85,15 @@ module.exports = class Peer {
 
   hasPlayerData() {
     return Object.keys(this.data).length > 1 ? true : false;
+  }
+
+  async setOnline(online = false) {
+    if (!this.hasPlayerData()) return
+    
+    this.data.online = online
+    
+    await this.saveToDb()
+    await this.saveToCache()
   }
 
   async alreadyInCache() {

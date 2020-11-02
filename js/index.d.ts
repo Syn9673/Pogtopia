@@ -407,6 +407,11 @@ interface PeerData {
    * Email address of a peer
    */
   email?: string
+
+  /**
+   * Whether or not a peer is online. (Must be manually set.)
+   */
+  online?: boolean
 }
 
 
@@ -948,6 +953,12 @@ export class Peer {
    * Check if proper player data is present.
    */
   public hasPlayerData(): boolean;
+
+  /**
+   * Sets the status of a player
+   * @param online Whether or not to set it as offline or online. Defaults to false
+   */
+  public setOnline(online?: boolean): Promise<void>
 
   /**
    * Whether or not a player is already in cache
