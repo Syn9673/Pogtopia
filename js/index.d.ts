@@ -517,6 +517,11 @@ interface WorldTile {
   doorDestination?: string
 
   /**
+   * The ID of the door
+   */
+  doorID?: string
+
+  /**
    * The amount of hits a block has taken
    */
   hitsTaken?: number
@@ -963,8 +968,9 @@ export class Peer {
 
   /**
    * Whether or not a player is already in cache
+   * @param userID The user id to use for filter, if not specified, will use the connectID.
    */
-  public alreadyInCache(): Promise<boolean>;
+  public alreadyInCache(userID?: number): Promise<PeerData | null>;
 
   /**
    * Fetches the peer data from the cache or database

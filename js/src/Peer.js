@@ -39,6 +39,8 @@ module.exports = class Peer {
   async disconnect(type) {
     type = type?.toLowerCase();
 
+    await this.fetch('cache')
+
     Native.disconnect(type, this.data.connectID);
     if (this.hasPlayerData()) {
       this.data.hasMovedInWorld = false
@@ -98,13 +100,17 @@ module.exports = class Peer {
     await this.saveToDb()
   }
 
-  async alreadyInCache() {
+  async alreadyInCache(userID = null) {
     const players = await this.server.cache.get("players");
     if (!Array.isArray(players)) return;
+
+    const condition = userID ?
+                        players.find(p => p && p.userID === userID) :
+                        players[this.data.connectID]
     
-    if (!players[this.data.connectID])
-      return false;
-    else return true;
+    if (!condition)
+      return null;
+    else return condition;
   }
 
   async fetch(type, filter) {
