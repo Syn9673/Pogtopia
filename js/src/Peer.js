@@ -87,13 +87,15 @@ module.exports = class Peer {
     return Object.keys(this.data).length > 1 ? true : false;
   }
 
-  async setOnline(online = false) {
+  async setOnline(cache, online = false) {
     if (!this.hasPlayerData()) return
-    
+
     this.data.online = online
-    
+
+    if (cache)
+      await this.saveToCache()
+      
     await this.saveToDb()
-    await this.saveToCache()
   }
 
   async alreadyInCache() {

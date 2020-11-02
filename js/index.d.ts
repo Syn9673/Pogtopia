@@ -956,9 +956,10 @@ export class Peer {
 
   /**
    * Sets the status of a player
+   * @param cache Whether or not to save to cache
    * @param online Whether or not to set it as offline or online. Defaults to false
    */
-  public setOnline(online?: boolean): Promise<void>
+  public setOnline(cache: boolean, online?: boolean): Promise<void>
 
   /**
    * Whether or not a player is already in cache
