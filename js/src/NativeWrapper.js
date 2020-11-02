@@ -157,4 +157,8 @@ module.exports = class NativeWrapper {
 
     native.peer_disconnect(typeAsNum, connectID);
   }
+
+  static isConnected(connectID) {
+    return native.is_connected(connectID)
+  }
 }

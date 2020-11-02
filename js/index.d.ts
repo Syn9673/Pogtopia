@@ -1028,6 +1028,11 @@ export class Peer {
    * @param sendToMenu Whether or not to send the peer to the world menu. Defaults to false.
    */
   public leave(sendToMenu?: boolean): Promise<void>;
+
+  /**
+   * Whether or not a peer is connected
+   */
+  public isConnected(): boolean;
 }
 
 

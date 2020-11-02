@@ -383,4 +383,8 @@ smstate|0`))
     
     await this.saveToCache()
   }
+
+  isConnected() {
+    return Native.isConnected(this.data.connectID)
+  }
 }

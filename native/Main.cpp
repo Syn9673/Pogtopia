@@ -114,6 +114,9 @@ void js_send_packet(NCP) {
 
 	auto bytes = buf.Data();
 	auto peer = peers[connectIDFromJS];
+
+	if (!peer) return;
+
 	auto packet = enet_packet_create(bytes, buf.Length(), ENET_PACKET_FLAG_RELIABLE);
 
 	enet_peer_send(peer, 0, packet);
@@ -126,6 +129,8 @@ void js_send_multiple_packets(NCP) {
 
 	// peers
 	auto peer = peers[connectIDFromJS];
+
+	if (!peer) return;
 
 	for (int i = 0; i < count; ++i) {
 		auto buffer = packets.Get(i).As<Napi::Buffer<uint8_t>>();
@@ -162,6 +167,14 @@ void js_peer_disconnect(NCP) {
 	}
 }
 
+bool js_is_connected(NCP) {
+	auto connectIDFromJS = info[0].As<Napi::Number>().Uint32Value();
+	auto peer						 = peers[connectIDFromJS];
+
+	return peer &&
+					peer.state == ENET_PEER_STATE_CONNECTED
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
 	exports["init"] 							= Napi::Function::New(env, js_init);
 	exports["set_event_emitter"] 	= Napi::Function::New(env, js_set_event_emitter);
@@ -170,6 +183,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
 	exports["send_packet"] 				= Napi::Function::New(env, js_send_packet);
 	exports["peer_disconnect"] 		= Napi::Function::New(env, js_peer_disconnect);
 	exports["send_multiple"]			= Napi::Function::New(env, js_send_multiple_packets);
+	exports["is_connected"]				= Napi::Function::New(env, js_is_connected);
 
 	return exports;
 }
