@@ -982,8 +982,10 @@ export class Peer {
    * Joins a world
    * @param name The name of the world
    * @param isSuperMod Whether or not the player joining is a super mod. Defaults to false
+   * @param xPos The position to spawn the player at the x-axis. Defaults to undefined
+   * @param yPos The position to spawn the player at the y-axis. Defaults to undefined
    */
-  public join(name: string, isSuperMod?: boolean): Promise<void>;
+  public join(name: string, isSuperMod?: boolean, xPos?: number, yPos?: number): Promise<void>;
 
   /**
    * Plays an audio file.

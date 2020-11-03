@@ -131,7 +131,7 @@ module.exports = class World {
 
     const WORLD_INFO_SIZE = 20 + this.data.name.length;
     const DROPPED_ITEMS_INFO_SIZE = 8; // dropped item count and last dropped item id
-    const WORLD_WEATHER_SIZE = 4;
+    const WORLD_WEATHER_SIZE = 15;     // 6 bytes before weather, 8 bytes after. total: 15 bytes
 
     const WORLD_VERSION = 0x0f;
     const WORLD_NAME = this.data.name ?? "";

@@ -147,7 +147,7 @@ module.exports = class Peer {
     }
   }
 
-  async join(name, isSuperMod) {
+  async join(name, isSuperMod, xPos, yPos) {
     if (!name)
       name = ''
 
@@ -186,8 +186,12 @@ module.exports = class Peer {
 
     world.data.playerCount++
 
-    const x = mainDoor?.x ?? 0;
-    const y = mainDoor?.y ?? 0;
+    const x = typeof xPos === 'number' ?
+                xPos :
+                mainDoor?.x || 0
+    const y = typeof yPos === 'number' ?
+                      yPos :
+                      mainDoor?.y || 0
 
     this.data.x = x * 32;
     this.data.y = y * 32;
@@ -380,7 +384,7 @@ smstate|0`))
       }
     )
 
-    if (world.playerCount < 1) { // remove to cache if empty
+    if (world.data.playerCount < 1) { // remove to cache if empty
       world.data.playerCount = 0
 
       await world.saveToDb()
