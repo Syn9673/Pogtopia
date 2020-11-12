@@ -14,9 +14,8 @@
 			],
 			"conditions": [
 				['OS=="linux"', {
-						"cflags": ["-fPIC"],
 						"libraries": [
-							"<(module_root_dir)/lib/Linux/libenet.a"
+							"-lenet"
 						]
 					}
 				],
