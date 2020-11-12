@@ -15,7 +15,7 @@
 			"conditions": [
 				['OS=="linux"', {
 						"libraries": [
-							"-lenet"
+							"<(module_root_dir)/lib/libenet.a"
 						]
 					}
 				],
