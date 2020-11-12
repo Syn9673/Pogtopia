@@ -14,7 +14,7 @@
 			],
 			"conditions": [
 				['OS=="linux"', {
-						"cflags_cc": ["-fPIC"],
+						"cflags": ["-fPIC"],
 						"libraries": [
 							"<(module_root_dir)/lib/Linux/libenet.a"
 						]
